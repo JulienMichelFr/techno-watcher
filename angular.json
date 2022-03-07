@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
+    "techno-watcher": "apps/techno-watcher",
+    "techno-watcher-e2e": "apps/techno-watcher-e2e"
+  }
+}
