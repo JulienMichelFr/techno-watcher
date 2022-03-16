@@ -14,12 +14,13 @@ export class PostService {
     return this.prisma.post.create({ data: post, ...args });
   }
 
-  public async addComment(content: string, postId: number, user: User, args: Prisma.PostArgs = {}): Promise<Post> {
+  public async addComment(content: string, postId: number, commentId: number | null, user: User, args: Prisma.PostArgs = {}): Promise<Post> {
     await this.prisma.comment.create({
       data: {
         content,
         post: { connect: { id: postId } },
         author: { connect: { id: user.id } },
+        parentComment: commentId ? { connect: { id: commentId } } : null,
       },
     });
 

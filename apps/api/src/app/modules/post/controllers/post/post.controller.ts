@@ -20,7 +20,7 @@ export class PostController {
       content: true,
       createdAt: true,
       updatedAt: true,
-      comments: { select: { author: PostController.authorSelect, content: true, createdAt: true, updatedAt: true } },
+      comments: { select: { id: true, author: PostController.authorSelect, content: true, createdAt: true, updatedAt: true, parentCommentId: true } },
       author: PostController.authorSelect,
     },
   };
@@ -48,6 +48,16 @@ export class PostController {
 
   @Post(':postId/comments')
   public async addComment(@Body() { content }: AddCommentOnPostDto, @GetUser() user: User, @Param('postId', ParseIntPipe) postId: number): Promise<PostEntity> {
-    return await this.postService.addComment(content, postId, user, PostController.postSelect);
+    return await this.postService.addComment(content, postId, null, user, PostController.postSelect);
+  }
+
+  @Post(':postId/comments/:commentId')
+  public async replyToComment(
+    @Body() { content }: AddCommentOnPostDto,
+    @GetUser() user: User,
+    @Param('postId', ParseIntPipe) postId: number,
+    @Param('commentId', ParseIntPipe) commentId: number
+  ): Promise<PostEntity> {
+    return await this.postService.addComment(content, postId, commentId, user, PostController.postSelect);
   }
 }

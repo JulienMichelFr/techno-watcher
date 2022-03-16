@@ -3,11 +3,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 
@@ -27,7 +29,7 @@ model Post {
   id        Int @default(autoincrement()) @id
   title     String
   content   String?
-  author    User @relation(fields: [authorId], references: [id])
+  author    User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -37,12 +39,19 @@ model Post {
 
 model Comment {
   id        Int @default(autoincrement()) @id
-  content   String
-  author    User @relation(fields: [authorId], references: [id])
-  authorId  Int
-  post      Post @relation(fields: [postId], references: [id])
-  postId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+
+  content   String
+
+  author    User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  Int
+
+  post      Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+
+  parentCommentId Int?
+  parentComment  Comment? @relation("ParentComment", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  comments  Comment[] @relation("ParentComment")
 }

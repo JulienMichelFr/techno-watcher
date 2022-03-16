@@ -11,6 +11,8 @@ function hashPassword(password: string) {
 }
 
 async function seedUsers(): Promise<User[]> {
+  await prisma.user.deleteMany({});
+
   const user1 = await prisma.user.upsert({
     where: { email: 'user@email.com' },
     update: {},
@@ -62,27 +64,31 @@ async function seedPosts(users: User[]): Promise<Post[]> {
 }
 
 async function seedComments(users: User[], posts: Post[]): Promise<Comment[]> {
-  await prisma.comment.createMany({
-    data: [
-      {
-        content: randSentence(),
-        authorId: users[0].id,
-        postId: posts[0].id,
-      },
-      {
-        content: randSentence(),
-        authorId: users[1].id,
-        postId: posts[0].id,
-      },
-      {
-        content: randSentence(),
-        authorId: users[1].id,
-        postId: posts[2].id,
-      },
-    ],
+  const comment1 = await prisma.comment.create({
+    data: {
+      content: randParagraph(),
+      authorId: users[1].id,
+      postId: posts[0].id,
+    },
+  });
+  const comment2OnComment1 = await prisma.comment.create({
+    data: {
+      content: randParagraph(),
+      authorId: users[0].id,
+      postId: posts[0].id,
+      parentCommentId: comment1.id,
+    },
   });
 
-  return await prisma.comment.findMany();
+  const comment3 = await prisma.comment.create({
+    data: {
+      content: randParagraph(),
+      authorId: users[0].id,
+      postId: posts[1].id,
+    },
+  });
+
+  return [comment1, comment2OnComment1, comment3];
 }
 
 async function main() {
