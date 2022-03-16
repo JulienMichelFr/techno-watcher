@@ -10,7 +10,7 @@ export class UserService {
     return this.prismaService.user.create({ data: user });
   }
 
-  public findOne(search: Prisma.UserWhereUniqueInput): Promise<User> {
-    return this.prismaService.user.findUnique({ where: search });
+  public findOne(search: Prisma.UserWhereUniqueInput, args: Prisma.UserArgs = {}): Promise<User> {
+    return this.prismaService.user.findUnique({ where: search, ...args });
   }
 }

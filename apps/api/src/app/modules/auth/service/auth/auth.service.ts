@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   public async validateUserPassword(loginDTO: LoginDTO): Promise<JwtPayload> {
-    const user: User = await this.userService.findOne({ email: loginDTO.email });
+    const user: User = await this.userService.findOne({ email: loginDTO.email }, { select: { password: true, username: true, id: true } });
     if (user && (await AuthService.validatePassword(loginDTO.password, user.password))) {
       return { email: user.email, username: user.username, id: user.id };
     }

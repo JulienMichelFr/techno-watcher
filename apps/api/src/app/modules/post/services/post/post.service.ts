@@ -7,20 +7,14 @@ export class PostService {
   public constructor(private prisma: PrismaService) {}
 
   public async find(conditions: Prisma.PostFindManyArgs = {}): Promise<Post[]> {
-    return this.prisma.post.findMany({
-      include: {
-        comments: true,
-        author: true,
-      },
-      ...conditions,
-    });
+    return this.prisma.post.findMany(conditions);
   }
 
-  public async create(post: Prisma.PostCreateInput): Promise<Post> {
-    return this.prisma.post.create({ data: post, include: { comments: true, author: true } });
+  public async create(post: Prisma.PostCreateInput, args: Prisma.PostArgs = {}): Promise<Post> {
+    return this.prisma.post.create({ data: post, ...args });
   }
 
-  public async addComment(content: string, postId: number, user: User): Promise<Post> {
+  public async addComment(content: string, postId: number, user: User, args: Prisma.PostArgs = {}): Promise<Post> {
     await this.prisma.comment.create({
       data: {
         content,
@@ -29,6 +23,9 @@ export class PostService {
       },
     });
 
-    return this.prisma.post.findUnique({ where: { id: postId }, include: { comments: true, author: true } });
+    return this.prisma.post.findUnique({
+      ...args,
+      where: { id: postId },
+    });
   }
 }
