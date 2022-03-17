@@ -20,7 +20,7 @@ export class PostService {
         content,
         post: { connect: { id: postId } },
         author: { connect: { id: user.id } },
-        parentComment: commentId ? { connect: { id: commentId } } : null,
+        parentComment: commentId ? { connect: { id: commentId } } : undefined,
       },
     });
 

@@ -4,6 +4,7 @@
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
     "techno-watcher": "apps/techno-watcher",
-    "techno-watcher-e2e": "apps/techno-watcher-e2e"
+    "techno-watcher-e2e": "apps/techno-watcher-e2e",
+    "tools": "libs/tools"
   }
 }
