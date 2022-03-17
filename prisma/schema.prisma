@@ -35,6 +35,7 @@ model Post {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   comments  Comment[]
+  tags      String[]
 }
 
 model Comment {

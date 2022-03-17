@@ -1,5 +1,5 @@
-import { IsInt, IsString, Max, Min } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 import { Post } from '@prisma/client';
 import { Sort } from '../../../../types/sort.type';
 
@@ -19,4 +19,8 @@ export class GetPostsDto {
 
   @IsString()
   public sort: PostSort = 'createdAt:desc';
+
+  @IsOptional()
+  @Transform(({ value }) => value?.split(',') ?? [])
+  public tags: string[] = [];
 }

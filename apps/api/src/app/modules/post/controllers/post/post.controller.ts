@@ -20,6 +20,7 @@ export class PostController {
       content: true,
       createdAt: true,
       updatedAt: true,
+      tags: true,
       comments: { select: { id: true, author: PostController.authorSelect, content: true, createdAt: true, updatedAt: true, parentCommentId: true } },
       author: PostController.authorSelect,
     },
@@ -28,12 +29,22 @@ export class PostController {
   public constructor(private readonly postService: PostService) {}
 
   @Get()
-  public async getPosts(@Query() { skip, take, sort }: GetPostsDto): Promise<PostEntity[]> {
+  public async getPosts(@Query() { skip, take, sort, tags }: GetPostsDto): Promise<PostEntity[]> {
     const [sortKey, sortOrder] = sort.split(':');
+    let where: Prisma.PostWhereInput = {
+      deletedAt: null,
+    };
+    if (tags?.length) {
+      where = {
+        ...where,
+        tags: {
+          hasSome: tags,
+        },
+      };
+    }
+
     return this.postService.find({
-      where: {
-        deletedAt: null,
-      },
+      where,
       skip,
       take,
       orderBy: [{ [sortKey]: sortOrder }],

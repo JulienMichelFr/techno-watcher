@@ -46,16 +46,19 @@ async function seedPosts(users: User[]): Promise<Post[]> {
         title: randSentence(),
         content: randParagraph(),
         authorId: users[1].id,
+        tags: ['tag1', 'tag2'],
       },
       {
         title: randSentence(),
         content: randParagraph(),
         authorId: users[0].id,
+        tags: ['tag2', 'tag3'],
       },
       {
         title: randSentence(),
         content: randParagraph(),
         authorId: users[0].id,
+        tags: [],
       },
     ],
   });
