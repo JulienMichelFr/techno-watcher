@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiServiceBase } from '../../bases/api-service.base';
 import { Observable } from 'rxjs';
-import { CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
+import { CreatePostDto, GetPostsDto, Paginated } from '@techno-watcher/api-models';
+import type { Post as PostEntity, User } from '@prisma/client';
 
 // TODO
-export type Post = any;
+export type Post = PostEntity & { author: User } & { _count: { comments: number } };
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ export type Post = any;
 export class PostService extends ApiServiceBase<Post> {
   protected readonly baseUrl: string = `${this.apiUrl}/posts`;
 
-  public findPosts(params: GetPostsDto): Observable<Post[]> {
-    return this.http.get<Post[]>(this.baseUrl, {
+  public findPosts(params: GetPostsDto): Observable<Paginated<Post>> {
+    return this.http.get<Paginated<Post>>(this.baseUrl, {
       params: {
         ...params,
       },
