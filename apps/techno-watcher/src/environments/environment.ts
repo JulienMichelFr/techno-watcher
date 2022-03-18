@@ -6,6 +6,7 @@ import { AppConfig } from '../types/app-config';
 
 export const environment: AppConfig = {
   production: false,
+  apiUrl: 'http://localhost:3333',
 };
 
 /*
