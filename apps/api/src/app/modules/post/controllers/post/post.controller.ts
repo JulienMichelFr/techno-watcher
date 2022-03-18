@@ -5,6 +5,7 @@ import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
 import { AddCommentOnPostDto } from '../../dto/comment/add-comment-on-post.dto';
 import { CreatePostDto } from '../../dto/post/create-post.dto';
 import { GetPostsDto } from '../../dto/post/get-posts.dto';
+import { Public } from '../../../auth/decorators/public/public.decorator';
 
 @Controller('posts')
 export class PostController {
@@ -29,6 +30,7 @@ export class PostController {
   public constructor(private readonly postService: PostService) {}
 
   @Get()
+  @Public()
   public async getPosts(@Query() { skip, take, sort, tags }: GetPostsDto): Promise<PostEntity[]> {
     const [sortKey, sortOrder] = sort.split(':');
     let where: Prisma.PostWhereInput = {
