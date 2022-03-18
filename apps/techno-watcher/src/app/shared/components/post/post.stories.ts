@@ -3,14 +3,15 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { TagComponentModule } from '../tag/tag-component.module';
 import { PostComponentModule } from './post-component.module';
 import { Post } from '../../../services/post/post.service';
+import { randRecentDate } from '@ngneat/falso';
 
 const post: Post = {
   _count: { comments: 2 },
   title: 'Post title',
   content: 'Post content',
   tags: ['Tag 1', 'Prisma', 'Storybook'],
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: randRecentDate(),
+  updatedAt: randRecentDate(),
   id: 1,
   author: {
     id: 1,

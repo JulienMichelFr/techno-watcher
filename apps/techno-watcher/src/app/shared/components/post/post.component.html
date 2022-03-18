@@ -1,6 +1,6 @@
 <div class="inline-flex items-center gap-4 rounded-t bg-white p-1">
   <span>@{{ post.author.username }}</span
-  ><span>{{ post.createdAt | date: 'hh:mm dd/MM/yyyy' }}</span>
+  ><span>{{ post.createdAt | dateAgo }}</span>
 </div>
 <div class="shadow-md bg-white p-2 flex items-start gap-4 rounded-b">
   <mat-icon [matBadge]="post._count.comments" color="accent">forum</mat-icon>
