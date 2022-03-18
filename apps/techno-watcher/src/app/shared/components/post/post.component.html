@@ -6,6 +6,6 @@
   <mat-icon [matBadge]="post._count.comments" color="accent">forum</mat-icon>
   <div>{{ post.title }}</div>
 </div>
-<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center gap-2 mt-2">
   <techno-watcher-tag *ngFor="let tag of post.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
 </div>

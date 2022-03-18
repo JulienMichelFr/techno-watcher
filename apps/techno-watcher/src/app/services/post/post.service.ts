@@ -5,7 +5,12 @@ import { CreatePostDto, GetPostsDto, Paginated } from '@techno-watcher/api-model
 import type { Post as PostEntity, User } from '@prisma/client';
 
 // TODO
-export type Post = PostEntity & { author: User } & { _count: { comments: number } };
+export type Post = PostEntity & {
+  author: User;
+  _count: {
+    comments: number;
+  };
+};
 
 @Injectable({
   providedIn: 'root',
