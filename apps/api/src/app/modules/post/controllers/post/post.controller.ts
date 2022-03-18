@@ -2,9 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs
 import { Post as PostEntity, Prisma, User } from '@prisma/client';
 import { PostService } from '../../services/post/post.service';
 import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
-import { AddCommentOnPostDto } from '../../dto/comment/add-comment-on-post.dto';
-import { CreatePostDto } from '../../dto/post/create-post.dto';
-import { GetPostsDto } from '../../dto/post/get-posts.dto';
+import { AddCommentOnPostDto, CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
 import { Public } from '../../../auth/decorators/public/public.decorator';
 
 @Controller('posts')

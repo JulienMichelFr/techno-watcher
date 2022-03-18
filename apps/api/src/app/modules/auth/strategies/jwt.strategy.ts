@@ -3,7 +3,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../user/services/user/user.service';
 import { User } from '@prisma/client';
-import { JwtPayload } from '../../../types/auth.type';
+import { JwtPayload } from '../auth.type';
 import { ConfigService } from '@nestjs/config';
 import { JWT_EXPIRATION, JWT_SECRET } from '../../../constantes/config.const';
 

@@ -3,7 +3,8 @@ import { UserService } from '../../../user/services/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { Prisma, User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload, LoginDTO } from '../../../../types/auth.type';
+import { JwtPayload } from '../../auth.type';
+import { SignInDTO } from '@techno-watcher/api-models';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
     return bcrypt.compare(password, hashedPassword);
   }
 
-  public async validateUserPassword(loginDTO: LoginDTO): Promise<JwtPayload> {
+  public async validateUserPassword(loginDTO: SignInDTO): Promise<JwtPayload> {
     const user: User = await this.userService.findOne({ email: loginDTO.email }, { select: { password: true, username: true, id: true } });
     if (user && (await AuthService.validatePassword(loginDTO.password, user.password))) {
       return { email: user.email, username: user.username, id: user.id };
@@ -25,7 +26,7 @@ export class AuthService {
     return null;
   }
 
-  public async signIn(signInDTO: LoginDTO): Promise<{ accessToken: string }> {
+  public async signIn(signInDTO: SignInDTO): Promise<{ accessToken: string }> {
     const payload: JwtPayload = await this.validateUserPassword(signInDTO);
     if (!payload) {
       throw new UnauthorizedException('Invalid credentials');

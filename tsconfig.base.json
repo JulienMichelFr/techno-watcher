@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@techno-watcher/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@techno-watcher/api-models": ["libs/api-models/src/index.ts"],
       "@techno-watcher/tools": ["libs/tools/src/index.ts"]
     }
   },

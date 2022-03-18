@@ -1,7 +1,7 @@
 import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { Post } from '@prisma/client';
-import { Sort } from '../../../../types/sort.type';
+import type { Post } from '@prisma/client';
+import type { Sort } from '../types/sort.type';
 
 type PostSort = Sort<Post>;
 
