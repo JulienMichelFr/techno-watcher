@@ -25,7 +25,7 @@ const post: PostModel = plainToInstance(PostModel, {
   },
   deletedAt: null,
   authorId: 1,
-});
+}, {excludeExtraneousValues: true});
 
 export default {
   title: 'Shared/Components/Post',
