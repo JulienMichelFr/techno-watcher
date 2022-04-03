@@ -10,15 +10,27 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@techno-watcher/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@techno-watcher/api-models": ["libs/api-models/src/index.ts"],
-      "@techno-watcher/tools": ["libs/tools/src/index.ts"]
+      "@techno-watcher/api-interfaces": [
+        "libs/api-interfaces/src/index.ts"
+      ],
+      "@techno-watcher/api-models": [
+        "libs/api-models/src/index.ts"
+      ],
+      "@techno-watcher/tools": [
+        "libs/tools/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
