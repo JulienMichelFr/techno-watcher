@@ -1,21 +1,24 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from '../../service/auth/auth.service';
-import { SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+import { AuthResponseModel, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Public } from '../../decorators/public/public.decorator';
+import { Serializer } from '../../../../decorators/serializer/serializer.decorator';
 
 @Controller('auth')
 export class AuthController {
   public constructor(private readonly authService: AuthService) {}
 
+  @Serializer(AuthResponseModel)
   @Public()
   @Post('sign-in')
-  public async signIn(@Body() { email, password }: SignInDTO): Promise<{ accessToken: string }> {
+  public async signIn(@Body() { email, password }: SignInDTO): Promise<AuthResponseModel> {
     return await this.authService.signIn({ email, password });
   }
 
+  @Serializer(AuthResponseModel)
   @Public()
   @Post('sign-up')
-  public async signUp(@Body() { username, email, password }: SignUpDTO): Promise<{ accessToken: string }> {
+  public async signUp(@Body() { username, email, password }: SignUpDTO): Promise<AuthResponseModel> {
     return await this.authService.signUp({ username, email, password });
   }
 }

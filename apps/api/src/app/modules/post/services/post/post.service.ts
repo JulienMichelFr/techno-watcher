@@ -11,6 +11,10 @@ export class PostService {
     return this.prisma.post.count(conditions);
   }
 
+  public async findOne(args: Prisma.PostFindUniqueArgs): Promise<Post | null> {
+    return this.prisma.post.findUnique(args);
+  }
+
   public async find(conditions: Prisma.PostFindManyArgs, withCount: true): Promise<Paginated<Post>>;
   public async find(conditions: Prisma.PostFindManyArgs, withCount: false): Promise<Paginated<Post>>;
   public async find(conditions: Prisma.PostFindManyArgs = {}, withCount: boolean = false): Promise<Post[] | Paginated<Post>> {
