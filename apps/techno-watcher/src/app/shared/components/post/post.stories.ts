@@ -1,11 +1,12 @@
-import { PostComponent } from './post.component';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { TagComponentModule } from '../tag/tag-component.module';
-import { PostComponentModule } from './post-component.module';
-import { Post } from '../../../services/post/post.service';
-import { randRecentDate } from '@ngneat/falso';
+import {PostComponent} from './post.component';
+import {Meta, moduleMetadata, Story} from '@storybook/angular';
+import {TagComponentModule} from '../tag/tag-component.module';
+import {PostComponentModule} from './post-component.module';
+import {randRecentDate} from '@ngneat/falso';
+import {PostModel} from "@techno-watcher/api-models";
+import {plainToInstance} from "class-transformer";
 
-const post: Post = {
+const post: PostModel = plainToInstance(PostModel, {
   _count: { comments: 2 },
   title: 'Post title',
   content: 'Post content',
@@ -24,7 +25,7 @@ const post: Post = {
   },
   deletedAt: null,
   authorId: 1,
-};
+});
 
 export default {
   title: 'Shared/Components/Post',

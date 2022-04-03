@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Post } from '../../../services/post/post.service';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {PostModel} from "@techno-watcher/api-models";
 
 @Component({
   selector: 'techno-watcher-post',
@@ -8,7 +8,7 @@ import { Post } from '../../../services/post/post.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
-  @Input() public post!: Post;
+  @Input() public post!: PostModel;
 
   public trackByIndex(index: number): number {
     return index;
