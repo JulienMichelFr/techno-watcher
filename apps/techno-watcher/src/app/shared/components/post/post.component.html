@@ -1,11 +1,13 @@
-<div class="inline-flex items-center gap-4 rounded-t bg-white p-1">
-  <span>@{{ post.author.username }}</span
-  ><span>{{ post.createdAt | dateAgo }}</span>
-</div>
-<div class="shadow-md bg-white p-2 flex items-start gap-4 rounded-b">
-  <mat-icon [matBadge]="post.commentCount" color="accent">forum</mat-icon>
-  <div>{{ post.title }}</div>
-</div>
-<div class="flex items-center gap-2 mt-2">
-  <techno-watcher-tag *ngFor="let tag of post.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
+<div class="flex flex-col rounded bg-white shadow-md p-2 gap-2">
+  <div class="flex items-center gap-4">
+    <span>@{{ post.author.username }}</span
+    ><span>{{ post.createdAt | dateAgo }}</span>
+  </div>
+  <div class="flex items-start gap-4 pt-4 pb-4">
+    <mat-icon [matBadge]="post.commentCount" color="accent">forum</mat-icon>
+    <div>{{ post.title }}</div>
+  </div>
+  <div class="flex items-center gap-2 mt-2">
+    <techno-watcher-tag *ngFor="let tag of post.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
+  </div>
 </div>
