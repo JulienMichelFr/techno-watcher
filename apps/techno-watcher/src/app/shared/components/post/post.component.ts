@@ -8,7 +8,7 @@ import {PostModel} from "@techno-watcher/api-models";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
-  @Input() public post!: PostModel;
+  @Input() public post: PostModel | null = null;
 
   public trackByIndex(index: number): number {
     return index;

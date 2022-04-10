@@ -45,3 +45,8 @@ export const Default: Story<PostComponent> = Template.bind({});
 Default.args = {
   post,
 };
+
+export const Loading: Story<PostComponent> = Template.bind({});
+Loading.args = {
+  post: null
+};
