@@ -6,9 +6,10 @@ import { NavbarComponent } from './containers/navbar/navbar.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { MatInputModule } from '@angular/material/input';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
-  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatInputModule],
+  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatInputModule, RouterModule],
   declarations: [NavbarComponent, AuthComponent, SearchBarComponent],
   exports: [NavbarComponent],
 })
