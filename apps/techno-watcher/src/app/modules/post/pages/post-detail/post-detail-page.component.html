@@ -1,3 +1,5 @@
 <div class="flex flex-col gap-2">
   <techno-watcher-post [post]="post$ | async"></techno-watcher-post>
+  <hr>
+  <techno-watcher-comment *ngFor="let comment of comments$ | async; trackBy: commentsTrackByFn" [comment]="comment"></techno-watcher-comment>
 </div>

@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { debounceTime, filter, Observable, switchMap } from 'rxjs';
-import { PostModel } from '@techno-watcher/api-models';
-import { PostService } from '../../../../services/post/post.service';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {debounceTime, filter, Observable, pluck, switchMap} from 'rxjs';
+import {CommentModel, PostModel} from '@techno-watcher/api-models';
+import {PostService} from '../../../../services/post/post.service';
 
 @Component({
   selector: 'techno-watcher-post-detail-page',
@@ -11,10 +11,16 @@ import { PostService } from '../../../../services/post/post.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostDetailPageComponent {
-  public post$: Observable<PostModel>;
+  public post$: Observable<PostModel> = this.getPost();
+  public comments$: Observable<CommentModel[] | undefined> = this.post$.pipe(
+    pluck('comments'),
+  )
 
   public constructor(private activatedRoute: ActivatedRoute, private postService: PostService) {
-    this.post$ = this.getPost();
+  }
+
+  public commentsTrackByFn(index: number, comment: CommentModel): number {
+    return comment.id;
   }
 
   private getPost(): Observable<PostModel> {

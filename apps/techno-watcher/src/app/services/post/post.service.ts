@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiServiceBase } from '../../bases/api-service.base';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {CreatePostDto, GetPostsDto, Paginated, PostModel} from '@techno-watcher/api-models';
 
 @Injectable({
@@ -18,7 +18,18 @@ export class PostService extends ApiServiceBase<PostModel> {
   }
 
   public findPostById(id: number): Observable<PostModel> {
-    return this.findById(id);
+    return this.findById(id).pipe(
+      map((post: PostModel) => {
+        if (!post.comments?.length) {
+          return post;
+        }
+        post.comments = post.comments.map((comment) => {
+          comment.comments = post.comments?.filter((c) => c.parentCommentId === comment.id) ?? null;
+          return comment
+        })
+        return post;
+      }),
+    );
   }
 
   public createPost(post: CreatePostDto): Observable<PostModel> {
