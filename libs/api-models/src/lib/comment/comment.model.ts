@@ -17,5 +17,9 @@ export class CommentModel implements Omit<Comment, 'deletedAt' | 'postId' | 'aut
 
   @Expose()
   @Type(() => AuthorModel)
-  public author: AuthorModel | null = null;
+  public author!: AuthorModel;
+
+  @Expose()
+  @Type(() => CommentModel)
+  public comments: CommentModel[] | null = null;
 }
