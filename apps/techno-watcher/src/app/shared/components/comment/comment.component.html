@@ -1,0 +1,32 @@
+<div class="flex flex-col rounded bg-white shadow-md p-2 gap-2" [class.animate-pulse]="!comment">
+  <div class="flex items-center gap-4">
+    <ng-container *ngIf="comment; else loadingHeaderTemplate">
+      <span>@{{ comment.author.username }}</span
+      ><span>{{ comment.createdAt | dateAgo }}</span>
+    </ng-container>
+    <ng-template #loadingHeaderTemplate>
+      <div class="h-4 w-20 bg-green-800 rounded"></div>
+      <div class="h-4 w-20 bg-green-800 rounded"></div>
+    </ng-template>
+  </div>
+  <div class="flex items-start gap-4 pt-2 pb-2">
+    <mat-icon class="rotate-180" color="accent">reply</mat-icon>
+    <ng-container *ngIf="comment; else loadingBodyTemplate">
+      <div>{{ comment.content }}</div>
+    </ng-container>
+    <ng-template #loadingBodyTemplate>
+      <div class="h-4 w-full bg-green-800 rounded"></div>
+    </ng-template>
+  </div>
+</div>
+<div *ngIf="comment.comments?.length" class="flex mt-2 mb-2 ml-4" [class.items-center]="!showComments">
+  <button mat-icon-button color="primary" (click)="toggleComments()">
+    <mat-icon color="accent">{{ showComments ? 'remove' : 'add' }}</mat-icon>
+  </button>
+  <div class="flex flex-col gap-4" *ngIf="showComments; else commentCountTemplate">
+    <techno-watcher-comment  *ngFor="let subComment of comment.comments;trackBy: commentTrackByFn" [comment]="subComment"></techno-watcher-comment>
+  </div>
+  <ng-template #commentCountTemplate>
+    {{comment.comments!.length}} comment<ng-container *ngIf="comment.comments!.length > 1">s</ng-container>
+  </ng-template>
+</div>
