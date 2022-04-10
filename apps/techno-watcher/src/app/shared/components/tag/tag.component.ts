@@ -26,6 +26,5 @@ export class TagComponent implements OnInit {
 
   public ngOnInit(): void {
     this.color = TagComponent.generateColorFromString(this.tag);
-    console.log(this.color);
   }
 }
