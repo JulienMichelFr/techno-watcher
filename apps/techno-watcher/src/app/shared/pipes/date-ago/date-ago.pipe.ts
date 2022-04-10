@@ -1,5 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { LogArgs } from '@techno-watcher/tools';
+import {Pipe, PipeTransform} from '@angular/core';
 
 const A_MINUTE: number = 1;
 const AN_HOUR: number = 60 * A_MINUTE;
@@ -14,7 +13,6 @@ export class DateAgoPipe implements PipeTransform {
     numeric: 'auto',
   });
 
-  @LogArgs()
   public transform(value: Date | string, existingDate: Date = new Date()): string {
     if (!value) {
       return '';
@@ -27,12 +25,13 @@ export class DateAgoPipe implements PipeTransform {
     switch (true) {
       case Math.abs(compared) < A_MINUTE:
         return 'less than a minutes ago';
-      case Math.abs(compared) < 60: {
+      case Math.abs(compared) < AN_HOUR: {
         return this.intl.format(compared, 'minutes');
       }
-      case Math.abs(compared) < 60 * 24: {
+      case Math.abs(compared) < A_DAY: {
         return this.intl.format(Math.round(compared / 60), 'hours');
       }
+      case Math.abs(compared) >= A_DAY:
       default: {
         return this.intl.format(Math.round(compared / 60 / 24), 'days');
       }
