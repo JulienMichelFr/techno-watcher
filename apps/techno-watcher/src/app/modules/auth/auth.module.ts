@@ -9,9 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { SignInPageComponent } from './pages/sign-in/sign-in-page.component';
 
 @NgModule({
-  declarations: [SignUpPageComponent, SignUpFormComponent],
+  declarations: [SignUpPageComponent, SignUpFormComponent, SignInPageComponent],
   imports: [CommonModule, AuthRoutingModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, FormsModule, MatButtonModule, MatCardModule],
 })
 export class AuthModule {}

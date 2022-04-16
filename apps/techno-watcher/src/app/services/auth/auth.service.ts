@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
-import { AuthResponseModel, SignUpDTO } from '@techno-watcher/api-models';
+import { AuthResponseModel, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,5 +14,9 @@ export class AuthService {
 
   public signUp(signUpDto: SignUpDTO): Observable<AuthResponseModel> {
     return this.http.post<AuthResponseModel>(`${this.baseUrl}/sign-up`, signUpDto);
+  }
+
+  public signIn(signInDto: SignInDTO): Observable<AuthResponseModel> {
+    return this.http.post<AuthResponseModel>(`${this.baseUrl}/sign-in`, signInDto);
   }
 }

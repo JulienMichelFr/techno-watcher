@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+  <mat-card>
+    <mat-card-title>Sign in</mat-card-title>
+    <mat-card-content>
+      <div class="flex flex-col flex-nowrap gap-1 items-stretch">
+        <mat-form-field>
+          <input matInput type="email" formControlName="email" placeholder="Email" />
+          <mat-error *ngIf="emailFormControl.invalid && emailFormControl.touched">
+            <ng-container *ngIf="emailFormControl.hasError('required'); else invalidEmailErrorMessageTemplate">Email is required</ng-container>
+            <ng-template #invalidEmailErrorMessageTemplate> Email is invalid</ng-template>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" formControlName="password" placeholder="Password" />
+          <mat-error *ngIf="passwordFormControl.invalid && passwordFormControl.touched">Password is required</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button type="button" routerLink="/">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">Sign in</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
