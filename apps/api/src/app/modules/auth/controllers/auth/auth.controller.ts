@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from '../../service/auth/auth.service';
 import { AuthResponseModel, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Public } from '../../decorators/public/public.decorator';
@@ -10,6 +10,7 @@ export class AuthController {
 
   @Serializer(AuthResponseModel)
   @Public()
+  @HttpCode(200)
   @Post('sign-in')
   public async signIn(@Body() { email, password }: SignInDTO): Promise<AuthResponseModel> {
     return await this.authService.signIn({ email, password });
