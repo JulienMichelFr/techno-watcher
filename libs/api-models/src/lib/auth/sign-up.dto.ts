@@ -5,7 +5,7 @@ import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validato
   Contains at least 1 lowercase
   Contains at least 1 number or special character
  */
-const PASSWORD_REGEXP: RegExp = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+export const PASSWORD_REGEXP: RegExp = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
 
 export class SignUpDTO {
   @IsString()
