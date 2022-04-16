@@ -4,7 +4,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 
 const Routes: Route[] = [
   { path: '', component: HomePageComponent },
-  { path: 'posts', loadChildren: () => import('./modules/post/post.module').then(m => m.PostModule) }
+  { path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then((m) => m.AuthModule) },
+  { path: 'posts', loadChildren: () => import('./modules/post/post.module').then((m) => m.PostModule) },
 ];
 
 @NgModule({

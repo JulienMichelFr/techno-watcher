@@ -1,0 +1,12 @@
+<form #form="ngForm" (ngSubmit)="submitForm(signUpDTO)">
+  <mat-card>
+    <mat-card-title>Sign up</mat-card-title>
+    <mat-card-content>
+      <techno-watcher-sign-up-form name="signUpDto" [(ngModel)]="signUpDTO"></techno-watcher-sign-up-form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button type="button" routerLink="/">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">Sign up</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
