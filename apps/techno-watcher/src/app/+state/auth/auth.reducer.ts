@@ -23,19 +23,33 @@ export const initialState: AuthState = {
 export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<AuthState, AuthAction>(
   initialState,
   on(fromActions.init, () => initialState),
+  //#region SignIn
   on(fromActions.signInStart, () => ({ ...initialState, loading: true })),
   on(fromActions.signInSuccess, (_state, { payload }): AuthState => {
-    const decoded: DecodedToken = decodeJwt(payload.accessToken);
-    return {
-      ...initialState,
-      token: payload.accessToken,
-      profile: { username: decoded.username, id: decoded.id },
-      expireAt: decoded.exp,
-    };
+    return handleAuthResponse(payload.accessToken);
   }),
   // TODO Handle error message from API
-  on(fromActions.signInFail, () => ({ ...initialState, loading: false, error: 'Error', token: null }))
+  on(fromActions.signInFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
+  //#endregion
+  //#region SignUp
+  on(fromActions.signUpStart, () => ({ ...initialState, loading: true })),
+  on(fromActions.signUpSuccess, (_state, { payload }): AuthState => {
+    return handleAuthResponse(payload.accessToken);
+  }),
+  // TODO Handle error message from API
+  on(fromActions.signUpFail, () => ({ ...initialState, loading: false, error: 'Error', token: null }))
+  //#endregion
 );
+
+function handleAuthResponse(accessToken: string): AuthState {
+  const decoded: DecodedToken = decodeJwt(accessToken);
+  return {
+    ...initialState,
+    token: accessToken,
+    profile: { username: decoded.username, id: decoded.id },
+    expireAt: decoded.exp,
+  };
+}
 
 function decodeJwt(jwt: string): DecodedToken {
   const base64Url: string = jwt.split('.')[1];

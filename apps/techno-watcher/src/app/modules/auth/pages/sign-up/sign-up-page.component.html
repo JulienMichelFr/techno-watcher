@@ -6,7 +6,7 @@
     </mat-card-content>
     <mat-card-actions align="end">
       <button mat-button type="button" routerLink="/">Cancel</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">Sign up</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || (isLoading$ | async)">Sign up</button>
     </mat-card-actions>
   </mat-card>
 </form>

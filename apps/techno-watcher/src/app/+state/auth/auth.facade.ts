@@ -4,7 +4,7 @@ import * as AuthSelectors from './auth.selectors';
 import * as AuthActions from './auth.actions';
 import { Observable } from 'rxjs';
 import { AuthStateUserProfile } from './auth.models';
-import { SignInDTO } from '@techno-watcher/api-models';
+import { SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
@@ -17,5 +17,9 @@ export class AuthFacade {
 
   public signIn(signInDTO: SignInDTO): void {
     this.store.dispatch(AuthActions.signInStart({ payload: signInDTO }));
+  }
+
+  public signUp(signUpDTO: SignUpDTO): void {
+    this.store.dispatch(AuthActions.signUpStart({ payload: signUpDTO }));
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import * as AuthActions from './auth.actions';
+import * as fromActions from './auth.actions';
 import { AuthService } from '../../services/auth/auth.service';
 import { catchError, map, mergeMap, of } from 'rxjs';
 
@@ -12,11 +12,22 @@ export class AuthEffects {
   // eslint-disable-next-line @typescript-eslint/typedef
   public signInStart$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signInStart),
+      ofType(fromActions.signInStart),
       mergeMap(({ payload }) => this.authService.signIn(payload)),
-      map(({ accessToken }) => AuthActions.signInSuccess({ payload: { accessToken } })),
+      map(({ accessToken }) => fromActions.signInSuccess({ payload: { accessToken } })),
       // TODO Add error handling
-      catchError(() => of(AuthActions.signInFail({ payload: {} })))
+      catchError(() => of(fromActions.signInFail({ payload: {} })))
+    )
+  );
+
+  // eslint-disable-next-line @typescript-eslint/typedef
+  public signUpStart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.signUpStart),
+      mergeMap(({ payload }) => this.authService.signUp(payload)),
+      map(({ accessToken }) => fromActions.signUpSuccess({ payload: { accessToken } })),
+      // TODO Add error handling
+      catchError(() => of(fromActions.signUpFail({ payload: {} })))
     )
   );
 }
