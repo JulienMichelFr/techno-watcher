@@ -1,2 +1,10 @@
-<button routerLink="/auth/sign-in" class="right-2" color="accent" mat-raised-button>Sign In</button>
-<button routerLink="/auth/sign-up" mat-stroked-button>Sign Up</button>
+<ng-container *ngIf="profile$ | async as profile; else signActionTemplate">
+  <div class="flex flex-row gap-1 items-center">
+    <span class="text-base">{{ profile.username }}</span>
+    <button mat-button (click)="signOut()">Sign out</button>
+  </div>
+</ng-container>
+<ng-template #signActionTemplate>
+  <button routerLink="/auth/sign-in" class="right-2" color="accent" mat-raised-button [disabled]="isLoading$ | async">Sign In</button>
+  <button routerLink="/auth/sign-up" mat-stroked-button [disabled]="isLoading$ | async">Sign Up</button>
+</ng-template>

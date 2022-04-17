@@ -8,3 +8,6 @@ export const authStateIsLoading = createSelector(getAuthState, (state: AuthState
 export const getProfile = createSelector(getAuthState, (state: AuthState) => state.profile);
 export const getTokenExpirationDate = createSelector(getAuthState, (state: AuthState) => state.expireAt);
 export const getAccessToken = createSelector(getAuthState, (state: AuthState) => state.token);
+export const isSignedIn = createSelector(getAuthState, (state: AuthState) => {
+  return !!(!state.loading && state.token && state.profile?.id && state.profile?.username);
+});

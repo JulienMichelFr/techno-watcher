@@ -21,8 +21,13 @@ export const initialState: AuthState = {
 };
 
 export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<AuthState, AuthAction>(
-  initialState,
-  on(fromActions.init, () => initialState),
+  { ...initialState, loading: true },
+  on(fromActions.init, (_state, { payload }) => {
+    if (!payload?.accessToken) {
+      return initialState;
+    }
+    return handleAuthResponse(payload.accessToken);
+  }),
   //#region SignIn
   on(fromActions.signInStart, () => ({ ...initialState, loading: true })),
   on(fromActions.signInSuccess, (_state, { payload }): AuthState => {
@@ -37,8 +42,9 @@ export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<A
     return handleAuthResponse(payload.accessToken);
   }),
   // TODO Handle error message from API
-  on(fromActions.signUpFail, () => ({ ...initialState, loading: false, error: 'Error', token: null }))
+  on(fromActions.signUpFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
   //#endregion
+  on(fromActions.signOut, () => initialState)
 );
 
 function handleAuthResponse(accessToken: string): AuthState {

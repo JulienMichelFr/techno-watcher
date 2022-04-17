@@ -12,6 +12,7 @@ export class AuthFacade {
   public accessToken$: Observable<string | null> = this.store.pipe(select(AuthSelectors.getAccessToken));
   public profile$: Observable<AuthStateUserProfile | null> = this.store.pipe(select(AuthSelectors.getProfile));
   public tokenExpirationDate$: Observable<number | null> = this.store.pipe(select(AuthSelectors.getTokenExpirationDate));
+  public isSignedIn$: Observable<boolean> = this.store.pipe(select(AuthSelectors.isSignedIn));
 
   public constructor(private readonly store: Store) {}
 
@@ -21,5 +22,9 @@ export class AuthFacade {
 
   public signUp(signUpDTO: SignUpDTO): void {
     this.store.dispatch(AuthActions.signUpStart({ payload: signUpDTO }));
+  }
+
+  public signOut(): void {
+    this.store.dispatch(AuthActions.signOut());
   }
 }
