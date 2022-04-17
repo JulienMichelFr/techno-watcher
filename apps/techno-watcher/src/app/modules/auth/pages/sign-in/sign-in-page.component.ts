@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../../services/auth/auth.service';
 import { SignUpDTO } from '@techno-watcher/api-models';
+import { AuthFacade } from '../../../../+state/auth/auth.facade';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'techno-watcher-sign-in',
@@ -14,7 +15,7 @@ export class SignInPageComponent {
     password: new FormControl(null, [Validators.required]),
   });
 
-  public isLoading: boolean = false;
+  public isLoading$: Observable<boolean> = this.authFacade.isLoading$;
 
   public get emailFormControl(): FormControl {
     return this.form.get('email') as FormControl;
@@ -24,16 +25,9 @@ export class SignInPageComponent {
     return this.form.get('email') as FormControl;
   }
 
-  public constructor(private authService: AuthService) {}
+  public constructor(private authFacade: AuthFacade) {}
 
   public submitForm(signUpDTO: SignUpDTO): void {
-    if (this.isLoading) {
-      return;
-    }
-
-    this.isLoading = true;
-    this.authService.signIn(signUpDTO).subscribe(() => {
-      this.isLoading = false;
-    });
+    this.authFacade.signIn(signUpDTO);
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,10 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavbarModule } from './layout/navbar/navbar.module';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { PostComponentModule } from './shared/components/post/post-component.module';
-import { StoreModule } from '@ngrx/store';
+import { ActionReducerMap, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import * as fromAuth from './+state/auth/auth.reducer';
+import { AUTH_FEATURE_KEY } from './+state/auth/auth.reducer';
+import { AuthEffects } from './+state/auth/auth.effects';
+import { AuthFacade } from './+state/auth/auth.facade';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
@@ -23,7 +26,9 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     PostComponentModule,
     StoreModule.forRoot(
-      {},
+      {
+        [AUTH_FEATURE_KEY]: fromAuth.authReducer,
+      } as ActionReducerMap<unknown>,
       {
         metaReducers: !environment.production ? [] : [],
         runtimeChecks: {
@@ -32,10 +37,10 @@ import { environment } from '../environments/environment';
         },
       }
     ),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [],
+  providers: [AuthFacade],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
