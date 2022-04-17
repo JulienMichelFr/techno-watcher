@@ -9,7 +9,8 @@
     "build": "nx build",
     "test": "nx test",
     "prisma:db:push": "prisma db push",
-    "prisma:seed": "prisma db seed"
+    "prisma:seed": "prisma db seed",
+    "prisma:studio": "prisma studio"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
