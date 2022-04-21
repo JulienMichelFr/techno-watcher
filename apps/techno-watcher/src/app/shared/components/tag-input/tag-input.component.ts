@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationError
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { noop, NoopFn } from '../../utils/noop';
+import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'techno-watcher-tag-input',
@@ -15,15 +16,13 @@ import { noop, NoopFn } from '../../utils/noop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagInputComponent implements ControlValueAccessor, Validator {
-  @Input() public required: boolean = false;
-
   public disabled: boolean = false;
   public readonly separatorKeysCodes: readonly [number, number] = [ENTER, COMMA] as const;
 
   private onChange: (value: string[]) => void = noop;
   private onTouched: NoopFn = noop;
 
-  //#region Tags
+  //#region tags
   public get tags(): string[] {
     return this._tags;
   }
@@ -32,6 +31,17 @@ export class TagInputComponent implements ControlValueAccessor, Validator {
     this.onChange(value);
   }
   private _tags: string[] = [];
+  //#endregion
+
+  //#region required
+  @Input()
+  public get required(): boolean {
+    return this._required;
+  }
+  public set required(value: BooleanInput) {
+    this._required = coerceBooleanProperty(value);
+  }
+  public _required: boolean = false;
   //#endregion
 
   //#region ControlValueAccessor

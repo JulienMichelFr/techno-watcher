@@ -1,0 +1,21 @@
+<form #form="ngForm" (ngSubmit)="submit(post)">
+  <mat-card>
+    <mat-card-title>New post</mat-card-title>
+    <mat-card-content>
+
+      <div class="flex flex-col gap-1 ">
+        <mat-form-field>
+          <input matInput placeholder="Title" name="title" [(ngModel)]="post.title" required/>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Content" name="content" cdkTextareaAutosize [cdkAutosizeMinRows]="5" [(ngModel)]="post.content"></textarea>
+        </mat-form-field>
+        <techno-watcher-tag-input name="tags" [(ngModel)]="post.tags" required></techno-watcher-tag-input>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button type="button" mat-button routerLink="/">Cancel</button>
+      <button type="submit" mat-button color="primary" [disabled]="!form.valid">Create</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -5,12 +5,12 @@ import {CommentModel, PostModel} from '@techno-watcher/api-models';
 import {PostService} from '../../../../services/post/post.service';
 
 @Component({
-  selector: 'techno-watcher-post-detail-page',
-  templateUrl: './post-detail-page.component.html',
-  styleUrls: ['./post-detail-page.component.scss'],
+  selector: 'techno-watcher-show-post-page-page',
+  templateUrl: './show-post-page.component.html',
+  styleUrls: ['./show-post-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostDetailPageComponent {
+export class ShowPostPageComponent {
   public post$: Observable<PostModel> = this.getPost();
   public comments$: Observable<CommentModel[] | undefined> = this.post$.pipe(
     pluck('comments'),
