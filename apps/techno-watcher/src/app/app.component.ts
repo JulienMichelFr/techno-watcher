@@ -1,13 +1,10 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@techno-watcher/api-interfaces';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'techno-watcher-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
 }
