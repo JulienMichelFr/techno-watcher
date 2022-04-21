@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiServiceBase } from '../../bases/api-service.base';
-import {map, Observable} from 'rxjs';
-import {CreatePostDto, GetPostsDto, Paginated, PostModel} from '@techno-watcher/api-models';
+import { map, Observable } from 'rxjs';
+import { CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
+import { HttpContext } from '@angular/common/http';
+import { JWT_REQUIRED } from '../../constantes/jwt-required-http-context';
 
 @Injectable({
   providedIn: 'root',
@@ -14,21 +16,22 @@ export class PostService extends ApiServiceBase<PostModel> {
       params: {
         ...params,
       },
+      context: new HttpContext().set(JWT_REQUIRED, false),
     });
   }
 
   public findPostById(id: number): Observable<PostModel> {
-    return this.findById(id).pipe(
+    return this.findById(id, new HttpContext().set(JWT_REQUIRED, false)).pipe(
       map((post: PostModel) => {
         if (!post.comments?.length) {
           return post;
         }
         post.comments = post.comments.map((comment) => {
           comment.comments = post.comments?.filter((c) => c.parentCommentId === comment.id) ?? null;
-          return comment
-        })
+          return comment;
+        });
         return post;
-      }),
+      })
     );
   }
 

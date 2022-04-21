@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { ConfigService } from '../services/config/config.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -11,12 +11,12 @@ export abstract class ApiServiceBase<Model = unknown> {
 
   public constructor(protected http: HttpClient, protected configService: ConfigService) {}
 
-  protected find(): Observable<Model[]> {
-    return this.http.get<Model[]>(this.baseUrl);
+  protected find(context?: HttpContext): Observable<Model[]> {
+    return this.http.get<Model[]>(this.baseUrl, { context });
   }
 
-  protected findById(id: number): Observable<Model> {
-    return this.http.get<Model>(`${this.baseUrl}/${id}`);
+  protected findById(id: number, context?: HttpContext): Observable<Model> {
+    return this.http.get<Model>(`${this.baseUrl}/${id}`, { context });
   }
 
   protected create(model: Partial<Model>): Observable<Model> {

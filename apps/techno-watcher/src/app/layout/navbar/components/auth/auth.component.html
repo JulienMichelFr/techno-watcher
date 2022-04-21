@@ -1,5 +1,8 @@
 <ng-container *ngIf="profile$ | async as profile; else signActionTemplate">
   <div class="flex flex-row gap-1 items-center">
+    <button routerLink="/posts/new" class="right-2" mat-icon-button>
+      <mat-icon>add</mat-icon>
+    </button>
     <span class="text-base">{{ profile.username }}</span>
     <button mat-button (click)="signOut()">Sign out</button>
   </div>
