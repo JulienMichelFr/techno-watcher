@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarModule } from './layout/navbar/navbar.module';
@@ -15,6 +15,7 @@ import * as fromAuth from './+state/auth/auth.reducer';
 import { AUTH_FEATURE_KEY } from './+state/auth/auth.reducer';
 import { AuthEffects } from './+state/auth/auth.effects';
 import { AuthFacade } from './+state/auth/auth.facade';
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
@@ -40,7 +41,10 @@ import { AuthFacade } from './+state/auth/auth.facade';
     EffectsModule.forRoot([AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [AuthFacade],
+  providers: [
+    AuthFacade,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
