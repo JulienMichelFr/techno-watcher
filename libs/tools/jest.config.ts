@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 
 // Reading the SWC compilation config and remove the "exclude"
@@ -6,10 +7,11 @@ const { exclude: _, ...swcJestConfig } = JSON.parse(fs.readFileSync(`${__dirname
 
 module.exports = {
   displayName: 'tools',
-  preset: '../../jest.preset.js',
+
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/libs/tools',
+  preset: '../../jest.preset.ts',
 };

@@ -82,7 +82,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/techno-watcher"],
       "options": {
-        "jestConfig": "apps/techno-watcher/jest.config.js",
+        "jestConfig": "apps/techno-watcher/jest.config.ts",
         "passWithNoTests": true
       }
     },

@@ -13,7 +13,6 @@ export default {
 };
 
 const Template: Story<TagComponent> = (args: TagComponent) => ({
-  component: TagComponent,
   props: args,
 });
 
