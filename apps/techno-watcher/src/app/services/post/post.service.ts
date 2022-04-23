@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiServiceBase } from '../../bases/api-service.base';
 import { map, Observable } from 'rxjs';
-import { CommentModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
+import { AddCommentOnPostDto, CommentModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
 import { HttpContext } from '@angular/common/http';
 import { JWT_REQUIRED } from '../../constantes/jwt-required-http-context';
 
@@ -44,5 +44,9 @@ export class PostService extends ApiServiceBase<PostModel> {
           });
         })
       );
+  }
+
+  public addCommentOnPost(postId: number, comment: AddCommentOnPostDto): Observable<CommentModel> {
+    return this.http.post<CommentModel>(`${this.baseUrl}/${postId}/comments`, comment);
   }
 }
