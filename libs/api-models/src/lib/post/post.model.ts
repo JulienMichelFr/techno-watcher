@@ -1,6 +1,5 @@
 import { Post } from '@prisma/client';
 import { Expose, Transform, Type } from 'class-transformer';
-import { CommentModel } from '../comment';
 import { AuthorModel } from '../author';
 
 export class PostModel implements Omit<Post, 'authorId' | 'deletedAt'> {
@@ -24,10 +23,6 @@ export class PostModel implements Omit<Post, 'authorId' | 'deletedAt'> {
   @Expose()
   @Type(() => AuthorModel)
   public author!: AuthorModel;
-
-  @Expose()
-  @Type(() => CommentModel)
-  public comments?: CommentModel[] = undefined;
 
   @Expose()
   @Transform(({ obj }) => obj?._count?.comments ?? obj?.comments?.length)
