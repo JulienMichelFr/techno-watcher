@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TagInputModule } from '../../shared/components/tag-input/tag-input.module';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { ShowOnSignedInModule } from '../../shared/directives/show-on-signed-in/show-on-signed-in.module';
+import { CommentListModule } from '../../shared/components/comment-list/comment-list.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { ShowOnSignedInModule } from '../../shared/directives/show-on-signed-in/
     MatInputModule,
     TagInputModule,
     ShowOnSignedInModule,
+    CommentListModule,
   ],
   declarations: [ShowPostPageComponent, CreatePostPageComponent, CommentFormComponent],
   exports: [],

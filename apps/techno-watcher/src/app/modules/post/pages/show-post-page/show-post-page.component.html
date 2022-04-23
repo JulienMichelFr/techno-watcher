@@ -2,5 +2,5 @@
   <techno-watcher-post [post]="post$ | async"></techno-watcher-post>
   <hr />
   <techno-watcher-comment-form (addComment)="handleNewComment()" [postId]="(post$ | async)?.id" technoWatcherShowOnSignedIn></techno-watcher-comment-form>
-  <techno-watcher-comment *ngFor="let comment of comments$ | async; trackBy: commentsTrackByFn" [comment]="comment"></techno-watcher-comment>
+  <techno-watcher-comment-list [comments]="comments$ | async"></techno-watcher-comment-list>
 </div>

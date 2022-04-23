@@ -1,0 +1,21 @@
+<ng-container *ngIf="comment && comments; else loadingTemplate">
+  <techno-watcher-comment [comment]="comment"></techno-watcher-comment>
+  <div *ngIf="filteredComments?.length" [class.items-center]="!showComments" class="flex mt-2 mb-2 ml-0 w-full">
+    <button (click)="toggleComments()" color="primary" mat-icon-button>
+      <mat-icon color="accent">{{ showComments ? 'remove' : 'add' }}</mat-icon>
+    </button>
+    <div *ngIf="showComments; else showCommentTemplate" class="flex flex-col gap-4 w-full">
+      <techno-watcher-comment-with-subcomments
+        *ngFor="let subComment of filteredComments; trackBy: commentTrackByFn"
+        [comment]="subComment"
+        [comments]="comments"
+      ></techno-watcher-comment-with-subcomments>
+    </div>
+    <ng-template #showCommentTemplate>
+      <span class="text-gray-500 text-xs">Show comments</span>
+    </ng-template>
+  </div>
+</ng-container>
+<ng-template #loadingTemplate>
+  <techno-watcher-comment></techno-watcher-comment>
+</ng-template>

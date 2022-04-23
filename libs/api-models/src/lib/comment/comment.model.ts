@@ -1,7 +1,6 @@
-import {Comment} from "@prisma/client";
-import {Expose, Type} from "class-transformer";
-import {AuthorModel} from "../author";
-
+import { Comment } from '@prisma/client';
+import { Expose, Type } from 'class-transformer';
+import { AuthorModel } from '../author';
 
 export class CommentModel implements Omit<Comment, 'deletedAt' | 'postId' | 'authorId'> {
   @Expose()
@@ -18,8 +17,4 @@ export class CommentModel implements Omit<Comment, 'deletedAt' | 'postId' | 'aut
   @Expose()
   @Type(() => AuthorModel)
   public author!: AuthorModel;
-
-  @Expose()
-  @Type(() => CommentModel)
-  public comments: CommentModel[] | null = null;
 }
