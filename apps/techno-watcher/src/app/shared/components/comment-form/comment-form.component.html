@@ -5,16 +5,17 @@
         <textarea
           [(ngModel)]="comment.content"
           [cdkAutosizeMinRows]="5"
-          [disabled]="!postId"
+          [disabled]="isLoading"
           cdkTextareaAutosize
           matInput
           name="content"
           placeholder="Your comment"
-          required></textarea>
+          required
+        ></textarea>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button [disabled]="form.invalid || !postId" color="primary" mat-raised-button type="submit">Post comment</button>
+      <button [disabled]="form.invalid || isLoading" color="primary" mat-raised-button type="submit">Post comment</button>
     </mat-card-actions>
   </mat-card>
 </form>

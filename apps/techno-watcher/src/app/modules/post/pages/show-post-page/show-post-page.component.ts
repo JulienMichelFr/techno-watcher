@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, combineLatest, debounceTime, filter, map, Observable, switchMap } from 'rxjs';
-import { CommentModel, PostModel } from '@techno-watcher/api-models';
+import { BehaviorSubject, combineLatest, debounceTime, filter, map, Observable, switchMap, take } from 'rxjs';
+import { AddCommentOnPostDto, CommentModel, PostModel } from '@techno-watcher/api-models';
 import { PostService } from '../../../../services/post/post.service';
+import { noop } from '../../../../shared/utils/noop';
 
 @Component({
   selector: 'techno-watcher-show-post-page-page',
@@ -13,6 +14,10 @@ import { PostService } from '../../../../services/post/post.service';
 export class ShowPostPageComponent {
   public readonly post$: Observable<PostModel>;
   public readonly comments$: Observable<CommentModel[]>;
+
+  public addCommentLoading: boolean = false;
+  public addCommentDto: AddCommentOnPostDto = new AddCommentOnPostDto();
+
   private readonly refreshCommentSubject: BehaviorSubject<null>;
 
   public constructor(private activatedRoute: ActivatedRoute, private postService: PostService) {
@@ -25,8 +30,21 @@ export class ShowPostPageComponent {
     return comment.id;
   }
 
-  public handleNewComment(): void {
-    this.refreshCommentSubject.next(null);
+  public handleNewComment(comment: AddCommentOnPostDto): void {
+    this.addCommentLoading = true;
+    this.getPostIdFromRoute()
+      .pipe(
+        take(1),
+        switchMap((postId) => this.postService.addCommentOnPost(postId, comment))
+      )
+      .subscribe(
+        () => {
+          this.refreshCommentSubject.next(null);
+          this.addCommentDto = new AddCommentOnPostDto();
+        },
+        noop,
+        () => (this.addCommentLoading = false)
+      );
   }
 
   private getPost(): Observable<PostModel> {

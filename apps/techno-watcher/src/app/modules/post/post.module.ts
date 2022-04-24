@@ -11,9 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TagInputModule } from '../../shared/components/tag-input/tag-input.module';
-import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { ShowOnSignedInModule } from '../../shared/directives/show-on-signed-in/show-on-signed-in.module';
 import { CommentListModule } from '../../shared/components/comment-list/comment-list.module';
+import { CommentFormModule } from '../../shared/components/comment-form/comment-form.module';
 
 @NgModule({
   imports: [
@@ -29,8 +29,9 @@ import { CommentListModule } from '../../shared/components/comment-list/comment-
     TagInputModule,
     ShowOnSignedInModule,
     CommentListModule,
+    CommentFormModule,
   ],
-  declarations: [ShowPostPageComponent, CreatePostPageComponent, CommentFormComponent],
+  declarations: [ShowPostPageComponent, CreatePostPageComponent],
   exports: [],
 })
 export class PostModule {}
