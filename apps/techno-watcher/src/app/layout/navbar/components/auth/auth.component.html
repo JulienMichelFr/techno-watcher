@@ -3,8 +3,10 @@
     <button routerLink="/posts/new" class="right-2" mat-icon-button>
       <mat-icon>add</mat-icon>
     </button>
-    <span class="text-base">{{ profile.username }}</span>
-    <button mat-button (click)="signOut()">Sign out</button>
+    <button mat-button [matMenuTriggerFor]="signedInMenu">{{ profile.username }}</button>
+    <mat-menu #signedInMenu="matMenu">
+      <button mat-menu-item (click)="signOut()">Sign out</button>
+    </mat-menu>
   </div>
 </ng-container>
 <ng-template #signActionTemplate>
