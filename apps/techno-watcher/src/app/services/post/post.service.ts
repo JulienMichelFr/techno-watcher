@@ -37,4 +37,8 @@ export class PostService extends ApiServiceBase<PostModel> {
   public addCommentOnPost(postId: number, comment: AddCommentOnPostDto): Observable<CommentModel> {
     return this.http.post<CommentModel>(`${this.baseUrl}/${postId}/comments`, comment);
   }
+
+  public addCommentOnCommentWithPostId(postId: number, commentId: number, comment: AddCommentOnPostDto): Observable<CommentModel> {
+    return this.http.post<CommentModel>(`${this.baseUrl}/${postId}/comments/${commentId}`, comment);
+  }
 }
