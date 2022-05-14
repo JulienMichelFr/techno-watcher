@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'api-models',
 
   globals: {
@@ -11,5 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/libs/api-models',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };

@@ -1,5 +1,4 @@
 {
-  "root": "apps/techno-watcher-e2e",
   "sourceRoot": "apps/techno-watcher-e2e/src",
   "projectType": "application",
   "targets": {

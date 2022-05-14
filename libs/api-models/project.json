@@ -1,5 +1,4 @@
 {
-  "root": "libs/api-models",
   "sourceRoot": "libs/api-models/src",
   "targets": {
     "build": {

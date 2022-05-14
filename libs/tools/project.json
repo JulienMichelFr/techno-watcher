@@ -1,5 +1,4 @@
 {
-  "root": "libs/tools",
   "sourceRoot": "libs/tools/src",
   "targets": {
     "build": {
