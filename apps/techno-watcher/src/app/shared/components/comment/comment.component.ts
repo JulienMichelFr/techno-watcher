@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommentModel } from '@techno-watcher/api-models';
 
 @Component({
@@ -10,13 +10,15 @@ import { CommentModel } from '@techno-watcher/api-models';
 export class CommentComponent {
   @Input() public comment?: CommentModel;
 
-  public showComments: boolean = true;
+  @Output() public readonly reply: EventEmitter<void> = new EventEmitter<void>();
 
-  public commentTrackByFn(index: number, comment: CommentModel): number {
-    return comment.id;
-  }
+  public showComments: boolean = true;
 
   public toggleComments(): void {
     this.showComments = !this.showComments;
+  }
+
+  public emitReply(): void {
+    this.reply.emit();
   }
 }

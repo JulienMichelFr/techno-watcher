@@ -1,11 +1,15 @@
 <ng-container *ngIf="comment && comments; else loadingTemplate">
-  <techno-watcher-comment [comment]="comment"></techno-watcher-comment>
+  <techno-watcher-comment (reply)="toggleCommentForm()" [comment]="comment"></techno-watcher-comment>
+  <div *ngIf="showCommentForm" class="mt-2" technoWatcherShowOnSignedIn>
+    <techno-watcher-comment-form (addComment)="submitComment($event)" [comment]="commentForm"></techno-watcher-comment-form>
+  </div>
   <div *ngIf="filteredComments?.length" [class.items-center]="!showComments" class="flex mt-2 mb-2 ml-0 w-full">
     <button (click)="toggleComments()" color="primary" mat-icon-button>
       <mat-icon color="accent">{{ showComments ? 'remove' : 'add' }}</mat-icon>
     </button>
     <div *ngIf="showComments; else showCommentTemplate" class="flex flex-col gap-4 w-full">
       <techno-watcher-comment-with-subcomments
+        (addComment)="addComment.emit($event)"
         *ngFor="let subComment of filteredComments; trackBy: commentTrackByFn"
         [comment]="subComment"
         [comments]="comments"

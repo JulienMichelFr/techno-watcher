@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { CommentModel } from '@techno-watcher/api-models';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 
 @Component({
   selector: 'techno-watcher-comment-with-subcomments',
@@ -7,22 +7,41 @@ import { CommentModel } from '@techno-watcher/api-models';
   styleUrls: ['./comment-with-subcomments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentWithSubcommentsComponent implements OnInit {
+export class CommentWithSubcommentsComponent implements OnChanges {
   @Input() public comment!: CommentModel;
   @Input() public comments!: CommentModel[];
 
+  @Output() public readonly addComment: EventEmitter<{ commentId: number; comment: AddCommentOnPostDto }> = new EventEmitter<{
+    commentId: number;
+    comment: AddCommentOnPostDto;
+  }>();
+
   public filteredComments: CommentModel[] = [];
   public showComments: boolean = true;
+  public commentForm: AddCommentOnPostDto = new AddCommentOnPostDto();
+  public showCommentForm: boolean = false;
 
-  public ngOnInit(): void {
-    this.filteredComments = this.comments.filter((comment) => comment.parentCommentId === this.comment.id);
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['comments']) {
+      this.filteredComments = this.comments.filter((comment) => comment.parentCommentId === this.comment.id);
+    }
   }
 
   public toggleComments(): void {
     this.showComments = !this.showComments;
   }
 
+  public toggleCommentForm(): void {
+    this.showCommentForm = !this.showCommentForm;
+  }
+
   public commentTrackByFn(index: number, comment: CommentModel): number {
     return comment.id;
+  }
+
+  public submitComment(comment: AddCommentOnPostDto): void {
+    this.addComment.emit({ comment, commentId: this.comment.id });
+    this.commentForm = new AddCommentOnPostDto();
+    this.toggleCommentForm();
   }
 }

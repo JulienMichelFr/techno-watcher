@@ -2,6 +2,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CommentComponent } from './comment.component';
 import { CommentComponentModule } from './comment-component.module';
 import { generateComment } from '../../../../mocks/comment.mock';
+import { provideMockStore } from '@ngrx/store/testing';
 
 export default {
   title: 'Shared/Components/Comment',
@@ -9,6 +10,13 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [CommentComponentModule],
+      providers: [
+        provideMockStore({
+          initialState: {
+            auth: {},
+          },
+        }),
+      ],
     }),
   ],
 } as Meta;

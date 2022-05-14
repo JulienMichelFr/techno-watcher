@@ -47,6 +47,17 @@ export class ShowPostPageComponent {
       );
   }
 
+  public addCommentOnComment({ comment, commentId }: { commentId: number; comment: AddCommentOnPostDto }): void {
+    this.getPostIdFromRoute()
+      .pipe(
+        take(1),
+        switchMap((postId) => this.postService.addCommentOnCommentWithPostId(postId, commentId, comment))
+      )
+      .subscribe(() => {
+        this.refreshCommentSubject.next(null);
+      });
+  }
+
   private getPost(): Observable<PostModel> {
     return this.getPostIdFromRoute().pipe(switchMap((postId) => this.postService.findPostById(postId)));
   }

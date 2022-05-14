@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CommentModel } from '@techno-watcher/api-models';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 
 @Component({
   selector: 'techno-watcher-comment-list',
@@ -11,6 +11,11 @@ export class CommentListComponent implements OnChanges {
   @Input()
   public comments?: CommentModel[] | null;
 
+  @Output() public readonly addComment: EventEmitter<{ commentId: number; comment: AddCommentOnPostDto }> = new EventEmitter<{
+    commentId: number;
+    comment: AddCommentOnPostDto;
+  }>();
+
   public filteredComments: CommentModel[] = [];
 
   public ngOnChanges({ comments }: SimpleChanges): void {
@@ -19,5 +24,9 @@ export class CommentListComponent implements OnChanges {
 
   public commentTrackByFn(index: number, comment: CommentModel): number {
     return comment.id;
+  }
+
+  public emitAddComment(event: { commentId: number; comment: AddCommentOnPostDto }): void {
+    this.addComment.emit(event);
   }
 }

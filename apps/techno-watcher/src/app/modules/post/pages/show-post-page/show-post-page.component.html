@@ -7,5 +7,5 @@
     [isLoading]="addCommentLoading"
     technoWatcherShowOnSignedIn
   ></techno-watcher-comment-form>
-  <techno-watcher-comment-list [comments]="comments$ | async"></techno-watcher-comment-list>
+  <techno-watcher-comment-list (addComment)="addCommentOnComment($event)" [comments]="comments$ | async"></techno-watcher-comment-list>
 </div>

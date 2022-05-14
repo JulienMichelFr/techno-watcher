@@ -1,25 +1,30 @@
-<mat-card [class.animate-pulse]="!comment">
-  <mat-card-subtitle>
-    <div class="flex items-center gap-4">
-      <ng-container *ngIf="comment; else loadingHeaderTemplate">
-        <span>@{{ comment.author.username }}</span
-        ><span>{{ comment.createdAt | dateAgo }}</span>
-      </ng-container>
-      <ng-template #loadingHeaderTemplate>
-        <div class="h-4 w-20 bg-green-800 rounded"></div>
-        <div class="h-4 w-20 bg-green-800 rounded"></div>
-      </ng-template>
-    </div>
-  </mat-card-subtitle>
-  <mat-card-content>
-    <div class="flex items-start gap-4 pt-2 pb-2">
-      <mat-icon class="rotate-180" color="accent">reply</mat-icon>
-      <ng-container *ngIf="comment; else loadingBodyTemplate">
-        <div>{{ comment.content }}</div>
-      </ng-container>
-      <ng-template #loadingBodyTemplate>
-        <div class="h-4 w-full bg-green-800 rounded"></div>
-      </ng-template>
-    </div>
-  </mat-card-content>
+<mat-card>
+  <div [class.animate-pulse]="!comment">
+    <mat-card-subtitle>
+      <div class="flex items-center gap-4">
+        <ng-container *ngIf="comment; else loadingHeaderTemplate">
+          <span>@{{ comment.author.username }}</span
+          ><span>{{ comment.createdAt | dateAgo }}</span>
+        </ng-container>
+        <ng-template #loadingHeaderTemplate>
+          <div class="h-4 w-20 bg-primaryLighter rounded"></div>
+          <div class="h-4 w-20 bg-primaryLighter rounded"></div>
+        </ng-template>
+      </div>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <div class="flex items-start gap-4 pt-2 pb-2">
+        <mat-icon class="rotate-180" color="accent">reply</mat-icon>
+        <ng-container *ngIf="comment; else loadingBodyTemplate">
+          <div>{{ comment.content }}</div>
+        </ng-container>
+        <ng-template #loadingBodyTemplate>
+          <div class="h-4 w-full bg-primaryLighter rounded"></div>
+        </ng-template>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end" technoWatcherShowOnSignedIn>
+      <button (click)="emitReply()" mat-button>Reply</button>
+    </mat-card-actions>
+  </div>
 </mat-card>

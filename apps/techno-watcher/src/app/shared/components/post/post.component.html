@@ -1,52 +1,54 @@
-<mat-card [class.animate-pulse]="!post">
-  <mat-card-subtitle>
-    <div class="flex items-center gap-4">
-      <ng-container *ngIf="post; else loadingHeaderTemplate">
-        <span>@{{ post.author.username }}</span
-        ><span>{{ post.createdAt | dateAgo }}</span>
-      </ng-container>
-      <ng-template #loadingHeaderTemplate>
-        <div class="h-4 w-20 bg-green-800 rounded"></div>
-        <div class="h-4 w-20 bg-green-800 rounded"></div>
-      </ng-template>
-    </div>
-  </mat-card-subtitle>
-  <mat-card-content>
-    <div class="flex flex-col gap-2">
+<mat-card>
+  <div [class.animate-pulse]="!post">
+    <mat-card-subtitle>
       <div class="flex items-center gap-4">
-        <mat-icon [matBadge]="post?.commentCount" color="accent">forum</mat-icon>
-        <ng-container *ngIf="post; else loadingBodyTemplate">
-          <div class="text-lg">{{ post.title }}</div>
+        <ng-container *ngIf="post; else loadingHeaderTemplate">
+          <span>@{{ post.author.username }}</span
+          ><span>{{ post.createdAt | dateAgo }}</span>
         </ng-container>
-        <ng-template #loadingBodyTemplate>
-          <div class="h-4 w-full bg-green-800 rounded"></div>
+        <ng-template #loadingHeaderTemplate>
+          <div class="h-4 w-20 bg-primaryLighter rounded"></div>
+          <div class="h-4 w-20 bg-primaryLighter rounded"></div>
         </ng-template>
       </div>
-      <ng-container *ngIf="showContent">
-        <div *ngIf="post; else loadingContentTemplate">
-          <p class="text-base">{{ post.content }}</p>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-4">
+          <mat-icon [matBadge]="post?.commentCount" color="accent">forum</mat-icon>
+          <ng-container *ngIf="post; else loadingBodyTemplate">
+            <div class="text-lg">{{ post.title }}</div>
+          </ng-container>
+          <ng-template #loadingBodyTemplate>
+            <div class="h-4 w-full bg-primaryLighter rounded"></div>
+          </ng-template>
         </div>
-        <ng-template #loadingContentTemplate>
-          <div class="flex flex-col gap-1">
-            <div class="h-4 w-full bg-green-800 rounded"></div>
-            <div class="h-4 w-full bg-green-800 rounded"></div>
-            <div class="h-4 w-full bg-green-800 rounded"></div>
-            <div class="h-4 w-full bg-green-800 rounded"></div>
+        <ng-container *ngIf="showContent">
+          <div *ngIf="post; else loadingContentTemplate">
+            <p class="text-base">{{ post.content }}</p>
           </div>
+          <ng-template #loadingContentTemplate>
+            <div class="flex flex-col gap-1">
+              <div class="h-4 w-full bg-primaryLighter rounded"></div>
+              <div class="h-4 w-full bg-primaryLighter rounded"></div>
+              <div class="h-4 w-full bg-primaryLighter rounded"></div>
+              <div class="h-4 w-full bg-primaryLighter rounded"></div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="flex items-center gap-2 mb-2 ml-2">
+        <ng-container *ngIf="post; else loadingTagsTemplate">
+          <techno-watcher-tag *ngFor="let tag of post?.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
+        </ng-container>
+        <ng-template #loadingTagsTemplate>
+          <div class="h-4 w-8 bg-primaryLighter rounded"></div>
+          <div class="h-4 w-8 bg-primaryLighter rounded"></div>
+          <div class="h-4 w-8 bg-primaryLighter rounded"></div>
         </ng-template>
-      </ng-container>
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <div class="flex items-center gap-2 mb-2 ml-2">
-      <ng-container *ngIf="post; else loadingTagsTemplate">
-        <techno-watcher-tag *ngFor="let tag of post?.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
-      </ng-container>
-      <ng-template #loadingTagsTemplate>
-        <div class="h-4 w-8 bg-green-800 rounded"></div>
-        <div class="h-4 w-8 bg-green-800 rounded"></div>
-        <div class="h-4 w-8 bg-green-800 rounded"></div>
-      </ng-template>
-    </div>
-  </mat-card-actions>
+      </div>
+    </mat-card-actions>
+  </div>
 </mat-card>
