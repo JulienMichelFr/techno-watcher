@@ -5,7 +5,7 @@ const fs = require('fs');
 // for the test files to be compiled by SWC
 const { exclude: _, ...swcJestConfig } = JSON.parse(fs.readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
 
-module.exports = {
+export default {
   displayName: 'tools',
 
   transform: {
@@ -13,5 +13,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/libs/tools',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };

@@ -1,6 +1,5 @@
 {
   "projectType": "application",
-  "root": "apps/techno-watcher",
   "sourceRoot": "apps/techno-watcher/src",
   "prefix": "techno-watcher",
   "targets": {
