@@ -7,6 +7,7 @@ export class CreatePostDto implements Pick<Prisma.PostCreateInput, 'title' | 'co
   @IsString()
   public title!: string;
   @IsString()
+  @IsOptional()
   public content!: string;
 
   @Transform(({ value }) => [...new Set(value)].filter(Boolean))
