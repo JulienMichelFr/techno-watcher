@@ -12,8 +12,8 @@ export const parameters = {
       },
       {
         name: 'light-gray',
-        value: '#ccc',
-      }
+        value: 'var(--accent-color)',
+      },
     ],
   },
 };
