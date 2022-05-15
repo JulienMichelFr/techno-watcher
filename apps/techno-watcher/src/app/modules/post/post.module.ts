@@ -14,6 +14,7 @@ import { TagInputModule } from '../../shared/components/tag-input/tag-input.modu
 import { ShowOnSignedInModule } from '../../shared/directives/show-on-signed-in/show-on-signed-in.module';
 import { CommentListModule } from '../../shared/components/comment-list/comment-list.module';
 import { CommentFormModule } from '../../shared/components/comment-form/comment-form.module';
+import { UrlValidatorDirectiveModule } from '../../shared/validators/url-validator-directive/url-validator-directive.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { CommentFormModule } from '../../shared/components/comment-form/comment-
     ShowOnSignedInModule,
     CommentListModule,
     CommentFormModule,
+    UrlValidatorDirectiveModule,
   ],
   declarations: [ShowPostPageComponent, CreatePostPageComponent],
   exports: [],

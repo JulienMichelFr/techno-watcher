@@ -25,6 +25,7 @@ export class PostController {
   private static readonly postSelect: Prisma.PostSelect = {
     id: true,
     title: true,
+    link: true,
     content: true,
     createdAt: true,
     updatedAt: true,

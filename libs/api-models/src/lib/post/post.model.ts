@@ -8,6 +8,8 @@ export class PostModel implements Omit<Post, 'authorId' | 'deletedAt'> {
   @Expose()
   public title!: string;
   @Expose()
+  public link!: string;
+  @Expose()
   public content: string | null = null;
   @Expose()
   public authorId!: number;

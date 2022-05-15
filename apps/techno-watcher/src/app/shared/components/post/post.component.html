@@ -5,6 +5,9 @@
         <ng-container *ngIf="post; else loadingHeaderTemplate">
           <span>@{{ post.author.username }}</span
           ><span>{{ post.createdAt | dateAgo }}</span>
+          <a [href]="post.link" target="_blank" rel="noopener">
+            <u>{{ post.link | postSource }}</u>
+          </a>
         </ng-container>
         <ng-template #loadingHeaderTemplate>
           <div class="h-4 w-20 bg-primaryLighter rounded"></div>

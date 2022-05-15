@@ -1,5 +1,5 @@
 import { Comment, Post, PrismaClient, User } from '@prisma/client';
-import { randEmail, randParagraph, randSentence, seed } from '@ngneat/falso';
+import { randCatchPhrase, randEmail, randParagraph, randSentence, randUrl, seed } from '@ngneat/falso';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -43,19 +43,22 @@ async function seedPosts(users: User[]): Promise<Post[]> {
   await prisma.post.createMany({
     data: [
       {
-        title: randSentence(),
+        title: randCatchPhrase(),
+        link: randUrl(),
         content: randParagraph(),
         authorId: users[1].id,
         tags: ['tag1', 'tag2'],
       },
       {
         title: randSentence(),
+        link: randUrl(),
         content: randParagraph(),
         authorId: users[0].id,
         tags: ['tag2', 'tag3'],
       },
       {
         title: randSentence(),
+        link: randUrl(),
         content: randParagraph(),
         authorId: users[0].id,
         tags: [],

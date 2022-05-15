@@ -1,31 +1,36 @@
-import {PostComponent} from './post.component';
-import {Meta, moduleMetadata, Story} from '@storybook/angular';
-import {TagComponentModule} from '../tag/tag-component.module';
-import {PostComponentModule} from './post-component.module';
-import {randRecentDate} from '@ngneat/falso';
-import {PostModel} from "@techno-watcher/api-models";
-import {plainToInstance} from "class-transformer";
+import { PostComponent } from './post.component';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { TagComponentModule } from '../tag/tag-component.module';
+import { PostComponentModule } from './post-component.module';
+import { randRecentDate, randUrl } from '@ngneat/falso';
+import { PostModel } from '@techno-watcher/api-models';
+import { plainToInstance } from 'class-transformer';
 
-const post: PostModel = plainToInstance(PostModel, {
-  _count: { comments: 2 },
-  title: 'Post title',
-  content: 'Post content',
-  tags: ['Tag 1', 'Prisma', 'Storybook'],
-  createdAt: randRecentDate(),
-  updatedAt: randRecentDate(),
-  id: 1,
-  author: {
+const post: PostModel = plainToInstance(
+  PostModel,
+  {
+    _count: { comments: 2 },
+    title: 'Post title',
+    content: 'Post content',
+    link: randUrl(),
+    tags: ['Tag 1', 'Prisma', 'Storybook'],
+    createdAt: randRecentDate(),
+    updatedAt: randRecentDate(),
     id: 1,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    username: 'UserName',
-    email: 'email@domain.tld',
-    password: '',
+    author: {
+      id: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      username: 'UserName',
+      email: 'email@domain.tld',
+      password: '',
+      deletedAt: null,
+    },
     deletedAt: null,
+    authorId: 1,
   },
-  deletedAt: null,
-  authorId: 1,
-}, {excludeExtraneousValues: true});
+  { excludeExtraneousValues: true }
+);
 
 export default {
   title: 'Shared/Components/Post',
@@ -48,5 +53,5 @@ Default.args = {
 
 export const Loading: Story<PostComponent> = Template.bind({});
 Loading.args = {
-  post: null
+  post: null,
 };
