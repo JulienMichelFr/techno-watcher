@@ -40,6 +40,14 @@ export default {
       imports: [PostComponentModule, TagComponentModule],
     }),
   ],
+  argTypes: {
+    canDelete: {
+      control: {
+        type: 'boolean',
+      },
+      defaultValue: false,
+    },
+  },
 } as Meta;
 
 const Template: Story<PostComponent> = (args: PostComponent) => ({
@@ -49,6 +57,12 @@ const Template: Story<PostComponent> = (args: PostComponent) => ({
 export const Default: Story<PostComponent> = Template.bind({});
 Default.args = {
   post,
+};
+
+export const CanDelete: Story<PostComponent> = Template.bind({});
+CanDelete.args = {
+  post,
+  canDelete: true,
 };
 
 export const Loading: Story<PostComponent> = Template.bind({});

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, NotFoundException, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { Comment, Post as PostEntity, Prisma, User } from '@prisma/client';
 import { PostService } from '../../services/post/post.service';
 import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
@@ -115,5 +115,27 @@ export class PostController {
       },
       select: PostController.commentSelect,
     });
+  }
+
+  @Delete(':postId')
+  public async deletePost(@Param('postId', ParseIntPipe) postId: number, @GetUser() user: User): Promise<void> {
+    const post: PostEntity = await this.postService.findOne({
+      where: {
+        id: postId,
+      },
+      select: {
+        authorId: true,
+      },
+    });
+
+    if (!post) {
+      throw new NotFoundException(`Post with id ${postId} not found`);
+    }
+
+    if (post.authorId !== user.id) {
+      throw new ForbiddenException('You are not allowed to delete this post');
+    }
+
+    await this.postService.softDeleteById(postId);
   }
 }

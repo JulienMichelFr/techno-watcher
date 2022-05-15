@@ -7,10 +7,11 @@ import { TagComponentModule } from '../tag/tag-component.module';
 import { DateAgoPipeModule } from '../../pipes/date-ago/date-ago-pipe.module';
 import { MatCardModule } from '@angular/material/card';
 import { PostSourcePipeModule } from '../../pipes/post-source/post-source-pipe.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [PostComponent],
-  imports: [CommonModule, MatIconModule, MatBadgeModule, TagComponentModule, DateAgoPipeModule, MatCardModule, PostSourcePipeModule],
+  imports: [CommonModule, MatIconModule, MatBadgeModule, TagComponentModule, DateAgoPipeModule, MatCardModule, PostSourcePipeModule, MatButtonModule],
   exports: [PostComponent],
 })
 export class PostComponentModule {}

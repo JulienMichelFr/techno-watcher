@@ -8,6 +8,10 @@
           <a [href]="post.link" target="_blank" rel="noopener">
             <u>{{ post.link | postSource }}</u>
           </a>
+          <span class="flex-grow"></span>
+          <button *ngIf="canDelete" mat-icon-button (click)="onDelete()">
+            <mat-icon>delete</mat-icon>
+          </button>
         </ng-container>
         <ng-template #loadingHeaderTemplate>
           <div class="h-4 w-20 bg-primaryLighter rounded"></div>

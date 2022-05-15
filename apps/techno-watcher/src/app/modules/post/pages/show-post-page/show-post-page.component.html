@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-2">
-  <techno-watcher-post [post]="post$ | async"></techno-watcher-post>
+  <techno-watcher-post [post]="post$ | async" [canDelete]="canDelete$ | async" (delete)="deletePost()"></techno-watcher-post>
   <hr />
   <techno-watcher-comment-form
     (addComment)="handleNewComment($event)"

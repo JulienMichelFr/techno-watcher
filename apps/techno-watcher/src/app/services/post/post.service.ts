@@ -41,4 +41,8 @@ export class PostService extends ApiServiceBase<PostModel> {
   public addCommentOnCommentWithPostId(postId: number, commentId: number, comment: AddCommentOnPostDto): Observable<CommentModel> {
     return this.http.post<CommentModel>(`${this.baseUrl}/${postId}/comments/${commentId}`, comment);
   }
+
+  public deletePost(postId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${postId}`, {});
+  }
 }

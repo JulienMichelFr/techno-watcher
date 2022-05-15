@@ -51,4 +51,11 @@ export class PostService {
       where: { id: postId },
     });
   }
+
+  public async softDeleteById(postId: number): Promise<void> {
+    await this.prisma.post.update({
+      where: { id: postId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }
