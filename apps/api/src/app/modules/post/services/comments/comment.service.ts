@@ -21,4 +21,15 @@ export class CommentService {
   public async find(conditions: Prisma.CommentFindManyArgs = {}): Promise<Comment[]> {
     return this.prisma.comment.findMany(conditions);
   }
+
+  public async findOne(conditions: Prisma.CommentFindUniqueArgs): Promise<Comment | null> {
+    return this.prisma.comment.findUnique(conditions);
+  }
+
+  public async softDeleteComment(commentId: number): Promise<void> {
+    await this.prisma.comment.update({
+      where: { id: commentId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }

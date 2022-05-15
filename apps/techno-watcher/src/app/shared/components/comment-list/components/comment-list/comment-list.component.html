@@ -1,10 +1,12 @@
 <div class="flex flex-col gap-1">
   <ng-container *ngIf="comments; else commentsLoadingTemplate">
     <techno-watcher-comment-with-subcomments
-      (addComment)="emitAddComment($event)"
       *ngFor="let comment of filteredComments; trackBy: commentTrackByFn"
+      (addComment)="emitAddComment($event)"
+      (deleteComment)="onDeleteComment($event)"
       [comment]="comment"
       [comments]="comments"
+      [username]="username"
     ></techno-watcher-comment-with-subcomments>
   </ng-container>
   <ng-template #commentsLoadingTemplate>

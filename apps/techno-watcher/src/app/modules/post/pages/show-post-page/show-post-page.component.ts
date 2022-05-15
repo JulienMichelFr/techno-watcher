@@ -5,6 +5,7 @@ import { AddCommentOnPostDto, CommentModel, PostModel } from '@techno-watcher/ap
 import { PostService } from '../../../../services/post/post.service';
 import { noop } from '../../../../shared/utils/noop';
 import { AuthFacade } from '../../../../+state/auth/auth.facade';
+import { CommentService } from '../../../../services/comment/comment.service';
 
 @Component({
   selector: 'techno-watcher-show-post-page-page',
@@ -16,19 +17,27 @@ export class ShowPostPageComponent {
   public readonly post$: Observable<PostModel>;
   public readonly comments$: Observable<CommentModel[]>;
   public readonly canDelete$: Observable<boolean>;
+  public readonly username$: Observable<string | null>;
 
   public addCommentLoading: boolean = false;
   public addCommentDto: AddCommentOnPostDto = new AddCommentOnPostDto();
 
   private readonly refreshCommentSubject: BehaviorSubject<null>;
 
-  public constructor(private activatedRoute: ActivatedRoute, private postService: PostService, private authFacade: AuthFacade, private router: Router) {
+  public constructor(
+    private activatedRoute: ActivatedRoute,
+    private postService: PostService,
+    private authFacade: AuthFacade,
+    private router: Router,
+    private commentService: CommentService
+  ) {
     this.refreshCommentSubject = new BehaviorSubject(null);
     this.post$ = this.getPost();
     this.comments$ = this.getComments();
+    this.username$ = this.authFacade.profile$.pipe(map((profile) => profile?.username ?? null));
     this.canDelete$ = this.post$.pipe(
-      withLatestFrom(this.authFacade.profile$),
-      map(([post, profile]) => post.author.username === profile?.username)
+      withLatestFrom(this.username$),
+      map(([post, username]) => post.author.username === username)
     );
   }
 
@@ -71,6 +80,13 @@ export class ShowPostPageComponent {
         switchMap((postId) => this.postService.deletePost(postId)),
         tap(() => this.router.navigate(['/']))
       )
+      .subscribe();
+  }
+
+  public deleteComment(commentId: number): void {
+    this.commentService
+      .deleteComment(commentId)
+      .pipe(tap(() => this.refreshCommentSubject.next(null)))
       .subscribe();
   }
 

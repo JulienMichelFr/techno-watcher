@@ -10,11 +10,15 @@ import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 export class CommentWithSubcommentsComponent implements OnChanges {
   @Input() public comment!: CommentModel;
   @Input() public comments!: CommentModel[];
+  @Input() public username: string | null = null;
+  @Input() public disableAddComment?: boolean | null = false;
 
   @Output() public readonly addComment: EventEmitter<{ commentId: number; comment: AddCommentOnPostDto }> = new EventEmitter<{
     commentId: number;
     comment: AddCommentOnPostDto;
   }>();
+
+  @Output() public readonly deleteComment: EventEmitter<number> = new EventEmitter<number>();
 
   public filteredComments: CommentModel[] = [];
   public showComments: boolean = true;
@@ -43,5 +47,9 @@ export class CommentWithSubcommentsComponent implements OnChanges {
     this.addComment.emit({ comment, commentId: this.comment.id });
     this.commentForm = new AddCommentOnPostDto();
     this.toggleCommentForm();
+  }
+
+  public onDeleteComment(commentId: number): void {
+    this.deleteComment.emit(commentId);
   }
 }

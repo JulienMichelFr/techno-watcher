@@ -20,6 +20,7 @@ export class PostController {
     createdAt: true,
     updatedAt: true,
     parentCommentId: true,
+    deletedAt: true,
   };
 
   private static readonly postSelect: Prisma.PostSelect = {

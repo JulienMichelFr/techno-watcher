@@ -30,6 +30,14 @@ Default.args = {
   comment: generateComment(),
 };
 
+export const Deleted: Story<CommentComponent> = Template.bind({});
+Deleted.args = {
+  comment: {
+    ...generateComment(),
+    deletedAt: new Date(),
+  },
+};
+
 export const Loading: Story<CommentComponent> = Template.bind({});
 Loading.args = {
   comment: undefined,
