@@ -7,4 +7,4 @@ import { DateAgoPipe } from './date-ago.pipe';
   imports: [CommonModule],
   exports: [DateAgoPipe],
 })
-export class DateAgoModule {}
+export class DateAgoPipeModule {}
