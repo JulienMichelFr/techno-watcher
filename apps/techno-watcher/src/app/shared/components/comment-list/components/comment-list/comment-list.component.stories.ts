@@ -10,7 +10,7 @@ import { select, Store } from '@ngrx/store';
 import { isSignedIn } from '../../../../../+state/auth/auth.selectors';
 
 const signedOutState: AuthState = {
-  token: null,
+  accessToken: null,
   error: null,
   loading: false,
   expireAt: null,
@@ -18,7 +18,7 @@ const signedOutState: AuthState = {
 };
 
 const signedInState: AuthState = {
-  token: 'token',
+  accessToken: 'token',
   error: null,
   loading: false,
   expireAt: 0,

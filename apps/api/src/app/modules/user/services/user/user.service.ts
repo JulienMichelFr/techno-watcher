@@ -13,4 +13,11 @@ export class UserService {
   public findOne(search: Prisma.UserWhereUniqueInput, args: Prisma.UserArgs = {}): Promise<User> {
     return this.prismaService.user.findUnique({ where: search, ...args });
   }
+
+  public async updateRefreshToken(userId: number, refreshToken: string): Promise<void> {
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { refreshToken },
+    });
+  }
 }

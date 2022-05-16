@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../../user/services/user/user.service';
 import * as bcrypt from 'bcrypt';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../auth.type';
-import { SignInDTO } from '@techno-watcher/api-models';
+import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 
 @Injectable()
 export class AuthService {
@@ -26,19 +26,38 @@ export class AuthService {
     return null;
   }
 
-  public async signIn(signInDTO: SignInDTO): Promise<{ accessToken: string }> {
+  public async signIn(signInDTO: SignInDTO): Promise<AuthResponseModel> {
     const payload: JwtPayload = await this.validateUserPassword(signInDTO);
     if (!payload) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const accessToken: string = this.jwtService.sign(payload);
-    return { accessToken };
+    return this.generateTokens({ id: payload.id, username: payload.username, email: payload.email });
   }
 
-  public async signUp(signUpDTO: Prisma.UserCreateInput): Promise<{ accessToken: string }> {
+  public async signUp(signUpDTO: SignUpDTO): Promise<AuthResponseModel> {
     const password: string = await AuthService.hashPassword(signUpDTO.password);
     await this.userService.create({ ...signUpDTO, password });
 
     return this.signIn({ email: signUpDTO.email, password: signUpDTO.password });
+  }
+
+  public async refreshToken(refreshTokenDTO: RefreshTokenDto): Promise<AuthResponseModel> {
+    const { id, email, username }: JwtPayload = await this.jwtService.verify(refreshTokenDTO.refreshToken);
+    const user: User = await this.userService.findOne({ id }, { select: { email: true, username: true, id: true, refreshToken: true } });
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    if (user.refreshToken !== refreshTokenDTO.refreshToken) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    return this.generateTokens({ id, email, username });
+  }
+
+  private async generateTokens(user: JwtPayload): Promise<AuthResponseModel> {
+    const accessToken: string = this.jwtService.sign(user);
+    const refreshToken: string = this.jwtService.sign(user, { expiresIn: '7d' });
+    await this.userService.updateRefreshToken(user.id, refreshToken);
+    return { accessToken, refreshToken };
   }
 }

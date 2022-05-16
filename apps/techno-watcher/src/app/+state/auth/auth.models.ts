@@ -5,7 +5,8 @@ export interface AuthStateUserProfile {
 
 export interface AuthState {
   loading: boolean;
-  token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   error: string | null;
   profile: AuthStateUserProfile | null;
   expireAt: number | null;

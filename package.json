@@ -41,9 +41,11 @@
     "@nrwl/angular": "14.1.5",
     "@prisma/client": "^3.14.0",
     "@storybook/core-server": "6.4.21",
+    "@types/jsonwebtoken": "^8.5.8",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "jsonwebtoken": "^8.5.1",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
@@ -106,4 +108,3 @@
     "webpack": "^5.64.0"
   }
 }
-

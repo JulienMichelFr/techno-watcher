@@ -3,17 +3,14 @@ import { ActionReducer, createReducer, on } from '@ngrx/store';
 import * as fromActions from './auth.actions';
 import { AuthAction } from './auth.actions';
 import { AuthState } from './auth.models';
-
-type DecodedToken = {
-  exp: number;
-  id: number;
-  username: string;
-};
+import { AuthResponseModel } from '@techno-watcher/api-models';
+import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
 
 export const AUTH_FEATURE_KEY: string = 'auth';
 
 export const initialState: AuthState = {
-  token: null,
+  accessToken: null,
+  refreshToken: null,
   error: null,
   loading: false,
   expireAt: null,
@@ -22,16 +19,10 @@ export const initialState: AuthState = {
 
 export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<AuthState, AuthAction>(
   { ...initialState, loading: true },
-  on(fromActions.init, (_state, { payload }) => {
-    if (!payload?.accessToken) {
-      return initialState;
-    }
-    return handleAuthResponse(payload.accessToken);
-  }),
   //#region SignIn
   on(fromActions.signInStart, () => ({ ...initialState, loading: true })),
   on(fromActions.signInSuccess, (_state, { payload }): AuthState => {
-    return handleAuthResponse(payload.accessToken);
+    return handleAuthResponse(payload);
   }),
   // TODO Handle error message from API
   on(fromActions.signInFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
@@ -39,26 +30,29 @@ export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<A
   //#region SignUp
   on(fromActions.signUpStart, () => ({ ...initialState, loading: true })),
   on(fromActions.signUpSuccess, (_state, { payload }): AuthState => {
-    return handleAuthResponse(payload.accessToken);
+    return handleAuthResponse(payload);
   }),
   // TODO Handle error message from API
   on(fromActions.signUpFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
   //#endregion
+  //#region Refresh token
+  on(fromActions.refreshTokenStart, (state) => ({ ...state, loading: true })),
+  on(fromActions.refreshTokenSuccess, (_state, { payload }): AuthState => {
+    return handleAuthResponse(payload);
+  }),
+  // TODO Handle error message from API
+  on(fromActions.refreshTokenFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
+  //#endregion
   on(fromActions.signOut, () => initialState)
 );
 
-function handleAuthResponse(accessToken: string): AuthState {
-  const decoded: DecodedToken = decodeJwt(accessToken);
+function handleAuthResponse(authResponse: AuthResponseModel): AuthState {
+  const decoded: DecodedToken = decodeJwt(authResponse.accessToken);
   return {
     ...initialState,
-    token: accessToken,
+    accessToken: authResponse.accessToken,
+    refreshToken: authResponse.refreshToken,
     profile: { username: decoded.username, id: decoded.id },
-    expireAt: decoded.exp,
+    expireAt: decoded.exp * 1000,
   };
-}
-
-function decodeJwt(jwt: string): DecodedToken {
-  const base64Url: string = jwt.split('.')[1];
-  const base64: string = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
 }

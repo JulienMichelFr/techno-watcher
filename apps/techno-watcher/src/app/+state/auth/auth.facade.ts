@@ -3,11 +3,12 @@ import { select, Store } from '@ngrx/store';
 import * as AuthSelectors from './auth.selectors';
 import * as AuthActions from './auth.actions';
 import { Observable } from 'rxjs';
-import { AuthStateUserProfile } from './auth.models';
+import { AuthState, AuthStateUserProfile } from './auth.models';
 import { SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
+  public authState$: Observable<AuthState> = this.store.pipe(select(AuthSelectors.getAuthState));
   public isLoading$: Observable<boolean> = this.store.pipe(select(AuthSelectors.authStateIsLoading));
   public accessToken$: Observable<string | null> = this.store.pipe(select(AuthSelectors.getAccessToken));
   public profile$: Observable<AuthStateUserProfile | null> = this.store.pipe(select(AuthSelectors.getProfile));
@@ -22,6 +23,10 @@ export class AuthFacade {
 
   public signUp(signUpDTO: SignUpDTO): void {
     this.store.dispatch(AuthActions.signUpStart({ payload: signUpDTO }));
+  }
+
+  public refreshToken(refreshToken: string): void {
+    this.store.dispatch(AuthActions.refreshTokenStart({ payload: { refreshToken } }));
   }
 
   public signOut(): void {

@@ -3,8 +3,9 @@ import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 
 import * as fromActions from './auth.actions';
 import { AuthService } from '../../services/auth/auth.service';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
 
 export const AUTH_LOCAL_STORAGE_KEY: string = 'auth';
 
@@ -13,10 +14,21 @@ export class AuthEffects {
   public constructor(private readonly actions$: Actions, private authService: AuthService, private router: Router) {}
 
   // eslint-disable-next-line @typescript-eslint/typedef
-  public init$ = createEffect(() =>
+  public initFromLocalStorage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROOT_EFFECTS_INIT),
-      map(() => fromActions.init({ payload: { accessToken: localStorage.getItem(AUTH_LOCAL_STORAGE_KEY) } }))
+      map(() => {
+        const refreshToken: string | null = localStorage.getItem(AUTH_LOCAL_STORAGE_KEY);
+        if (!refreshToken) {
+          return fromActions.signOut();
+        }
+        const decoded: DecodedToken = decodeJwt(refreshToken);
+        if (decoded.exp < Date.now()) {
+          return fromActions.signOut();
+        }
+
+        return fromActions.refreshTokenStart({ payload: { refreshToken } });
+      })
     )
   );
 
@@ -25,7 +37,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(fromActions.signInStart),
       mergeMap(({ payload }) => this.authService.signIn(payload)),
-      map(({ accessToken }) => fromActions.signInSuccess({ payload: { accessToken } })),
+      map((response) => fromActions.signInSuccess({ payload: response })),
       // TODO Add error handling
       catchError(() => of(fromActions.signInFail({ payload: {} })))
     )
@@ -36,9 +48,20 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(fromActions.signUpStart),
       mergeMap(({ payload }) => this.authService.signUp(payload)),
-      map(({ accessToken }) => fromActions.signUpSuccess({ payload: { accessToken } })),
+      map((response) => fromActions.signUpSuccess({ payload: response })),
       // TODO Add error handling
       catchError(() => of(fromActions.signUpFail({ payload: {} })))
+    )
+  );
+
+  // eslint-disable-next-line @typescript-eslint/typedef
+  public refreshTokenStart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.refreshTokenStart),
+      mergeMap(({ payload }) => this.authService.refreshToken(payload.refreshToken)),
+      map((response) => fromActions.refreshTokenSuccess({ payload: response })),
+      // TODO Add error handling
+      catchError(() => of(fromActions.refreshTokenFail({ payload: {} })))
     )
   );
 
@@ -53,7 +76,7 @@ export class AuthEffects {
   );
 
   // eslint-disable-next-line @typescript-eslint/typedef
-  public storeTokenInLocalStorage$ = createEffect(
+  public storeRefreshTokenInLocalStorage$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(fromActions.signInSuccess, fromActions.signUpSuccess),
@@ -67,7 +90,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(fromActions.signOut),
-        map(() => localStorage.removeItem(AUTH_LOCAL_STORAGE_KEY))
+        tap(() => localStorage.removeItem(AUTH_LOCAL_STORAGE_KEY))
       ),
     { dispatch: false }
   );

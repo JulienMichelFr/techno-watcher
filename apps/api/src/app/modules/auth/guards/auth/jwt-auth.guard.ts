@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { IS_PUBLIC_KEY } from '../../decorators/public/public.decorator';
 import { Observable } from 'rxjs';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -18,8 +19,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  public handleRequest<User>(err: Error, user: User): User {
-    // You can throw an exception based on either "info" or "err" arguments
+  public handleRequest<User>(err: Error, user: User, info: unknown): User {
+    if (info instanceof TokenExpiredError) {
+      throw new UnauthorizedException('Token expired');
+    }
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
