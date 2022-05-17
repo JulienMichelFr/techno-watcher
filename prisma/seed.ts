@@ -1,4 +1,4 @@
-import { Comment, Post, PrismaClient, User } from '@prisma/client';
+import { Comment, Invitation, Post, PrismaClient, User } from '@prisma/client';
 import { randCatchPhrase, randEmail, randParagraph, randSentence, randUrl, seed } from '@ngneat/falso';
 import * as bcrypt from 'bcrypt';
 
@@ -10,7 +10,16 @@ function hashPassword(password: string) {
   return bcrypt.hashSync(password, 12);
 }
 
-async function seedUsers(): Promise<User[]> {
+async function seedInvitations(): Promise<Invitation[]> {
+  await prisma.invitation.deleteMany({});
+  await prisma.invitation.createMany({
+    data: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+  });
+
+  return prisma.invitation.findMany();
+}
+
+async function seedUsers(invitations: Invitation[]): Promise<User[]> {
   await prisma.user.deleteMany({});
 
   const user1 = await prisma.user.upsert({
@@ -20,6 +29,7 @@ async function seedUsers(): Promise<User[]> {
       email: 'user@email.com',
       password: hashPassword('Pas$w0rd'),
       username: 'User 1',
+      invitationId: invitations[0].id,
     },
   });
 
@@ -30,6 +40,7 @@ async function seedUsers(): Promise<User[]> {
       email: randEmail(),
       password: hashPassword('Pas$w0rd'),
       username: 'User 2',
+      invitationId: invitations[1].id,
     },
   });
 
@@ -98,7 +109,8 @@ async function seedComments(users: User[], posts: Post[]): Promise<Comment[]> {
 }
 
 async function main() {
-  const users: User[] = await seedUsers();
+  const invitations: Invitation[] = await seedInvitations();
+  const users: User[] = await seedUsers(invitations);
   const posts: Post[] = await seedPosts(users);
   const comments: Comment[] = await seedComments(users, posts);
 }
