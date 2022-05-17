@@ -209,7 +209,7 @@ describe('SignUpForm', () => {
       });
 
       it('should return error message when field is empty', () => {
-        expect(form.invitationErrorMessage).toEqual('Invitation code is required');
+        expect(form.invitationErrorMessage).toEqual('Invitation is required');
       });
 
       it('should not return error message when field is valid', () => {
