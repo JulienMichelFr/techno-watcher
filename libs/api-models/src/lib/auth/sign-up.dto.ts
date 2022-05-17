@@ -1,4 +1,4 @@
-import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 /*
   Contains at least 1 uppercase
@@ -19,10 +19,14 @@ export class SignUpDTO {
   @MaxLength(32)
   @Matches(PASSWORD_REGEXP, { message: 'Password is too weak' })
   public password: string;
+  @IsString()
+  @IsNotEmpty()
+  public invitation: string;
 
-  public constructor(username: string, email: string, password: string) {
+  public constructor(username: string, email: string, password: string, invitationCode: string) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.invitation = invitationCode;
   }
 }

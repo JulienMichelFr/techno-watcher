@@ -105,6 +105,22 @@ export class SignUpForm extends FormGroup {
     },
   };
 
+  public get invitation(): FormControl {
+    return this.get('invitation') as FormControl;
+  }
+
+  public get invitationErrorMessage(): string | null {
+    if (!this.invitation.touched) {
+      return null;
+    }
+
+    if (this.invitation.hasError('required')) {
+      return 'Invitation is required';
+    }
+
+    return null;
+  }
+
   public constructor() {
     super(
       {
@@ -112,6 +128,7 @@ export class SignUpForm extends FormGroup {
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(32), Validators.pattern(PASSWORD_REGEXP)]),
         confirmPassword: new FormControl(null, [Validators.required]),
+        invitation: new FormControl(null, [Validators.required]),
       },
       [SignUpForm.passwordAreSameValidator()]
     );
@@ -142,11 +159,12 @@ export class SignUpForm extends FormGroup {
     this.email.setValue(value?.email ?? null);
     this.password.setValue(value?.password ?? null);
     this.confirmPassword.setValue(value?.password ?? null);
+    this.invitation.setValue(value?.invitation ?? null);
     this.markAsPristine();
     this.markAsUntouched();
   }
 
   public toDTO(): SignUpDTO {
-    return new SignUpDTO(this.username.value, this.email.value, this.password.value);
+    return new SignUpDTO(this.username.value, this.email.value, this.password.value, this.invitation.value);
   }
 }

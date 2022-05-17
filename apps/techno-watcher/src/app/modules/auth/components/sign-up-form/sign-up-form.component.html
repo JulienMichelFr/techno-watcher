@@ -1,24 +1,32 @@
 <div class="flex flex-col flex-nowrap gap-1 items-stretch">
+  <div class="flex flex-row flex-nowrap gap-2">
+    <mat-form-field class="grow">
+      <input matInput placeholder="Username" type="text" [formControl]="form.username" autocomplete="username" />
+      <mat-error *ngIf="form.usernameErrorMessage">{{ form.usernameErrorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="grow">
+      <input matInput placeholder="Email" type="email" [formControl]="form.email" autocomplete="email" />
+      <mat-error *ngIf="form.emailErrorMessage">{{ form.emailErrorMessage }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="flex flex-row flex-nowrap gap-2">
+    <mat-form-field class="grow">
+      <input matInput placeholder="Password" type="password" [formControl]="form.password" autocomplete="new-password" />
+      <mat-error *ngIf="form.passwordErrorMessage">{{ form.passwordErrorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="grow">
+      <input
+        matInput
+        placeholder="Confirm password"
+        type="password"
+        [formControl]="form.confirmPassword"
+        [errorStateMatcher]="form.confirmPasswordErrorStateMatcher"
+      />
+      <mat-error *ngIf="form.confirmPasswordErrorMessage">{{ form.confirmPasswordErrorMessage }}</mat-error>
+    </mat-form-field>
+  </div>
   <mat-form-field>
-    <input matInput placeholder="Username" type="text" [formControl]="form.username" />
-    <mat-error *ngIf="form.usernameErrorMessage">{{ form.usernameErrorMessage }}</mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Email" type="email" [formControl]="form.email" />
-    <mat-error *ngIf="form.emailErrorMessage">{{ form.emailErrorMessage }}</mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Password" type="password" [formControl]="form.password" />
-    <mat-error *ngIf="form.passwordErrorMessage">{{ form.passwordErrorMessage }}</mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Confirm password"
-      type="password"
-      [formControl]="form.confirmPassword"
-      [errorStateMatcher]="form.confirmPasswordErrorStateMatcher"
-    />
-    <mat-error *ngIf="form.confirmPasswordErrorMessage">{{ form.confirmPasswordErrorMessage }}</mat-error>
+    <input matInput placeholder="Invitation" type="text" [formControl]="form.invitation" />
+    <mat-error *ngIf="form.invitationErrorMessage">{{ form.invitationErrorMessage }}</mat-error>
   </mat-form-field>
 </div>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
 import { AuthResponseModel, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { JWT_REQUIRED } from '../../constantes/jwt-required-http-context';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +12,16 @@ import { JWT_REQUIRED } from '../../constantes/jwt-required-http-context';
 export class AuthService {
   private readonly baseUrl: string = `${this.configService.get('apiUrl')}/auth`;
 
-  public constructor(protected http: HttpClient, protected configService: ConfigService) {}
+  public constructor(protected http: HttpClient, protected configService: ConfigService, private snackbar: MatSnackBar) {}
 
   public signUp(signUpDto: SignUpDTO): Observable<AuthResponseModel> {
-    return this.http.post<AuthResponseModel>(`${this.baseUrl}/sign-up`, signUpDto, { context: new HttpContext().set(JWT_REQUIRED, false) });
+    return this.http.post<AuthResponseModel>(`${this.baseUrl}/sign-up`, signUpDto, { context: new HttpContext().set(JWT_REQUIRED, false) }).pipe(
+      catchError((error: Error) => {
+        if (error instanceof HttpErrorResponse && error?.error?.message === 'Invalid invitation')
+          this.snackbar.open(error.error.message, '', { duration: 3000 });
+        return throwError(() => error);
+      })
+    );
   }
 
   public signIn(signInDto: SignInDTO): Observable<AuthResponseModel> {

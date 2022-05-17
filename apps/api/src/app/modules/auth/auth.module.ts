@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { UserModule } from '../user/user.module';
-import { AuthService } from './service/auth/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
@@ -9,11 +9,13 @@ import { ConfigService } from '@nestjs/config';
 import { JWT_EXPIRATION, JWT_SECRET } from '../../constantes/config.const';
 import { JwtAuthGuard } from './guards/auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { InvitationModule } from '../invitation/invitation.module';
 
 @Global()
 @Module({
   imports: [
     UserModule,
+    InvitationModule,
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
         secret: configService.get(JWT_SECRET),

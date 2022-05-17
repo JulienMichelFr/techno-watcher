@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { AuthService } from '../../service/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Public } from '../../decorators/public/public.decorator';
 import { Serializer } from '../../../../decorators/serializer/serializer.decorator';
@@ -19,8 +19,8 @@ export class AuthController {
   @Serializer(AuthResponseModel)
   @Public()
   @Post('sign-up')
-  public async signUp(@Body() { username, email, password }: SignUpDTO): Promise<AuthResponseModel> {
-    return await this.authService.signUp({ username, email, password });
+  public async signUp(@Body() { username, email, password, invitation }: SignUpDTO): Promise<AuthResponseModel> {
+    return await this.authService.signUp({ username, email, password, invitation });
   }
 
   @Serializer(AuthResponseModel)
