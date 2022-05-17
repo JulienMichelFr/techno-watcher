@@ -25,7 +25,7 @@ export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<A
     return handleAuthResponse(payload);
   }),
   // TODO Handle error message from API
-  on(fromActions.signInFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
+  on(fromActions.signInFail, () => ({ ...initialState, loading: false, error: 'Error', accessToken: null, refreshToken: null })),
   //#endregion
   //#region SignUp
   on(fromActions.signUpStart, () => ({ ...initialState, loading: true })),
@@ -33,7 +33,7 @@ export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<A
     return handleAuthResponse(payload);
   }),
   // TODO Handle error message from API
-  on(fromActions.signUpFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
+  on(fromActions.signUpFail, () => ({ ...initialState, loading: false, error: 'Error', accessToken: null, refreshToken: null })),
   //#endregion
   //#region Refresh token
   on(fromActions.refreshTokenStart, (state) => ({ ...state, loading: true })),
@@ -41,7 +41,7 @@ export const authReducer: ActionReducer<AuthState, AuthAction> = createReducer<A
     return handleAuthResponse(payload);
   }),
   // TODO Handle error message from API
-  on(fromActions.refreshTokenFail, () => ({ ...initialState, loading: false, error: 'Error', token: null })),
+  on(fromActions.refreshTokenFail, () => ({ ...initialState, loading: false, error: 'Error', accessToken: null, refreshToken: null })),
   //#endregion
   on(fromActions.signOut, () => initialState)
 );

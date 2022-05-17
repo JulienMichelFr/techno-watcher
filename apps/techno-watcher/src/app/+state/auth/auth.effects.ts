@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 
 import * as fromActions from './auth.actions';
 import { AuthService } from '../../services/auth/auth.service';
-import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, map, mergeMap, of, repeat, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
 
@@ -39,7 +39,8 @@ export class AuthEffects {
       mergeMap(({ payload }) => this.authService.signIn(payload)),
       map((response) => fromActions.signInSuccess({ payload: response })),
       // TODO Add error handling
-      catchError(() => of(fromActions.signInFail({ payload: {} })))
+      catchError(() => of(fromActions.signInFail({ payload: {} }))),
+      repeat()
     )
   );
 
@@ -50,7 +51,10 @@ export class AuthEffects {
       mergeMap(({ payload }) => this.authService.signUp(payload)),
       map((response) => fromActions.signUpSuccess({ payload: response })),
       // TODO Add error handling
-      catchError(() => of(fromActions.signUpFail({ payload: {} })))
+      catchError(() => {
+        return of(fromActions.signUpFail({ payload: {} }));
+      }),
+      repeat()
     )
   );
 
@@ -61,7 +65,8 @@ export class AuthEffects {
       mergeMap(({ payload }) => this.authService.refreshToken(payload.refreshToken)),
       map((response) => fromActions.refreshTokenSuccess({ payload: response })),
       // TODO Add error handling
-      catchError(() => of(fromActions.refreshTokenFail({ payload: {} })))
+      catchError(() => of(fromActions.refreshTokenFail({ payload: {} }))),
+      repeat()
     )
   );
 

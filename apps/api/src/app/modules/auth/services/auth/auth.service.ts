@@ -1,14 +1,19 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../../user/services/user/user.service';
 import * as bcrypt from 'bcrypt';
-import { User } from '@prisma/client';
+import { Invitation, User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../auth.type';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
 
 @Injectable()
 export class AuthService {
-  public constructor(private readonly userService: UserService, private jwtService: JwtService) {}
+  public constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    private readonly invitationService: InvitationService
+  ) {}
 
   private static async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 12);
@@ -35,8 +40,13 @@ export class AuthService {
   }
 
   public async signUp(signUpDTO: SignUpDTO): Promise<AuthResponseModel> {
+    const invitation: (Invitation & { user: User }) | null = await this.invitationService.findByCode(signUpDTO.invitation);
+    if (!invitation || invitation.user) {
+      throw new UnauthorizedException('Invalid invitation');
+    }
+
     const password: string = await AuthService.hashPassword(signUpDTO.password);
-    await this.userService.create({ ...signUpDTO, password });
+    await this.userService.create({ ...signUpDTO, password, invitation: { connect: { id: invitation.id } } });
 
     return this.signIn({ email: signUpDTO.email, password: signUpDTO.password });
   }

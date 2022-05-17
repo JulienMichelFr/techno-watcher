@@ -17,6 +17,7 @@ import { AuthEffects } from './+state/auth/auth.effects';
 import { AuthFacade } from './+state/auth/auth.facade';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refresh-token.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
@@ -27,6 +28,7 @@ import { RefreshTokenInterceptor } from './interceptors/refresh-token.intercepto
     NavbarModule,
     AppRoutingModule,
     PostComponentModule,
+    MatSnackBarModule,
     StoreModule.forRoot(
       {
         [AUTH_FEATURE_KEY]: fromAuth.authReducer,

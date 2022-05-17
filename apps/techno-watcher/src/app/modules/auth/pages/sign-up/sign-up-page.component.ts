@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class SignUpPageComponent {
   public isLoading$: Observable<boolean> = this.authFacade.isLoading$;
-  public signUpDTO: SignUpDTO = new SignUpDTO('', '', '');
+  public signUpDTO: SignUpDTO = new SignUpDTO('', '', '', '');
 
   public constructor(private authFacade: AuthFacade) {}
 

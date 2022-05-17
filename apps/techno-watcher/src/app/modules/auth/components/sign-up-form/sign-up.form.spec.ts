@@ -14,6 +14,7 @@ describe('SignUpForm', () => {
     expect(form.email).toBeInstanceOf(FormControl);
     expect(form.password).toBeInstanceOf(FormControl);
     expect(form.confirmPassword).toBeInstanceOf(FormControl);
+    expect(form.invitation).toBeInstanceOf(FormControl);
   });
 
   describe('fromDTO()', () => {
@@ -24,6 +25,7 @@ describe('SignUpForm', () => {
         username: 'username',
         email: 'email',
         password: 'password',
+        invitation: 'invitation',
       };
     });
 
@@ -33,6 +35,7 @@ describe('SignUpForm', () => {
       expect(form.email.value).toBe(dto.email);
       expect(form.password.value).toBe(dto.password);
       expect(form.confirmPassword.value).toBe(dto.password);
+      expect(form.invitation.value).toBe(dto.invitation);
     });
 
     it('should set not provided values to null', () => {
@@ -41,6 +44,7 @@ describe('SignUpForm', () => {
       expect(form.email.value).toBeNull();
       expect(form.password.value).toBeNull();
       expect(form.confirmPassword.value).toBeNull();
+      expect(form.invitation.value).toBeNull();
     });
 
     it('should reset previous values when some values are not provided', () => {
@@ -50,6 +54,7 @@ describe('SignUpForm', () => {
       expect(form.email.value).toBe(dto.email);
       expect(form.password.value).toBeNull();
       expect(form.confirmPassword.value).toBeNull();
+      expect(form.invitation.value).toBeNull();
     });
 
     it('should mark form as pristine', () => {
@@ -72,6 +77,7 @@ describe('SignUpForm', () => {
         email: 'email',
         password: 'password',
         confirmPassword: 'password',
+        invitation: 'invitation',
       });
       const result: SignUpDTO = form.toDTO();
       expect(result).toBeInstanceOf(SignUpDTO);
@@ -79,6 +85,7 @@ describe('SignUpForm', () => {
         username: 'username',
         email: 'email',
         password: 'password',
+        invitation: 'invitation',
       });
     });
   });
@@ -188,6 +195,26 @@ describe('SignUpForm', () => {
       it('should not return error message when field is equal to password', () => {
         form.confirmPassword.setValue('password');
         expect(form.confirmPasswordErrorMessage).toBeNull();
+      });
+    });
+
+    describe('invitationErrorMessage()', () => {
+      beforeEach(() => {
+        form.invitation.markAsTouched();
+      });
+
+      it('should not return error message when field has not been touched', () => {
+        form.invitation.markAsUntouched();
+        expect(form.invitationErrorMessage).toBeNull();
+      });
+
+      it('should return error message when field is empty', () => {
+        expect(form.invitationErrorMessage).toEqual('Invitation code is required');
+      });
+
+      it('should not return error message when field is valid', () => {
+        form.invitation.setValue('invitation');
+        expect(form.invitationErrorMessage).toBeNull();
       });
     });
   });
