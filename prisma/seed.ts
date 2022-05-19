@@ -1,5 +1,5 @@
 import { Comment, Invitation, Post, PrismaClient, User } from '@prisma/client';
-import { randCatchPhrase, randEmail, randParagraph, randSentence, randUrl, seed } from '@ngneat/falso';
+import { rand, randCatchPhrase, randEmail, randNumber, randParagraph, randUrl, randWord, seed } from '@ngneat/falso';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -51,30 +51,21 @@ async function seedPosts(users: User[]): Promise<Post[]> {
   // Remove existing posts
   await prisma.post.deleteMany({});
 
+  function createPost() {
+    const userId: number = rand(users.map(({ id }) => id));
+    const tags: string[] = Array.from({ length: randNumber({ min: 0, max: 3 }) }).map(() => randWord());
+
+    return {
+      title: randCatchPhrase(),
+      link: randUrl(),
+      content: randParagraph(),
+      authorId: userId,
+      tags: tags,
+    };
+  }
+
   await prisma.post.createMany({
-    data: [
-      {
-        title: randCatchPhrase(),
-        link: randUrl(),
-        content: randParagraph(),
-        authorId: users[1].id,
-        tags: ['tag1', 'tag2'],
-      },
-      {
-        title: randSentence(),
-        link: randUrl(),
-        content: randParagraph(),
-        authorId: users[0].id,
-        tags: ['tag2', 'tag3'],
-      },
-      {
-        title: randSentence(),
-        link: randUrl(),
-        content: randParagraph(),
-        authorId: users[0].id,
-        tags: [],
-      },
-    ],
+    data: Array.from({ length: 50 }).map(() => createPost()),
   });
 
   return prisma.post.findMany();
