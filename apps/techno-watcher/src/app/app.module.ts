@@ -18,6 +18,8 @@ import { AuthFacade } from './+state/auth/auth.facade';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refresh-token.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
@@ -43,6 +45,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ),
     EffectsModule.forRoot([AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    MatPaginatorModule,
+    MatProgressBarModule,
   ],
   providers: [
     AuthFacade,
