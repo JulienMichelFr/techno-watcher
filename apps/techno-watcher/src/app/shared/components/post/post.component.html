@@ -1,61 +1,56 @@
 <mat-card>
   <div [class.animate-pulse]="!post">
-    <mat-card-subtitle>
-      <div class="flex items-center gap-4">
-        <ng-container *ngIf="post; else loadingHeaderTemplate">
-          <span>@{{ post.author.username }}</span
-          ><span>{{ post.createdAt | dateAgo }}</span>
-          <a [href]="post.link" target="_blank" rel="noopener">
-            <u>{{ post.link | postSource }}</u>
-          </a>
-          <span class="flex-grow"></span>
-          <button *ngIf="canDelete" mat-icon-button (click)="onDelete()">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </ng-container>
-        <ng-template #loadingHeaderTemplate>
-          <div class="h-4 w-20 bg-primaryLighter rounded"></div>
-          <div class="h-4 w-20 bg-primaryLighter rounded"></div>
-        </ng-template>
-      </div>
-    </mat-card-subtitle>
-    <mat-card-content>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-4">
-          <mat-icon [matBadge]="post?.commentCount" color="accent">forum</mat-icon>
-          <ng-container *ngIf="post; else loadingBodyTemplate">
-            <div class="text-lg">{{ post.title }}</div>
-          </ng-container>
-          <ng-template #loadingBodyTemplate>
-            <div class="h-4 w-full bg-primaryLighter rounded"></div>
-          </ng-template>
-        </div>
-        <ng-container *ngIf="showContent">
-          <div *ngIf="post; else loadingContentTemplate">
-            <p class="text-base">{{ post.content }}</p>
+    <mat-card-content class="!mb-0">
+      <div class="flex justify-between items-center p-x-1">
+        <div class="flex flex-col gap-1">
+          <div class="font-bold text-[24px]">
+            <ng-container *ngIf="post; else loadingTitleTemplate">
+              {{ post.title }}
+            </ng-container>
+            <ng-template #loadingTitleTemplate>
+              <div class="h-4 w-200 bg-primaryLighter rounded"></div>
+            </ng-template>
           </div>
-          <ng-template #loadingContentTemplate>
-            <div class="flex flex-col gap-1">
-              <div class="h-4 w-full bg-primaryLighter rounded"></div>
-              <div class="h-4 w-full bg-primaryLighter rounded"></div>
-              <div class="h-4 w-full bg-primaryLighter rounded"></div>
-              <div class="h-4 w-full bg-primaryLighter rounded"></div>
-            </div>
-          </ng-template>
-        </ng-container>
+          <div class="font-light text-[12px]">
+            <ng-container *ngIf="post; else loadingMetadataTemplate">
+              posted {{ post.createdAt | dateAgo }} by <em>{{ post.author.username }}</em> | source:
+              <a [href]="post.link" target="_blank" rel="noopener">
+                <u>{{ post.link | postSource }}</u>
+              </a>
+            </ng-container>
+            <ng-template #loadingMetadataTemplate>
+              <div class="h-4 w-20 bg-primaryLighter rounded"></div>
+            </ng-template>
+          </div>
+          <div class="flex items-center gap-2 mt-1">
+            <ng-container *ngIf="post; else loadingTagsTemplate">
+              <techno-watcher-tag *ngFor="let tag of post?.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
+            </ng-container>
+            <ng-template #loadingTagsTemplate>
+              <div class="h-4 w-8 bg-primaryLighter rounded"></div>
+              <div class="h-4 w-8 bg-primaryLighter rounded"></div>
+              <div class="h-4 w-8 bg-primaryLighter rounded"></div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1 items-center">
+          <div class="font-bold text-[24px]">
+            <ng-container *ngIf="post; else loadingCommentsTemplate">
+              {{ post.totalComments }}
+            </ng-container>
+            <ng-template #loadingCommentsTemplate>
+              <div class="h-4 w-20 bg-primaryLighter rounded"></div>
+            </ng-template>
+          </div>
+          <div class="font-light text-[12px]">
+            <ng-container [ngPlural]="post?.totalComments ?? 0">
+              <ng-template ngPluralCase="=0"> comment</ng-template>
+              <ng-template ngPluralCase="=1"> comment</ng-template>
+              <ng-template ngPluralCase="other"> comments</ng-template>
+            </ng-container>
+          </div>
+        </div>
       </div>
     </mat-card-content>
-    <mat-card-actions>
-      <div class="flex items-center gap-2 mb-2 ml-2">
-        <ng-container *ngIf="post; else loadingTagsTemplate">
-          <techno-watcher-tag *ngFor="let tag of post?.tags; trackBy: trackByIndex" [tag]="tag"></techno-watcher-tag>
-        </ng-container>
-        <ng-template #loadingTagsTemplate>
-          <div class="h-4 w-8 bg-primaryLighter rounded"></div>
-          <div class="h-4 w-8 bg-primaryLighter rounded"></div>
-          <div class="h-4 w-8 bg-primaryLighter rounded"></div>
-        </ng-template>
-      </div>
-    </mat-card-actions>
   </div>
 </mat-card>
