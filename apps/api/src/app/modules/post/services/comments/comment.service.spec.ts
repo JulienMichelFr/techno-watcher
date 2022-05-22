@@ -23,6 +23,15 @@ describe('CommentService', () => {
     commentService = new CommentService(prismaService);
   });
 
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2020, 3, 1));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it('should be defined', () => {
     expect(commentService).toBeDefined();
   });
