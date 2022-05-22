@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Post, Prisma, User } from '@prisma/client';
+import { Post, Prisma, PrismaPromise } from '@prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { Paginated } from '@techno-watcher/api-models';
 
@@ -19,7 +19,10 @@ export class PostService {
   public async find(conditions: Prisma.PostFindManyArgs, withCount: false): Promise<Paginated<Post>>;
   public async find(conditions: Prisma.PostFindManyArgs = {}, withCount: boolean = false): Promise<Post[] | Paginated<Post>> {
     if (withCount) {
-      const [count, posts] = await this.prisma.$transaction([this.prisma.post.count({ where: conditions.where ?? {} }), this.prisma.post.findMany(conditions)]);
+      const [count, posts] = await this.prisma.$transaction([
+        this.count({ where: conditions.where ?? {} }) as PrismaPromise<number>,
+        this.prisma.post.findMany(conditions),
+      ]);
 
       return {
         total: count,
@@ -34,22 +37,6 @@ export class PostService {
 
   public async create(post: Prisma.PostCreateInput, args: Prisma.PostArgs = {}): Promise<Post> {
     return this.prisma.post.create({ data: post, ...args });
-  }
-
-  public async addComment(content: string, postId: number, commentId: number | null, user: User, args: Prisma.PostArgs = {}): Promise<Post> {
-    await this.prisma.comment.create({
-      data: {
-        content,
-        post: { connect: { id: postId } },
-        author: { connect: { id: user.id } },
-        parentComment: commentId ? { connect: { id: commentId } } : undefined,
-      },
-    });
-
-    return this.prisma.post.findUnique({
-      ...args,
-      where: { id: postId },
-    });
   }
 
   public async softDeleteById(postId: number): Promise<void> {
