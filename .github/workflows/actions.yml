@@ -74,6 +74,21 @@ jobs:
           JWT_EXPIRATION: 10min
       - run: npx nx-cloud stop-all-agents
   agents:
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: techno_watcher_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
     name: Agent 1
     timeout-minutes: 60
@@ -86,5 +101,15 @@ jobs:
         with:
           node-version: '16'
       - run: npm install
+      - run: npx prisma generate
+      - run: npx prisma db push
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
       - name: Start Nx Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
