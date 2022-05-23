@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Post, Prisma, PrismaPromise } from '@prisma/client';
+import { Post, Prisma } from '@prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { Paginated } from '@techno-watcher/api-models';
 
@@ -8,7 +8,7 @@ export class PostService {
   public constructor(private prisma: PrismaService) {}
 
   public async count(conditions: Prisma.PostCountArgs = {}): Promise<number> {
-    return this.prisma.post.count(conditions);
+    return await this.prisma.post.count(conditions);
   }
 
   public async findOne(args: Prisma.PostFindUniqueArgs): Promise<Post | null> {
@@ -19,10 +19,7 @@ export class PostService {
   public async find(conditions: Prisma.PostFindManyArgs, withCount: false): Promise<Paginated<Post>>;
   public async find(conditions: Prisma.PostFindManyArgs = {}, withCount: boolean = false): Promise<Post[] | Paginated<Post>> {
     if (withCount) {
-      const [count, posts] = await this.prisma.$transaction([
-        this.count({ where: conditions.where ?? {} }) as PrismaPromise<number>,
-        this.prisma.post.findMany(conditions),
-      ]);
+      const [count, posts] = await this.prisma.$transaction([this.prisma.post.count({ where: conditions.where ?? {} }), this.prisma.post.findMany(conditions)]);
 
       return {
         total: count,
