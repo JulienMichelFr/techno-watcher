@@ -2,7 +2,6 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "api-e2e": "apps/api-e2e",
     "api-models": "libs/api-models",
     "techno-watcher": "apps/techno-watcher",
     "tools": "libs/tools"
