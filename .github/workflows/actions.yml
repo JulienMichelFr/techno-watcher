@@ -64,12 +64,12 @@ jobs:
       - run: npx prisma generate
       - run: npx prisma db push
         env:
-          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/techno_watcher_test?schema=public"
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
           JWT_SECRET: jwtsecret
           JWT_EXPIRATION: 10min
       - run: npx nx affected --target=e2e --parallel --max-parallel=2
         env:
-          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/techno_watcher_test?schema=public"
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
           JWT_SECRET: jwtsecret
           JWT_EXPIRATION: 10min
       - run: npx nx-cloud stop-all-agents
