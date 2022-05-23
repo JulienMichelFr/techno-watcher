@@ -28,6 +28,22 @@ jobs:
       - run: npx nx affected --target=test --parallel --max-parallel=2
       - run: npx nx-cloud stop-all-agents
   pr:
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: techno_watcher_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
@@ -45,6 +61,13 @@ jobs:
       - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: npx nx affected --target=test --parallel --max-parallel=2
       - run: npx nx affected --target=lint --parallel --max-parallel=2
+      - run: npx prisma generate
+      - run: npx prisma db push
+      - run: npx nx affected --target=e2e --parallel --max-parallel=2
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/techno_watcher_test?schema=public"
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
       - run: npx nx-cloud stop-all-agents
   agents:
     runs-on: ubuntu-latest
