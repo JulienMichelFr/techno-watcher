@@ -61,6 +61,9 @@ jobs:
       - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: npx nx affected --target=test --parallel --max-parallel=2
       - run: npx nx affected --target=lint --parallel --max-parallel=2
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Europe/Paris"
       - run: npx prisma generate
       - run: npx prisma db push
         env:
@@ -101,6 +104,9 @@ jobs:
         with:
           node-version: '16'
       - run: npm install
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Europe/Paris"
       - run: npx prisma generate
       - run: npx prisma db push
         env:
