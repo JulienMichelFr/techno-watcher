@@ -56,9 +56,9 @@ describe('Posts', () => {
       });
   });
 
-  it('GET /posts/13', async () => {
+  it('GET /posts/1013', async () => {
     return supertest(app.getHttpServer())
-      .get('/posts/13')
+      .get('/posts/1013')
       .expect(200)
       .expect((response) => {
         expect(response.body).toMatchSnapshot();
@@ -100,18 +100,18 @@ describe('Posts', () => {
       });
   });
 
-  it('DELETE /posts/12', async () => {
+  it('DELETE /posts/1012', async () => {
     return supertest(app.getHttpServer())
-      .delete('/posts/12')
+      .delete('/posts/1012')
       .expect(401)
       .expect((response) => {
         expect(response.body).toMatchSnapshot();
       });
   });
 
-  it('DELETE /posts/11 (Invalid user)', async () => {
+  it('DELETE /posts/1011 (Invalid user)', async () => {
     return supertest(app.getHttpServer())
-      .delete('/posts/11')
+      .delete('/posts/1011')
       .set('Authorization', bearerToken)
       .expect(403)
       .expect((response) => {
@@ -119,8 +119,8 @@ describe('Posts', () => {
       });
   });
 
-  it('DELETE /posts/13 (Authorized)', async () => {
-    return supertest(app.getHttpServer()).delete('/posts/13').set('Authorization', bearerToken).expect(200);
+  it('DELETE /posts/1013 (Authorized)', async () => {
+    return supertest(app.getHttpServer()).delete('/posts/1013').set('Authorization', bearerToken).expect(200);
   });
 
   afterAll(async () => {

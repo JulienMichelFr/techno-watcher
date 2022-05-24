@@ -22,7 +22,7 @@ function getDate(from: Date = new Date('01/01/2022'), to: Date = new Date('12/31
 //#endregion
 
 async function seedInvitations(): Promise<Invitation[]> {
-  let invitationId: number = 0;
+  let invitationId: number = 1000;
 
   function createInvitation(): { id: number; code: string } {
     return {
@@ -46,7 +46,7 @@ async function seedUsers(invitations: Invitation[]): Promise<User[]> {
   await prisma.user.createMany({
     data: [
       {
-        id: 1,
+        id: 1000,
         email: 'user1@email.com',
         password: hashPassword('Pas$w0rd'),
         username: 'User 1',
@@ -55,7 +55,7 @@ async function seedUsers(invitations: Invitation[]): Promise<User[]> {
         updatedAt: new Date(2022, 0, 1),
       },
       {
-        id: 2,
+        id: 1001,
         email: 'user2@email.com',
         password: hashPassword('Pas$w0rd'),
         username: 'User 2',
@@ -74,7 +74,7 @@ async function seedUsers(invitations: Invitation[]): Promise<User[]> {
 }
 
 async function seedPosts(users: User[]): Promise<Post[]> {
-  let postId: number = 0;
+  let postId: number = 1000;
 
   function createPost(): Post {
     const tags: string[] = generateCount(randNumber({ min: 0, max: 3 }), () => randWord());
@@ -105,7 +105,7 @@ async function seedPosts(users: User[]): Promise<Post[]> {
 }
 
 async function seedComments(users: User[], posts: Post[]): Promise<Comment[]> {
-  let commentId: number = 0;
+  let commentId: number = 1000;
   const postCommentMap: Map<number, number[]> = new Map<number, number[]>();
   posts.forEach(({ id }) => postCommentMap.set(id, []));
 
