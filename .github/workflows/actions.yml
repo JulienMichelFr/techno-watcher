@@ -67,7 +67,7 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
           JWT_SECRET: jwtsecret
           JWT_EXPIRATION: 10min
-      - run: npx nx affected --target=e2e --parallel --max-parallel=2
+      - run: npx nx affected --target=e2e --parallel --max-parallel=1
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
           JWT_SECRET: jwtsecret
