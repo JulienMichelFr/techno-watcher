@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Auth Refresh token should refresh token 1`] = `
+Object {
+  "accessToken": Any<String>,
+  "refreshToken": Any<String>,
+}
+`;
+
+exports[`Auth Refresh token should reject invalid refresh token 1`] = `
+Object {
+  "header": Object {
+    "access-control-allow-origin": "*",
+    "connection": "close",
+    "content-length": "52",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Sun, 29 May 2022 14:15:35 GMT",
+    "etag": "W/\\"34-rlKccw1E+/fV8niQk4oFitDfPro\\"",
+    "x-powered-by": "Express",
+  },
+  "req": Object {
+    "data": Object {
+      "refreshToken": "invalid token",
+    },
+    "headers": Object {
+      "content-type": "application/json",
+    },
+    "method": "POST",
+    "url": "http://127.0.0.1:60617/auth/refresh-token",
+  },
+  "status": 500,
+  "text": "{\\"statusCode\\":500,\\"message\\":\\"Internal server error\\"}",
+}
+`;
+
+exports[`Auth Sign in should reject invalid email 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": Array [
+    "email must be an email",
+  ],
+  "statusCode": 400,
+}
+`;
+
+exports[`Auth Sign in should reject unknown email 1`] = `
+Object {
+  "error": "Unauthorized",
+  "message": "Invalid credentials",
+  "statusCode": 401,
+}
+`;
+
+exports[`Auth Sign in should reject unknown password 1`] = `
+Object {
+  "error": "Unauthorized",
+  "message": "Invalid credentials",
+  "statusCode": 401,
+}
+`;
+
+exports[`Auth Sign in should sign in 1`] = `
+Object {
+  "accessToken": Any<String>,
+  "refreshToken": Any<String>,
+}
+`;
+
+exports[`Auth Sign up should reject already used email 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": "Could not create user: email is already used",
+  "statusCode": 400,
+}
+`;
+
+exports[`Auth Sign up should reject already used invitation code 1`] = `
+Object {
+  "error": "Unauthorized",
+  "message": "Invalid invitation",
+  "statusCode": 401,
+}
+`;
+
+exports[`Auth Sign up should reject already used username 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": "Could not create user: username is already used",
+  "statusCode": 400,
+}
+`;
+
+exports[`Auth Sign up should reject invalid email 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": Array [
+    "email must be an email",
+  ],
+  "statusCode": 400,
+}
+`;
+
+exports[`Auth Sign up should reject invalid invitation code 1`] = `
+Object {
+  "error": "Unauthorized",
+  "message": "Invalid invitation",
+  "statusCode": 401,
+}
+`;
+
+exports[`Auth Sign up should reject invalid password 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": Array [
+    "Password is too weak",
+  ],
+  "statusCode": 400,
+}
+`;
+
+exports[`Auth Sign up should reject invalid username 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": Array [
+    "username must be longer than or equal to 4 characters",
+  ],
+  "statusCode": 400,
+}
+`;
+
+exports[`Auth Sign up should sign up 1`] = `
+Object {
+  "accessToken": Any<String>,
+  "refreshToken": Any<String>,
+}
+`;

@@ -21,7 +21,7 @@ export class InvitationSeeder extends Seeder<Invitation> {
 
     await this.prisma.invitation.deleteMany({});
     await this.prisma.invitation.createMany({
-      data: generateCount(2, createInvitation),
+      data: generateCount(10, createInvitation),
     });
     const data: Invitation[] = await this.prisma.invitation.findMany({
       orderBy: {

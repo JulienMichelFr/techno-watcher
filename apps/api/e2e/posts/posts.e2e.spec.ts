@@ -194,7 +194,7 @@ describe('Posts', () => {
 
     it('Delete a post (Invalid user)', async () => {
       return supertest(app.getHttpServer())
-        .delete('/posts/1011')
+        .delete('/posts/1012')
         .set('Authorization', bearerToken)
         .expect(403)
         .expect((response) => {
@@ -203,7 +203,7 @@ describe('Posts', () => {
     });
 
     it('Delete a post (Authorized)', async () => {
-      return supertest(app.getHttpServer()).delete('/posts/1012').set('Authorization', bearerToken).expect(200);
+      return supertest(app.getHttpServer()).delete('/posts/1011').set('Authorization', bearerToken).expect(200);
     });
   });
 
@@ -228,7 +228,7 @@ describe('Posts', () => {
     });
 
     it('Delete a comment (Authorized)', async () => {
-      return supertest(app.getHttpServer()).delete('/comments/1002').set('Authorization', bearerToken).expect(200);
+      return supertest(app.getHttpServer()).delete('/comments/1003').set('Authorization', bearerToken).expect(200);
     });
   });
 
