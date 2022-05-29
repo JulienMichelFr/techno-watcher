@@ -1,440 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Posts DELETE /posts/1011 (Invalid user) 1`] = `
+exports[`Posts Create comment Create a comment on a comment (Authenticated) 1`] = `
 Object {
-  "error": "Forbidden",
-  "message": "You are not allowed to delete this post",
-  "statusCode": 403,
+  "author": Object {
+    "username": "User 1",
+  },
+  "content": "My comment",
+  "createdAt": Any<String>,
+  "deletedAt": null,
+  "id": Any<Number>,
+  "parentCommentId": 1001,
+  "updatedAt": Any<String>,
 }
 `;
 
-exports[`Posts DELETE /posts/1012 1`] = `
+exports[`Posts Create comment Create a comment on a comment (Unauthenticated) 1`] = `
 Object {
   "message": "Unauthorized",
   "statusCode": 401,
 }
 `;
 
-exports[`Posts GET /posts 1`] = `
-Object {
-  "data": Array [
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Ipsa nemo eos sequi nulla id accusamus nam ratione dolore. Omnis sint quisquam accusamus rem rem nihil. Non minus animi cum dolorem earum odit sequi. Rem non inventore sed dicta atque modi. Sed dolorem iste molestiae. Sed eum iste aliquid aliquid.",
-      "createdAt": "2022-12-29T12:56:38.370Z",
-      "id": 1013,
-      "link": "https://eos.io",
-      "tags": Array [
-        "maiores",
-      ],
-      "title": "Digitized clear-thinking firmware",
-      "totalComments": 2,
-      "updatedAt": "2022-12-29T12:56:38.370Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "In reprehenderit esse id ut quas cupiditate error sit. Eum nostrum libero facilis quis error consectetur. Totam porro ut similique aut sint enim amet enim. Harum quo est repudiandae doloribus.",
-      "createdAt": "2022-12-26T03:34:22.471Z",
-      "id": 1002,
-      "link": "https://quaerat.org",
-      "tags": Array [],
-      "title": "Upgradable stable strategy",
-      "totalComments": 2,
-      "updatedAt": "2022-12-26T03:34:22.471Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Inventore natus explicabo qui adipisci laborum voluptate molestias suscipit. Ullam quisquam assumenda nesciunt voluptatem in. Similique facere debitis mollitia autem fugit a quo et impedit.",
-      "createdAt": "2022-12-24T04:29:27.680Z",
-      "id": 1014,
-      "link": "https://qui.biz",
-      "tags": Array [
-        "sed",
-        "omnis",
-      ],
-      "title": "Customizable client-driven encoding",
-      "totalComments": 3,
-      "updatedAt": "2022-12-24T04:29:27.680Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Ea tempora qui. Aut deserunt dolorum laborum rerum vel. Omnis et ut deserunt minima soluta adipisci sed voluptas.",
-      "createdAt": "2022-10-02T18:19:28.184Z",
-      "id": 1010,
-      "link": "http://hic.biz",
-      "tags": Array [
-        "dolores",
-      ],
-      "title": "Synergized 4th generation success",
-      "totalComments": 1,
-      "updatedAt": "2022-10-02T18:19:28.184Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Eveniet quae minus vero praesentium eos fugit explicabo et. Libero at ea ut sapiente et nesciunt odio similique vel. Libero aliquam tempore corporis eveniet dolorum nihil maiores veritatis. Harum modi sint officia.",
-      "createdAt": "2022-09-29T19:29:06.019Z",
-      "id": 1003,
-      "link": "http://ipsum.io",
-      "tags": Array [
-        "quasi",
-        "quae",
-      ],
-      "title": "Focused asymmetric contingency",
-      "totalComments": 2,
-      "updatedAt": "2022-09-29T19:29:06.019Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Accusantium aliquid non neque dicta eum. Molestias nesciunt odit. Quis rerum et cumque distinctio a pariatur vel ea dicta.",
-      "createdAt": "2022-09-29T05:07:12.031Z",
-      "id": 1011,
-      "link": "http://aliquid.biz",
-      "tags": Array [],
-      "title": "Integrated regional open architecture",
-      "totalComments": 4,
-      "updatedAt": "2022-09-29T05:07:12.031Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Esse omnis enim odit. Veniam sed iusto. Voluptas libero accusamus. Corporis consequatur ut voluptas corporis blanditiis laudantium consequatur ea ducimus. Incidunt incidunt molestiae.",
-      "createdAt": "2022-09-15T17:40:51.876Z",
-      "id": 1005,
-      "link": "https://magnam.org",
-      "tags": Array [],
-      "title": "Customizable client-driven encoding",
-      "totalComments": 0,
-      "updatedAt": "2022-09-15T17:40:51.876Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Aperiam autem non et aut illum ut nihil laborum omnis. Vitae et ab et. Cupiditate et est delectus. Mollitia qui qui dolores reiciendis perferendis voluptates maiores. Omnis corporis cumque sequi sequi excepturi velit laborum nobis. Neque id maiores voluptatem est debitis.",
-      "createdAt": "2022-08-29T01:34:45.788Z",
-      "id": 1015,
-      "link": "https://id.com",
-      "tags": Array [
-        "commodi",
-      ],
-      "title": "Seamless bi-directional capacity",
-      "totalComments": 1,
-      "updatedAt": "2022-08-29T01:34:45.788Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Et quod ad optio culpa dicta at eveniet. Deserunt perferendis debitis sunt aut. Laboriosam laboriosam aspernatur id corporis.",
-      "createdAt": "2022-08-29T00:10:15.170Z",
-      "id": 1012,
-      "link": "http://quaerat.info",
-      "tags": Array [
-        "eos",
-      ],
-      "title": "Innovative background attitude",
-      "totalComments": 0,
-      "updatedAt": "2022-08-29T00:10:15.170Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Distinctio facere fugit vel nobis dolor voluptas vel quod in. Molestiae et velit. Maiores voluptatem ut qui eligendi repellat eos quia. Tempore ipsa voluptatem minus. In reiciendis dolorem deserunt consequatur at.",
-      "createdAt": "2022-07-18T21:14:50.006Z",
-      "id": 1001,
-      "link": "https://beatae.biz",
-      "tags": Array [
-        "exercitationem",
-      ],
-      "title": "Re-engineered upward-trending standardization",
-      "totalComments": 3,
-      "updatedAt": "2022-07-18T21:14:50.006Z",
-    },
-  ],
-  "from": 0,
-  "perPage": 10,
-  "to": 10,
-  "total": 15,
-}
-`;
-
-exports[`Posts GET /posts/1013 1`] = `
+exports[`Posts Create comment Create a comment on a post (Authenticated) 1`] = `
 Object {
   "author": Object {
     "username": "User 1",
   },
-  "content": "Ipsa nemo eos sequi nulla id accusamus nam ratione dolore. Omnis sint quisquam accusamus rem rem nihil. Non minus animi cum dolorem earum odit sequi. Rem non inventore sed dicta atque modi. Sed dolorem iste molestiae. Sed eum iste aliquid aliquid.",
-  "createdAt": "2022-12-29T12:56:38.370Z",
-  "id": 1013,
-  "link": "https://eos.io",
-  "tags": Array [
-    "maiores",
-  ],
-  "title": "Digitized clear-thinking firmware",
-  "totalComments": 2,
-  "updatedAt": "2022-12-29T12:56:38.370Z",
+  "content": "My comment",
+  "createdAt": Any<String>,
+  "deletedAt": null,
+  "id": Any<Number>,
+  "parentCommentId": null,
+  "updatedAt": Any<String>,
 }
 `;
 
-exports[`Posts GET /posts?skip=10&take=10 1`] = `
+exports[`Posts Create comment Create a comment on a post (Unauthenticated) 1`] = `
 Object {
-  "data": Array [
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Et quod ad optio culpa dicta at eveniet. Deserunt perferendis debitis sunt aut. Laboriosam laboriosam aspernatur id corporis.",
-      "createdAt": "2022-06-04T15:46:06.574Z",
-      "id": 1009,
-      "link": "http://enim.org",
-      "tags": Array [
-        "labore",
-        "ducimus",
-      ],
-      "title": "Organized maximized firmware",
-      "totalComments": 3,
-      "updatedAt": "2022-06-04T15:46:06.574Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Ducimus omnis numquam. Eos ut quis. Autem numquam nihil ut quo est nam eius. Laboriosam sint nihil in dolorum et recusandae est. Inventore consequuntur at ratione dolores quas doloribus autem et. Qui atque delectus consectetur praesentium doloribus corporis expedita soluta.",
-      "createdAt": "2022-04-14T14:30:17.546Z",
-      "id": 1006,
-      "link": "http://et.net",
-      "tags": Array [
-        "excepturi",
-        "quia",
-      ],
-      "title": "Streamlined executive Graphic Interface",
-      "totalComments": 1,
-      "updatedAt": "2022-04-14T14:30:17.546Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Et atque sunt ab esse excepturi ut quos delectus. Possimus dolor assumenda dicta sapiente quaerat nisi sed consequatur hic. In dolorem eos ut eum nam accusantium iure. Ipsam laborum deleniti ut.",
-      "createdAt": "2022-02-22T21:59:29.904Z",
-      "id": 1004,
-      "link": "http://fugit.com",
-      "tags": Array [
-        "quos",
-      ],
-      "title": "User-friendly disintermediate alliance",
-      "totalComments": 2,
-      "updatedAt": "2022-02-22T21:59:29.904Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Alias esse minus. Molestiae et ut dolores iste. Nam sint aut. Explicabo ut earum modi accusamus facilis rerum.",
-      "createdAt": "2022-02-02T21:10:38.281Z",
-      "id": 1007,
-      "link": "https://sed.biz",
-      "tags": Array [
-        "fugit",
-      ],
-      "title": "Upgradable cohesive knowledge user",
-      "totalComments": 0,
-      "updatedAt": "2022-02-02T21:10:38.281Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Tempora sunt enim. Sint ullam deleniti ut. Consequatur unde error odio quod fugit. Expedita unde commodi ratione sequi velit. Qui reprehenderit et tempora tenetur rerum. Veritatis consequatur odit sequi explicabo.",
-      "createdAt": "2022-01-18T23:00:42.364Z",
-      "id": 1008,
-      "link": "http://voluptatem.biz",
-      "tags": Array [],
-      "title": "Expanded didactic methodology",
-      "totalComments": 1,
-      "updatedAt": "2022-01-18T23:00:42.364Z",
-    },
-  ],
-  "from": 10,
-  "perPage": 10,
-  "to": 20,
-  "total": 15,
+  "message": "Unauthorized",
+  "statusCode": 401,
 }
 `;
 
-exports[`Posts GET /posts?sort=id:ASC 1`] = `
-Object {
-  "data": Array [
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Distinctio facere fugit vel nobis dolor voluptas vel quod in. Molestiae et velit. Maiores voluptatem ut qui eligendi repellat eos quia. Tempore ipsa voluptatem minus. In reiciendis dolorem deserunt consequatur at.",
-      "createdAt": "2022-07-18T21:14:50.006Z",
-      "id": 1001,
-      "link": "https://beatae.biz",
-      "tags": Array [
-        "exercitationem",
-      ],
-      "title": "Re-engineered upward-trending standardization",
-      "totalComments": 3,
-      "updatedAt": "2022-07-18T21:14:50.006Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "In reprehenderit esse id ut quas cupiditate error sit. Eum nostrum libero facilis quis error consectetur. Totam porro ut similique aut sint enim amet enim. Harum quo est repudiandae doloribus.",
-      "createdAt": "2022-12-26T03:34:22.471Z",
-      "id": 1002,
-      "link": "https://quaerat.org",
-      "tags": Array [],
-      "title": "Upgradable stable strategy",
-      "totalComments": 2,
-      "updatedAt": "2022-12-26T03:34:22.471Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Eveniet quae minus vero praesentium eos fugit explicabo et. Libero at ea ut sapiente et nesciunt odio similique vel. Libero aliquam tempore corporis eveniet dolorum nihil maiores veritatis. Harum modi sint officia.",
-      "createdAt": "2022-09-29T19:29:06.019Z",
-      "id": 1003,
-      "link": "http://ipsum.io",
-      "tags": Array [
-        "quasi",
-        "quae",
-      ],
-      "title": "Focused asymmetric contingency",
-      "totalComments": 2,
-      "updatedAt": "2022-09-29T19:29:06.019Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Et atque sunt ab esse excepturi ut quos delectus. Possimus dolor assumenda dicta sapiente quaerat nisi sed consequatur hic. In dolorem eos ut eum nam accusantium iure. Ipsam laborum deleniti ut.",
-      "createdAt": "2022-02-22T21:59:29.904Z",
-      "id": 1004,
-      "link": "http://fugit.com",
-      "tags": Array [
-        "quos",
-      ],
-      "title": "User-friendly disintermediate alliance",
-      "totalComments": 2,
-      "updatedAt": "2022-02-22T21:59:29.904Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Esse omnis enim odit. Veniam sed iusto. Voluptas libero accusamus. Corporis consequatur ut voluptas corporis blanditiis laudantium consequatur ea ducimus. Incidunt incidunt molestiae.",
-      "createdAt": "2022-09-15T17:40:51.876Z",
-      "id": 1005,
-      "link": "https://magnam.org",
-      "tags": Array [],
-      "title": "Customizable client-driven encoding",
-      "totalComments": 0,
-      "updatedAt": "2022-09-15T17:40:51.876Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Ducimus omnis numquam. Eos ut quis. Autem numquam nihil ut quo est nam eius. Laboriosam sint nihil in dolorum et recusandae est. Inventore consequuntur at ratione dolores quas doloribus autem et. Qui atque delectus consectetur praesentium doloribus corporis expedita soluta.",
-      "createdAt": "2022-04-14T14:30:17.546Z",
-      "id": 1006,
-      "link": "http://et.net",
-      "tags": Array [
-        "excepturi",
-        "quia",
-      ],
-      "title": "Streamlined executive Graphic Interface",
-      "totalComments": 1,
-      "updatedAt": "2022-04-14T14:30:17.546Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Alias esse minus. Molestiae et ut dolores iste. Nam sint aut. Explicabo ut earum modi accusamus facilis rerum.",
-      "createdAt": "2022-02-02T21:10:38.281Z",
-      "id": 1007,
-      "link": "https://sed.biz",
-      "tags": Array [
-        "fugit",
-      ],
-      "title": "Upgradable cohesive knowledge user",
-      "totalComments": 0,
-      "updatedAt": "2022-02-02T21:10:38.281Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 1",
-      },
-      "content": "Tempora sunt enim. Sint ullam deleniti ut. Consequatur unde error odio quod fugit. Expedita unde commodi ratione sequi velit. Qui reprehenderit et tempora tenetur rerum. Veritatis consequatur odit sequi explicabo.",
-      "createdAt": "2022-01-18T23:00:42.364Z",
-      "id": 1008,
-      "link": "http://voluptatem.biz",
-      "tags": Array [],
-      "title": "Expanded didactic methodology",
-      "totalComments": 1,
-      "updatedAt": "2022-01-18T23:00:42.364Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Et quod ad optio culpa dicta at eveniet. Deserunt perferendis debitis sunt aut. Laboriosam laboriosam aspernatur id corporis.",
-      "createdAt": "2022-06-04T15:46:06.574Z",
-      "id": 1009,
-      "link": "http://enim.org",
-      "tags": Array [
-        "labore",
-        "ducimus",
-      ],
-      "title": "Organized maximized firmware",
-      "totalComments": 3,
-      "updatedAt": "2022-06-04T15:46:06.574Z",
-    },
-    Object {
-      "author": Object {
-        "username": "User 2",
-      },
-      "content": "Ea tempora qui. Aut deserunt dolorum laborum rerum vel. Omnis et ut deserunt minima soluta adipisci sed voluptas.",
-      "createdAt": "2022-10-02T18:19:28.184Z",
-      "id": 1010,
-      "link": "http://hic.biz",
-      "tags": Array [
-        "dolores",
-      ],
-      "title": "Synergized 4th generation success",
-      "totalComments": 1,
-      "updatedAt": "2022-10-02T18:19:28.184Z",
-    },
-  ],
-  "from": 0,
-  "perPage": 10,
-  "to": 10,
-  "total": 15,
-}
-`;
-
-exports[`Posts POST /posts (Authenticated) 1`] = `
+exports[`Posts Create post Create a post (Authenticated) 1`] = `
 Object {
   "author": Object {
     "username": "User 1",
@@ -453,9 +61,487 @@ Object {
 }
 `;
 
-exports[`Posts POST /posts 1`] = `
+exports[`Posts Create post Create a post (Unauthenticated) 1`] = `
 Object {
   "message": "Unauthorized",
   "statusCode": 401,
+}
+`;
+
+exports[`Posts Delete comment Delete a comment (Invalid user) 1`] = `
+Object {
+  "error": "Forbidden",
+  "message": "You are not the author of this comment",
+  "statusCode": 403,
+}
+`;
+
+exports[`Posts Delete comment Delete a comment (Unauthenticated) 1`] = `
+Object {
+  "message": "Unauthorized",
+  "statusCode": 401,
+}
+`;
+
+exports[`Posts Delete post Delete a post (Invalid user) 1`] = `
+Object {
+  "error": "Forbidden",
+  "message": "You are not allowed to delete this post",
+  "statusCode": 403,
+}
+`;
+
+exports[`Posts Delete post Delete a post (Unauthenticated) 1`] = `
+Object {
+  "message": "Unauthorized",
+  "statusCode": 401,
+}
+`;
+
+exports[`Posts Get comments on post Get comments on post with id 1013 1`] = `
+Array [
+  Object {
+    "author": Object {
+      "username": "User 2",
+    },
+    "content": "Omnis perspiciatis qui quia commodi sequi modi. Nostrum quam aut cupiditate est facere omnis possimus. Tenetur similique nemo illo soluta molestias facere quo. Ipsam totam facilis delectus nihil quidem soluta vel est omnis.",
+    "createdAt": "2022-12-27T12:12:39.423Z",
+    "deletedAt": null,
+    "id": 1023,
+    "parentCommentId": null,
+    "updatedAt": "2022-12-27T12:12:39.423Z",
+  },
+]
+`;
+
+exports[`Posts Get posts Get a single post 1`] = `
+Object {
+  "author": Object {
+    "username": "User 2",
+  },
+  "content": "Quia sit architecto itaque voluptas aliquam. Rem veritatis qui quasi sint velit dolorem maxime voluptatem. Sit aut laboriosam aspernatur dicta non consequatur qui recusandae. Dignissimos voluptatem labore praesentium.",
+  "createdAt": "2022-06-13T18:29:25.771Z",
+  "id": 1013,
+  "link": "https://fugiat.io",
+  "tags": Array [
+    "nulla",
+  ],
+  "title": "Synergized 4th generation success",
+  "totalComments": 1,
+  "updatedAt": "2022-06-13T18:29:25.771Z",
+}
+`;
+
+exports[`Posts Get posts Get multiple posts 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Et id harum unde et ratione minima non. Suscipit ipsum rem. Sed asperiores quaerat dolorum autem nihil voluptatem et hic ut. Molestiae rerum autem. Dolores nam soluta officia pariatur debitis.",
+      "createdAt": "2022-12-21T13:50:49.826Z",
+      "id": 1014,
+      "link": "https://occaecati.name",
+      "tags": Array [
+        "enim",
+        "laborum",
+      ],
+      "title": "Versatile national time-frame",
+      "totalComments": 0,
+      "updatedAt": "2022-12-21T13:50:49.826Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Corrupti aspernatur minus eum. Nihil omnis fuga doloremque eius ipsam saepe impedit. Nobis odio omnis laboriosam similique nostrum voluptas magnam commodi at. Magnam quibusdam dolore. Dolorem minima neque est amet voluptate explicabo similique quos. Rerum esse pariatur.",
+      "createdAt": "2022-12-02T12:03:21.987Z",
+      "id": 1004,
+      "link": "https://ducimus.com",
+      "tags": Array [],
+      "title": "Focused asymmetric contingency",
+      "totalComments": 3,
+      "updatedAt": "2022-12-02T12:03:21.987Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Corporis distinctio delectus a ipsam commodi voluptas. Facilis minus sit numquam. Iusto quod consequatur molestias dolore dolor atque quidem distinctio. Voluptatem hic debitis sint ut sed recusandae qui consequatur. Nulla veritatis est.",
+      "createdAt": "2022-11-17T23:47:04.785Z",
+      "id": 1005,
+      "link": "http://quos.io",
+      "tags": Array [
+        "vel",
+        "vitae",
+        "maiores",
+      ],
+      "title": "Profit-focused coherent application",
+      "totalComments": 1,
+      "updatedAt": "2022-11-17T23:47:04.785Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Deserunt laboriosam quas autem repellat aspernatur ipsa accusamus pariatur deserunt. Nam aut eum vel ut. Sunt dicta id eveniet minus. Debitis temporibus quod.",
+      "createdAt": "2022-08-08T23:27:55.454Z",
+      "id": 1006,
+      "link": "http://possimus.dev",
+      "tags": Array [],
+      "title": "Secured methodical frame",
+      "totalComments": 1,
+      "updatedAt": "2022-08-08T23:27:55.454Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Omnis perspiciatis qui quia commodi sequi modi. Nostrum quam aut cupiditate est facere omnis possimus. Tenetur similique nemo illo soluta molestias facere quo. Ipsam totam facilis delectus nihil quidem soluta vel est omnis.",
+      "createdAt": "2022-07-22T21:10:56.806Z",
+      "id": 1003,
+      "link": "http://quae.info",
+      "tags": Array [
+        "aliquid",
+        "sed",
+      ],
+      "title": "Configurable global help-desk",
+      "totalComments": 1,
+      "updatedAt": "2022-07-22T21:10:56.806Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Ut a voluptas labore et dolores magnam. Dolor deleniti dolores temporibus non autem. Voluptatibus numquam reiciendis nesciunt ipsa numquam enim. Unde velit optio quia.",
+      "createdAt": "2022-07-19T10:05:30.942Z",
+      "id": 1002,
+      "link": "http://excepturi.io",
+      "tags": Array [
+        "sunt",
+        "repellat",
+      ],
+      "title": "Cloned human-resource knowledge base",
+      "totalComments": 1,
+      "updatedAt": "2022-07-19T10:05:30.942Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Dolor officia a fuga omnis sit. Ut atque est nostrum. Quos aut quo eos vel velit autem et aspernatur.",
+      "createdAt": "2022-07-15T20:50:58.831Z",
+      "id": 1011,
+      "link": "http://consequatur.dev",
+      "tags": Array [
+        "nostrum",
+        "id",
+      ],
+      "title": "Realigned empowering monitoring",
+      "totalComments": 5,
+      "updatedAt": "2022-07-15T20:50:58.831Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Quaerat veritatis tempora. Consectetur id fuga iusto voluptas quibusdam est. Et aut dolor est. Sunt mollitia libero.",
+      "createdAt": "2022-07-02T18:01:30.784Z",
+      "id": 1001,
+      "link": "https://doloribus.io",
+      "tags": Array [
+        "dicta",
+      ],
+      "title": "Cloned incremental structure",
+      "totalComments": 3,
+      "updatedAt": "2022-07-02T18:01:30.784Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Aperiam autem non et aut illum ut nihil laborum omnis. Vitae et ab et. Cupiditate et est delectus. Mollitia qui qui dolores reiciendis perferendis voluptates maiores. Omnis corporis cumque sequi sequi excepturi velit laborum nobis. Neque id maiores voluptatem est debitis.",
+      "createdAt": "2022-06-19T18:49:00.047Z",
+      "id": 1008,
+      "link": "http://unde.io",
+      "tags": Array [
+        "quos",
+        "est",
+      ],
+      "title": "Customizable client-driven encoding",
+      "totalComments": 1,
+      "updatedAt": "2022-06-19T18:49:00.047Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Quia sit architecto itaque voluptas aliquam. Rem veritatis qui quasi sint velit dolorem maxime voluptatem. Sit aut laboriosam aspernatur dicta non consequatur qui recusandae. Dignissimos voluptatem labore praesentium.",
+      "createdAt": "2022-06-13T18:29:25.771Z",
+      "id": 1013,
+      "link": "https://fugiat.io",
+      "tags": Array [
+        "nulla",
+      ],
+      "title": "Synergized 4th generation success",
+      "totalComments": 1,
+      "updatedAt": "2022-06-13T18:29:25.771Z",
+    },
+  ],
+  "from": 0,
+  "perPage": 10,
+  "to": 10,
+  "total": 15,
+}
+`;
+
+exports[`Posts Get posts Get multiple posts with pagination 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
+      "createdAt": "2022-06-06T13:34:27.804Z",
+      "id": 1010,
+      "link": "http://vitae.name",
+      "tags": Array [
+        "nemo",
+        "fugiat",
+      ],
+      "title": "Enhanced responsive software",
+      "totalComments": 3,
+      "updatedAt": "2022-06-06T13:34:27.804Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Aut facilis qui. Cupiditate sit ratione eum sunt rerum impedit. Qui suscipit debitis et et voluptates voluptatem voluptatibus. Quas voluptatum quae corporis corporis possimus.",
+      "createdAt": "2022-05-23T12:54:50.455Z",
+      "id": 1007,
+      "link": "http://qui.info",
+      "tags": Array [],
+      "title": "Re-engineered neutral database",
+      "totalComments": 0,
+      "updatedAt": "2022-05-23T12:54:50.455Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Quo voluptatem quia numquam laudantium sit quibusdam aut. Veritatis omnis neque ea saepe hic enim. Nam odit dolor non consequuntur perspiciatis inventore ut sint. Velit quod praesentium adipisci modi.",
+      "createdAt": "2022-05-08T02:58:30.546Z",
+      "id": 1012,
+      "link": "https://omnis.name",
+      "tags": Array [
+        "ducimus",
+      ],
+      "title": "Configurable zero administration projection",
+      "totalComments": 1,
+      "updatedAt": "2022-05-08T02:58:30.546Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Veniam commodi autem voluptatibus eos dolor quas reprehenderit. Praesentium cupiditate tempore et reprehenderit. Deleniti exercitationem illum maiores. Reprehenderit odio in ea voluptatem ut ut ullam.",
+      "createdAt": "2022-05-03T11:16:10.308Z",
+      "id": 1015,
+      "link": "http://tenetur.name",
+      "tags": Array [
+        "beatae",
+      ],
+      "title": "Monitored bottom-line productivity",
+      "totalComments": 2,
+      "updatedAt": "2022-05-03T11:16:10.308Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Sunt velit facere fuga et voluptas inventore itaque. Necessitatibus ratione in esse. Quasi dignissimos quia est sequi incidunt enim reiciendis. At omnis iure in doloremque. Aut tempore consequatur facilis est ut distinctio est quas. Autem sunt est saepe quasi sed reprehenderit error magnam.",
+      "createdAt": "2022-02-09T12:33:59.515Z",
+      "id": 1009,
+      "link": "https://sapiente.com",
+      "tags": Array [
+        "facilis",
+        "nihil",
+        "id",
+      ],
+      "title": "Focused logistical definition",
+      "totalComments": 2,
+      "updatedAt": "2022-02-09T12:33:59.515Z",
+    },
+  ],
+  "from": 10,
+  "perPage": 10,
+  "to": 20,
+  "total": 15,
+}
+`;
+
+exports[`Posts Get posts Get multiple posts with sort 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Quaerat veritatis tempora. Consectetur id fuga iusto voluptas quibusdam est. Et aut dolor est. Sunt mollitia libero.",
+      "createdAt": "2022-07-02T18:01:30.784Z",
+      "id": 1001,
+      "link": "https://doloribus.io",
+      "tags": Array [
+        "dicta",
+      ],
+      "title": "Cloned incremental structure",
+      "totalComments": 3,
+      "updatedAt": "2022-07-02T18:01:30.784Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Ut a voluptas labore et dolores magnam. Dolor deleniti dolores temporibus non autem. Voluptatibus numquam reiciendis nesciunt ipsa numquam enim. Unde velit optio quia.",
+      "createdAt": "2022-07-19T10:05:30.942Z",
+      "id": 1002,
+      "link": "http://excepturi.io",
+      "tags": Array [
+        "sunt",
+        "repellat",
+      ],
+      "title": "Cloned human-resource knowledge base",
+      "totalComments": 1,
+      "updatedAt": "2022-07-19T10:05:30.942Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Omnis perspiciatis qui quia commodi sequi modi. Nostrum quam aut cupiditate est facere omnis possimus. Tenetur similique nemo illo soluta molestias facere quo. Ipsam totam facilis delectus nihil quidem soluta vel est omnis.",
+      "createdAt": "2022-07-22T21:10:56.806Z",
+      "id": 1003,
+      "link": "http://quae.info",
+      "tags": Array [
+        "aliquid",
+        "sed",
+      ],
+      "title": "Configurable global help-desk",
+      "totalComments": 1,
+      "updatedAt": "2022-07-22T21:10:56.806Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Corrupti aspernatur minus eum. Nihil omnis fuga doloremque eius ipsam saepe impedit. Nobis odio omnis laboriosam similique nostrum voluptas magnam commodi at. Magnam quibusdam dolore. Dolorem minima neque est amet voluptate explicabo similique quos. Rerum esse pariatur.",
+      "createdAt": "2022-12-02T12:03:21.987Z",
+      "id": 1004,
+      "link": "https://ducimus.com",
+      "tags": Array [],
+      "title": "Focused asymmetric contingency",
+      "totalComments": 3,
+      "updatedAt": "2022-12-02T12:03:21.987Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Corporis distinctio delectus a ipsam commodi voluptas. Facilis minus sit numquam. Iusto quod consequatur molestias dolore dolor atque quidem distinctio. Voluptatem hic debitis sint ut sed recusandae qui consequatur. Nulla veritatis est.",
+      "createdAt": "2022-11-17T23:47:04.785Z",
+      "id": 1005,
+      "link": "http://quos.io",
+      "tags": Array [
+        "vel",
+        "vitae",
+        "maiores",
+      ],
+      "title": "Profit-focused coherent application",
+      "totalComments": 1,
+      "updatedAt": "2022-11-17T23:47:04.785Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Deserunt laboriosam quas autem repellat aspernatur ipsa accusamus pariatur deserunt. Nam aut eum vel ut. Sunt dicta id eveniet minus. Debitis temporibus quod.",
+      "createdAt": "2022-08-08T23:27:55.454Z",
+      "id": 1006,
+      "link": "http://possimus.dev",
+      "tags": Array [],
+      "title": "Secured methodical frame",
+      "totalComments": 1,
+      "updatedAt": "2022-08-08T23:27:55.454Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Aut facilis qui. Cupiditate sit ratione eum sunt rerum impedit. Qui suscipit debitis et et voluptates voluptatem voluptatibus. Quas voluptatum quae corporis corporis possimus.",
+      "createdAt": "2022-05-23T12:54:50.455Z",
+      "id": 1007,
+      "link": "http://qui.info",
+      "tags": Array [],
+      "title": "Re-engineered neutral database",
+      "totalComments": 0,
+      "updatedAt": "2022-05-23T12:54:50.455Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Aperiam autem non et aut illum ut nihil laborum omnis. Vitae et ab et. Cupiditate et est delectus. Mollitia qui qui dolores reiciendis perferendis voluptates maiores. Omnis corporis cumque sequi sequi excepturi velit laborum nobis. Neque id maiores voluptatem est debitis.",
+      "createdAt": "2022-06-19T18:49:00.047Z",
+      "id": 1008,
+      "link": "http://unde.io",
+      "tags": Array [
+        "quos",
+        "est",
+      ],
+      "title": "Customizable client-driven encoding",
+      "totalComments": 1,
+      "updatedAt": "2022-06-19T18:49:00.047Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Sunt velit facere fuga et voluptas inventore itaque. Necessitatibus ratione in esse. Quasi dignissimos quia est sequi incidunt enim reiciendis. At omnis iure in doloremque. Aut tempore consequatur facilis est ut distinctio est quas. Autem sunt est saepe quasi sed reprehenderit error magnam.",
+      "createdAt": "2022-02-09T12:33:59.515Z",
+      "id": 1009,
+      "link": "https://sapiente.com",
+      "tags": Array [
+        "facilis",
+        "nihil",
+        "id",
+      ],
+      "title": "Focused logistical definition",
+      "totalComments": 2,
+      "updatedAt": "2022-02-09T12:33:59.515Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
+      "createdAt": "2022-06-06T13:34:27.804Z",
+      "id": 1010,
+      "link": "http://vitae.name",
+      "tags": Array [
+        "nemo",
+        "fugiat",
+      ],
+      "title": "Enhanced responsive software",
+      "totalComments": 3,
+      "updatedAt": "2022-06-06T13:34:27.804Z",
+    },
+  ],
+  "from": 0,
+  "perPage": 10,
+  "to": 10,
+  "total": 15,
 }
 `;

@@ -28,7 +28,6 @@ jobs:
       - run: npx nx affected --target=test --parallel --max-parallel=2
       - run: npx nx-cloud stop-all-agents
   pr:
-
     services:
       postgres:
         image: postgres:latest
@@ -63,7 +62,7 @@ jobs:
       - run: npx nx affected --target=lint --parallel --max-parallel=2
       - uses: szenius/set-timezone@v1.0
         with:
-          timezoneLinux: "Europe/Paris"
+          timezoneLinux: 'Europe/Paris'
       - run: npx prisma generate
       - run: npx prisma db push
         env:
@@ -97,7 +96,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        agent: [ 1, 2, 3 ]
+        agent: [1, 2, 3]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -106,7 +105,7 @@ jobs:
       - run: npm install
       - uses: szenius/set-timezone@v1.0
         with:
-          timezoneLinux: "Europe/Paris"
+          timezoneLinux: 'Europe/Paris'
       - run: npx prisma generate
       - run: npx prisma db push
         env:

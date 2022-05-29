@@ -3,7 +3,7 @@ services:
     image: postgres
     container_name: 'techno-watcher-database'
     ports:
-      - "5432:5432"
+      - '5432:5432'
     restart: always
     environment:
       POSTGRES_USER: postgres
