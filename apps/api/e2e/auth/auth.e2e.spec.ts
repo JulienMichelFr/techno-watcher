@@ -7,9 +7,9 @@ import { InvitationSeeder } from '../seeders/invitation.seeder';
 import * as supertest from 'supertest';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { signIn } from '../helpers/signin';
+import { sign } from 'jsonwebtoken';
 
 describe('Auth', () => {
-  let bearerToken: string;
   let app: INestApplication;
   let userSeeder: UserSeeder;
   let invitationSeeder: InvitationSeeder;
@@ -241,8 +241,9 @@ describe('Auth', () => {
 
   describe('Refresh token', () => {
     it('should reject invalid refresh token', async () => {
+      const token: string = sign({}, process.env.JWT_SECRET, { expiresIn: '0s' });
       const data: RefreshTokenDto = {
-        refreshToken: 'invalid token',
+        refreshToken: token,
       };
 
       return supertest(app.getHttpServer())
@@ -250,7 +251,7 @@ describe('Auth', () => {
         .send(data)
         .expect(500)
         .expect((response) => {
-          expect(response).toMatchSnapshot();
+          expect(response.body).toMatchSnapshot();
         });
     });
 

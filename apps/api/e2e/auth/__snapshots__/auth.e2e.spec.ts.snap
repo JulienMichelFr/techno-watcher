@@ -9,27 +9,8 @@ Object {
 
 exports[`Auth Refresh token should reject invalid refresh token 1`] = `
 Object {
-  "header": Object {
-    "access-control-allow-origin": "*",
-    "connection": "close",
-    "content-length": "52",
-    "content-type": "application/json; charset=utf-8",
-    "date": "Sun, 29 May 2022 14:15:35 GMT",
-    "etag": "W/\\"34-rlKccw1E+/fV8niQk4oFitDfPro\\"",
-    "x-powered-by": "Express",
-  },
-  "req": Object {
-    "data": Object {
-      "refreshToken": "invalid token",
-    },
-    "headers": Object {
-      "content-type": "application/json",
-    },
-    "method": "POST",
-    "url": "http://127.0.0.1:60617/auth/refresh-token",
-  },
-  "status": 500,
-  "text": "{\\"statusCode\\":500,\\"message\\":\\"Internal server error\\"}",
+  "message": "Internal server error",
+  "statusCode": 500,
 }
 `;
 
