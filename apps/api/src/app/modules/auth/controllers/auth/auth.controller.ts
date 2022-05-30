@@ -1,9 +1,8 @@
-import { BadRequestException, Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Public } from '../../decorators/public/public.decorator';
 import { Serializer } from '../../../../decorators/serializer/serializer.decorator';
-import { Prisma } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
@@ -21,17 +20,7 @@ export class AuthController {
   @Public()
   @Post('sign-up')
   public async signUp(@Body() { username, email, password, invitation }: SignUpDTO): Promise<AuthResponseModel> {
-    try {
-      return await this.authService.signUp({ username, email, password, invitation });
-    } catch (e) {
-      // TODO Extract in a pipe
-      if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
-        const target: string[] = e.meta.target as string[];
-        throw new BadRequestException(`Could not create user: ${target.join(', ')} ${target?.length > 1 ? 'are' : 'is'} already used`);
-      } else {
-        throw e;
-      }
-    }
+    return await this.authService.signUp({ username, email, password, invitation });
   }
 
   @Serializer(AuthResponseModel)
