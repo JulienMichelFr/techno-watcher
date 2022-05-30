@@ -28,6 +28,21 @@ jobs:
       - run: npx nx affected --target=test --parallel --max-parallel=2
       - run: npx nx-cloud stop-all-agents
   pr:
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: techno_watcher_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
@@ -45,19 +60,61 @@ jobs:
       - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: npx nx affected --target=test --parallel --max-parallel=2
       - run: npx nx affected --target=lint --parallel --max-parallel=2
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'Europe/Paris'
+      - run: npx prisma generate
+      - run: npx prisma db push
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
+      - run: npx nx affected --target=e2e --parallel --max-parallel=1
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
       - run: npx nx-cloud stop-all-agents
   agents:
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: techno_watcher_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
     name: Agent 1
     timeout-minutes: 60
     strategy:
       matrix:
-        agent: [ 1, 2, 3 ]
+        agent: [1, 2, 3]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '16'
       - run: npm install
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'Europe/Paris'
+      - run: npx prisma generate
+      - run: npx prisma db push
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
       - name: Start Nx Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/techno_watcher_test?schema=public
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRATION: 10min
