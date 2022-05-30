@@ -1,1 +1,1 @@
-export const SEED_ID = 'seed-1';
+export const SEED_ID: string = 'seed-1';
