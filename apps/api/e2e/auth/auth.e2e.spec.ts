@@ -249,7 +249,7 @@ describe('Auth', () => {
       return supertest(app.getHttpServer())
         .post('/auth/refresh-token')
         .send(data)
-        .expect(500)
+        .expect(403)
         .expect((response) => {
           expect(response.body).toMatchSnapshot();
         });

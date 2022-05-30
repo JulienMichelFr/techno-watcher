@@ -9,8 +9,9 @@ Object {
 
 exports[`Auth Refresh token should reject invalid refresh token 1`] = `
 Object {
-  "message": "Internal server error",
-  "statusCode": 500,
+  "error": "Forbidden",
+  "message": "Token is expired",
+  "statusCode": 403,
 }
 `;
 
@@ -50,7 +51,7 @@ Object {
 exports[`Auth Sign up should reject already used email 1`] = `
 Object {
   "error": "Bad Request",
-  "message": "Could not create user: email is already used",
+  "message": "Could not create resource, email is already used",
   "statusCode": 400,
 }
 `;
@@ -66,7 +67,7 @@ Object {
 exports[`Auth Sign up should reject already used username 1`] = `
 Object {
   "error": "Bad Request",
-  "message": "Could not create user: username is already used",
+  "message": "Could not create resource, username is already used",
   "statusCode": 400,
 }
 `;
