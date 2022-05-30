@@ -9,8 +9,9 @@ Object {
 
 exports[`Auth Refresh token should reject invalid refresh token 1`] = `
 Object {
-  "message": "Internal server error",
-  "statusCode": 500,
+  "error": "Forbidden",
+  "message": "Token is expired",
+  "statusCode": 403,
 }
 `;
 
