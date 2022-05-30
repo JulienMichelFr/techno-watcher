@@ -564,3 +564,78 @@ Object {
   "total": 15,
 }
 `;
+
+exports[`Posts Get posts Get multiple posts with tags 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Est quo facilis voluptas aperiam. Natus dolores quas ratione enim repellendus. Illum dolor repellendus voluptas.",
+      "createdAt": "2022-07-11T05:07:16.307Z",
+      "id": 1001,
+      "link": "https://facilis.net",
+      "tags": Array [
+        "nihil",
+        "sunt",
+      ],
+      "title": "Secured methodical frame",
+      "totalComments": 4,
+      "updatedAt": "2022-07-11T05:07:16.307Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 1",
+      },
+      "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
+      "createdAt": "2022-06-06T13:34:27.804Z",
+      "id": 1009,
+      "link": "http://vitae.name",
+      "tags": Array [
+        "nemo",
+        "fugiat",
+      ],
+      "title": "Enhanced responsive software",
+      "totalComments": 1,
+      "updatedAt": "2022-06-06T13:34:27.804Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Labore corporis blanditiis dolorum nemo nam praesentium alias sequi inventore. Cupiditate rerum enim sint quis. Eum occaecati provident labore veniam deserunt vero sed soluta repellat. Cum sapiente pariatur et ea a recusandae et optio. Sequi doloribus reiciendis corrupti quidem accusamus est nesciunt. Excepturi accusamus consequatur est sed maiores excepturi autem.",
+      "createdAt": "2022-03-11T17:58:58.835Z",
+      "id": 1015,
+      "link": "http://sit.name",
+      "tags": Array [
+        "fugiat",
+      ],
+      "title": "Ameliorated asynchronous pricing structure",
+      "totalComments": 6,
+      "updatedAt": "2022-03-11T17:58:58.835Z",
+    },
+    Object {
+      "author": Object {
+        "username": "User 2",
+      },
+      "content": "Sunt velit facere fuga et voluptas inventore itaque. Necessitatibus ratione in esse. Quasi dignissimos quia est sequi incidunt enim reiciendis. At omnis iure in doloremque. Aut tempore consequatur facilis est ut distinctio est quas. Autem sunt est saepe quasi sed reprehenderit error magnam.",
+      "createdAt": "2022-02-09T12:33:59.515Z",
+      "id": 1008,
+      "link": "https://sapiente.com",
+      "tags": Array [
+        "facilis",
+        "nihil",
+        "id",
+      ],
+      "title": "Focused logistical definition",
+      "totalComments": 0,
+      "updatedAt": "2022-02-09T12:33:59.515Z",
+    },
+  ],
+  "from": 0,
+  "perPage": 10,
+  "to": 10,
+  "total": 4,
+}
+`;

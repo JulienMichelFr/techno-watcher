@@ -60,6 +60,15 @@ describe('Posts', () => {
         });
     });
 
+    it('Get multiple posts with tags', async () => {
+      return supertest(app.getHttpServer())
+        .get('/posts?tags=nihil,fugiat')
+        .expect(200)
+        .expect((response) => {
+          expect(response.body).toMatchSnapshot();
+        });
+    });
+
     it('Get a single post', async () => {
       return supertest(app.getHttpServer())
         .get('/posts/1013')
