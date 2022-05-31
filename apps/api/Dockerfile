@@ -29,21 +29,19 @@ COPY prisma prisma
 COPY apps apps
 COPY libs libs
 
-RUN npm install
+RUN npm ci --silent
 RUN npx prisma generate
-RUN npx nx build api
+RUN npx nx run api:build:production
 
 ################################################################################
 FROM common as runtime
 
-COPY --from=2 dist ./dist
-COPY --from=2 node_modules ./node_modules
+COPY --from=build /app/dist/apps/api ./
 
-RUN npm prune --production
+RUN npm ci --silent
 
-COPY --from=2 node_modules/.prisma ./node_modules/.prisma
-COPY --from=2 node_modules/@prisma/client ./node_modules/@prisma/client
+COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 
-EXPOSE 3000
+EXPOSE 3333
 
-CMD ["node", "./dist/apps/api/main.js"]
+CMD ["node", "./main.js"]
