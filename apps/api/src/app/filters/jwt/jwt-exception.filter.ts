@@ -1,4 +1,4 @@
-import { ArgumentsHost, Catch, ForbiddenException } from '@nestjs/common';
+import { ArgumentsHost, Catch, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import { BaseExceptionFilter } from '@nestjs/core';
 
@@ -7,9 +7,9 @@ export class JwtExceptionFilter extends BaseExceptionFilter {
   private static getException(exception: JsonWebTokenError): ForbiddenException {
     switch (exception.name) {
       case 'TokenExpiredError':
-        return new ForbiddenException('Token is expired');
+        return new UnauthorizedException('Token is expired');
       default:
-        return new ForbiddenException('Token is invalid');
+        return new UnauthorizedException('Token is invalid');
     }
   }
 

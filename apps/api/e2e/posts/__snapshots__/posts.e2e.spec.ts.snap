@@ -16,7 +16,8 @@ Object {
 
 exports[`Posts Create comment Create a comment on a comment (Unauthenticated) 1`] = `
 Object {
-  "message": "Unauthorized",
+  "error": "Unauthorized",
+  "message": "Token is missing",
   "statusCode": 401,
 }
 `;
@@ -37,7 +38,8 @@ Object {
 
 exports[`Posts Create comment Create a comment on a post (Unauthenticated) 1`] = `
 Object {
-  "message": "Unauthorized",
+  "error": "Unauthorized",
+  "message": "Token is missing",
   "statusCode": 401,
 }
 `;
@@ -63,7 +65,8 @@ Object {
 
 exports[`Posts Create post Create a post (Unauthenticated) 1`] = `
 Object {
-  "message": "Unauthorized",
+  "error": "Unauthorized",
+  "message": "Token is missing",
   "statusCode": 401,
 }
 `;
@@ -78,7 +81,8 @@ Object {
 
 exports[`Posts Delete comment Delete a comment (Unauthenticated) 1`] = `
 Object {
-  "message": "Unauthorized",
+  "error": "Unauthorized",
+  "message": "Token is missing",
   "statusCode": 401,
 }
 `;
@@ -93,7 +97,8 @@ Object {
 
 exports[`Posts Delete post Delete a post (Unauthenticated) 1`] = `
 Object {
-  "message": "Unauthorized",
+  "error": "Unauthorized",
+  "message": "Token is missing",
   "statusCode": 401,
 }
 `;
