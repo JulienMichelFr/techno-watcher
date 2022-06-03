@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, ForbiddenException, Get, NotFoundException, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
-import { Comment, Post as PostEntity, Prisma, User } from '@prisma/client';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Comment, Prisma, User } from '@prisma/client';
 import { PostService } from '../../services/post/post.service';
 import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
 import { AddCommentOnPostDto, CommentModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
@@ -23,68 +23,23 @@ export class PostController {
     deletedAt: true,
   };
 
-  private static readonly postSelect: Prisma.PostSelect = {
-    id: true,
-    title: true,
-    link: true,
-    content: true,
-    createdAt: true,
-    updatedAt: true,
-    tags: true,
-    comments: false,
-    author: {
-      select: PostController.authorSelect,
-    },
-    _count: true,
-  };
-
   public constructor(private readonly postService: PostService, private readonly commentService: CommentService) {}
 
-  @Serializer(PostModel)
   @Get()
   @Public()
-  public async getPosts(@Query() { skip, take, sort, tags }: GetPostsDto): Promise<Paginated<PostEntity>> {
-    const [sortKey, sortOrder] = sort.split(':');
-    let where: Prisma.PostWhereInput = {
-      deletedAt: null,
-    };
-    if (tags?.length) {
-      where = {
-        ...where,
-        tags: {
-          hasSome: tags,
-        },
-      };
-    }
-
-    return this.postService.find(
-      {
-        where,
-        skip,
-        take,
-        orderBy: [{ [sortKey]: sortOrder }],
-        select: PostController.postSelect,
-      },
-      true
-    );
+  public async getPosts(@Query() getPostsDto: GetPostsDto): Promise<Paginated<PostModel>> {
+    return this.postService.find(getPostsDto);
   }
 
-  @Serializer(PostModel)
   @Get(':id')
   @Public()
-  public async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
-    return this.postService.findOne({
-      where: {
-        id,
-      },
-      select: PostController.postSelect,
-    });
+  public async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostModel> {
+    return this.postService.findById(id);
   }
 
-  @Serializer(PostModel)
   @Post()
-  public async create(@Body() post: CreatePostDto, @GetUser() user: User): Promise<PostEntity> {
-    return await this.postService.create({ ...post, author: { connect: { id: user.id } } }, { select: PostController.postSelect });
+  public async create(@Body() post: CreatePostDto, @GetUser() user: User): Promise<PostModel> {
+    return await this.postService.create(post, user.id);
   }
 
   @Serializer(CommentModel)
@@ -120,23 +75,6 @@ export class PostController {
 
   @Delete(':postId')
   public async deletePost(@Param('postId', ParseIntPipe) postId: number, @GetUser() user: User): Promise<void> {
-    const post: PostEntity = await this.postService.findOne({
-      where: {
-        id: postId,
-      },
-      select: {
-        authorId: true,
-      },
-    });
-
-    if (!post) {
-      throw new NotFoundException(`Post with id ${postId} not found`);
-    }
-
-    if (post.authorId !== user.id) {
-      throw new ForbiddenException('You are not allowed to delete this post');
-    }
-
-    await this.postService.softDeleteById(postId);
+    await this.postService.softDeleteById(postId, user.id);
   }
 }

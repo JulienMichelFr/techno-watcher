@@ -1,45 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { Post, Prisma } from '@prisma/client';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Paginated } from '@techno-watcher/api-models';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
+import { PostRepositoryService } from '../../repositories/post/post-repository/post-repository.service';
 
 @Injectable()
 export class PostService {
-  public constructor(private prisma: PrismaService) {}
+  public constructor(private postRepository: PostRepositoryService) {}
 
-  public async count(conditions: Prisma.PostCountArgs = {}): Promise<number> {
-    return await this.prisma.post.count(conditions);
+  public async findById(postId: number): Promise<PostModel> {
+    return this.postRepository.findById(postId);
   }
 
-  public async findOne(args: Prisma.PostFindUniqueArgs): Promise<Post | null> {
-    return this.prisma.post.findUnique(args);
+  public async find(getPostsDto: GetPostsDto): Promise<Paginated<PostModel>> {
+    return this.postRepository.findPaginated(getPostsDto);
   }
 
-  public async find(conditions: Prisma.PostFindManyArgs, withCount: true): Promise<Paginated<Post>>;
-  public async find(conditions: Prisma.PostFindManyArgs, withCount: false): Promise<Paginated<Post>>;
-  public async find(conditions: Prisma.PostFindManyArgs = {}, withCount: boolean = false): Promise<Post[] | Paginated<Post>> {
-    if (withCount) {
-      const [count, posts] = await this.prisma.$transaction([this.prisma.post.count({ where: conditions.where ?? {} }), this.prisma.post.findMany(conditions)]);
+  public async create(createPostDto: CreatePostDto, userId: number): Promise<PostModel> {
+    return this.postRepository.create(createPostDto, userId);
+  }
 
-      return {
-        total: count,
-        from: conditions.skip ?? 0,
-        to: (conditions.skip ?? 0) + (conditions.take ?? 10),
-        data: posts,
-        perPage: conditions.take ?? 10,
-      };
+  public async softDeleteById(postId: number, userId: number): Promise<void> {
+    const post: PostModel = await this.findById(postId);
+
+    if (post.author.id !== userId) {
+      throw new ForbiddenException('You are not allowed to delete this post');
     }
-    return this.prisma.post.findMany(conditions);
-  }
 
-  public async create(post: Prisma.PostCreateInput, args: Prisma.PostArgs = {}): Promise<Post> {
-    return this.prisma.post.create({ data: post, ...args });
-  }
-
-  public async softDeleteById(postId: number): Promise<void> {
-    await this.prisma.post.update({
-      where: { id: postId },
-      data: { deletedAt: new Date() },
-    });
+    await this.postRepository.softDeleteById(postId);
   }
 }

@@ -9,27 +9,10 @@ describe('PostController', () => {
   let commentService: CommentService;
   let postController: PostController;
 
-  let postSelect: Prisma.PostSelect;
   let commentSelect: Prisma.CommentSelect;
   let user: User;
 
   beforeEach(() => {
-    postSelect = {
-      _count: true,
-      author: {
-        select: {
-          username: true,
-        },
-      },
-      comments: false,
-      content: true,
-      createdAt: true,
-      id: true,
-      link: true,
-      tags: true,
-      title: true,
-      updatedAt: true,
-    };
     commentSelect = {
       id: true,
       author: { select: { username: true } },
@@ -43,7 +26,7 @@ describe('PostController', () => {
 
     postService = {
       find: jest.fn(),
-      findOne: jest.fn(),
+      findById: jest.fn(),
       create: jest.fn(),
       softDeleteById: jest.fn(),
     } as unknown as PostService;
@@ -74,50 +57,14 @@ describe('PostController', () => {
 
     it('should call postService.find()', async () => {
       await postController.getPosts(getPostsDto);
-      expect(postService.find).toHaveBeenCalledWith(
-        {
-          where: {
-            deletedAt: null,
-          },
-          skip: getPostsDto.skip,
-          take: getPostsDto.take,
-          orderBy: [{ createdAt: 'desc' }],
-          select: postSelect,
-        },
-        true
-      );
-    });
-
-    it('should add tags in where clause', async () => {
-      getPostsDto.tags = ['tag1', 'tag2'];
-      await postController.getPosts(getPostsDto);
-      expect(postService.find).toHaveBeenCalledWith(
-        {
-          where: {
-            deletedAt: null,
-            tags: {
-              hasSome: getPostsDto.tags,
-            },
-          },
-          skip: getPostsDto.skip,
-          take: getPostsDto.take,
-          orderBy: [{ createdAt: 'desc' }],
-          select: postSelect,
-        },
-        true
-      );
+      expect(postService.find).toHaveBeenCalledWith(getPostsDto);
     });
   });
 
   describe('getPost()', () => {
-    it('should call postService.findOne()', async () => {
+    it('should call postService.findById()', async () => {
       await postController.getPost(1);
-      expect(postService.findOne).toHaveBeenCalledWith({
-        where: {
-          id: 1,
-        },
-        select: postSelect,
-      });
+      expect(postService.findById).toHaveBeenCalledWith(1);
     });
   });
 
@@ -135,17 +82,7 @@ describe('PostController', () => {
 
     it('should call postService.create()', async () => {
       await postController.create(createPostDto, user);
-      expect(postService.create).toHaveBeenCalledWith(
-        {
-          ...createPostDto,
-          author: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-        { select: postSelect }
-      );
+      expect(postService.create).toHaveBeenCalledWith(createPostDto, 1);
     });
   });
 
@@ -194,32 +131,9 @@ describe('PostController', () => {
   });
 
   describe('deletePost()', () => {
-    it('should get post from service', async () => {
-      (postService.findOne as jest.Mock).mockResolvedValueOnce({ authorId: user.id });
-      await postController.deletePost(1, user);
-      expect(postService.findOne).toHaveBeenCalledWith({
-        where: {
-          id: 1,
-        },
-        select: {
-          authorId: true,
-        },
-      });
-    });
-
     it('should call postService.softDeletePost()', async () => {
-      (postService.findOne as jest.Mock).mockResolvedValueOnce({ authorId: user.id });
       await postController.deletePost(1, user);
-      expect(postService.softDeleteById).toHaveBeenCalledWith(1);
-    });
-
-    it('should throw an error if post is not found', async () => {
-      await expect(postController.deletePost(1, user)).rejects.toThrowError('Post with id 1 not found');
-    });
-
-    it('should throw an error if user is not the author', async () => {
-      (postService.findOne as jest.Mock).mockResolvedValueOnce({ authorId: 2 });
-      await expect(postController.deletePost(1, user)).rejects.toThrowError('You are not allowed to delete this post');
+      expect(postService.softDeleteById).toHaveBeenCalledWith(1, 1);
     });
   });
 });
