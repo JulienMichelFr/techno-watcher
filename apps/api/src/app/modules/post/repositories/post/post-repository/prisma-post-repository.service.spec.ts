@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PostAndSelect, PostRepositoryService } from './post-repository.service';
+import { PostAndSelect, PrismaPostRepositoryService } from './prisma-post-repository.service';
 import { PrismaService } from '../../../../prisma/prisma.service';
 import { AuthorModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
 
-describe('PostRepositoryService', () => {
+describe('PrismaPostRepositoryService', () => {
   let prismaService: PrismaService;
-  let service: PostRepositoryService;
+  let service: PrismaPostRepositoryService;
   let postAndSelect: PostAndSelect;
 
   beforeEach(async () => {
@@ -37,10 +37,10 @@ describe('PostRepositoryService', () => {
     } as unknown as PrismaService;
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{ provide: PrismaService, useValue: prismaService }, PostRepositoryService],
+      providers: [{ provide: PrismaService, useValue: prismaService }, PrismaPostRepositoryService],
     }).compile();
 
-    service = module.get<PostRepositoryService>(PostRepositoryService);
+    service = module.get<PrismaPostRepositoryService>(PrismaPostRepositoryService);
   });
 
   beforeAll(() => {
