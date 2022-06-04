@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../../../prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { Post, Prisma } from '@prisma/client';
 import { AuthorModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
 import { PostRepositoryService } from './post-repository.service';
@@ -8,12 +8,7 @@ export type PostAndSelect = Omit<Post, 'comments' | 'authorId'> & { author: { id
 
 @Injectable()
 export class PrismaPostRepositoryService extends PostRepositoryService {
-  public readonly authorSelect: Prisma.UserSelect = {
-    id: true,
-    username: true,
-  };
-
-  public readonly postSelect: Prisma.PostSelect = {
+  private readonly postSelect: Prisma.PostSelect = {
     id: true,
     title: true,
     link: true,
@@ -23,7 +18,10 @@ export class PrismaPostRepositoryService extends PostRepositoryService {
     tags: true,
     comments: false,
     author: {
-      select: this.authorSelect,
+      select: {
+        id: true,
+        username: true,
+      },
     },
     _count: true,
   };

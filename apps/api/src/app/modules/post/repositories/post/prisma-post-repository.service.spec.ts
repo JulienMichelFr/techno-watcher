@@ -1,14 +1,37 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PostAndSelect, PrismaPostRepositoryService } from './prisma-post-repository.service';
-import { PrismaService } from '../../../../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 import { AuthorModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
+import { PostAndSelect, PrismaPostRepositoryService } from './prisma-post-repository.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 describe('PrismaPostRepositoryService', () => {
   let prismaService: PrismaService;
   let service: PrismaPostRepositoryService;
   let postAndSelect: PostAndSelect;
+  let postSelect: Prisma.PostSelect;
+  let postId: number;
 
   beforeEach(async () => {
+    postId = 1;
+
+    postSelect = {
+      id: true,
+      title: true,
+      link: true,
+      content: true,
+      createdAt: true,
+      updatedAt: true,
+      tags: true,
+      comments: false,
+      author: {
+        select: {
+          id: true,
+          username: true,
+        },
+      },
+      _count: true,
+    };
+
     postAndSelect = {
       id: 1,
       title: 'title',
@@ -80,15 +103,15 @@ describe('PrismaPostRepositoryService', () => {
     });
 
     it('should call prisma service with correct args', async () => {
-      await service.findById(1);
+      await service.findById(postId);
       expect(prismaService.post.findUnique).toHaveBeenCalledWith({
-        where: { id: 1 },
-        select: service.postSelect,
+        where: { id: postId },
+        select: postSelect,
       });
     });
 
     it('should map response to PostModel', async () => {
-      const result: PostModel = await service.findById(1);
+      const result: PostModel = await service.findById(postId);
       expect(result).toBeInstanceOf(PostModel);
     });
   });
@@ -121,9 +144,9 @@ describe('PrismaPostRepositoryService', () => {
         where: {
           deletedAt: null,
         },
-        select: service.postSelect,
-        skip: 0,
-        take: 10,
+        select: postSelect,
+        skip: getPostsDto.skip,
+        take: getPostsDto.take,
         orderBy: [
           {
             createdAt: 'asc',
@@ -139,12 +162,12 @@ describe('PrismaPostRepositoryService', () => {
         where: {
           deletedAt: null,
           tags: {
-            hasSome: ['tag1', 'tag2'],
+            hasSome: getPostsDto.tags,
           },
         },
-        select: service.postSelect,
-        skip: 0,
-        take: 10,
+        select: postSelect,
+        skip: getPostsDto.skip,
+        take: getPostsDto.take,
         orderBy: [
           {
             createdAt: 'asc',
@@ -189,16 +212,16 @@ describe('PrismaPostRepositoryService', () => {
             connect: { id: userId },
           },
         },
-        select: service.postSelect,
+        select: postSelect,
       });
     });
   });
 
   describe('softDeleteById()', () => {
     it('should call prisma service with correct args', async () => {
-      await service.softDeleteById(1);
+      await service.softDeleteById(postId);
       expect(prismaService.post.update).toHaveBeenCalledWith({
-        where: { id: 1 },
+        where: { id: postId },
         data: { deletedAt: new Date() },
       });
     });

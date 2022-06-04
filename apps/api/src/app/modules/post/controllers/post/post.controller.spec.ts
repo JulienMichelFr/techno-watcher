@@ -2,27 +2,21 @@ import { PostService } from '../../services/post/post.service';
 import { CommentService } from '../../services/comments/comment.service';
 import { PostController } from './post.controller';
 import { AddCommentOnPostDto, CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
+import { Test, TestingModule } from '@nestjs/testing';
 
 describe('PostController', () => {
   let postService: PostService;
   let commentService: CommentService;
   let postController: PostController;
 
-  let commentSelect: Prisma.CommentSelect;
   let user: User;
+  let postId: number;
 
-  beforeEach(() => {
-    commentSelect = {
-      id: true,
-      author: { select: { username: true } },
-      content: true,
-      createdAt: true,
-      updatedAt: true,
-      parentCommentId: true,
-      deletedAt: true,
-    };
+  beforeEach(async () => {
     user = { id: 1 } as User;
+
+    postId = 2;
 
     postService = {
       find: jest.fn(),
@@ -32,11 +26,19 @@ describe('PostController', () => {
     } as unknown as PostService;
 
     commentService = {
-      find: jest.fn(),
+      findByPostId: jest.fn(),
       createOnPost: jest.fn(),
     } as unknown as CommentService;
 
-    postController = new PostController(postService, commentService);
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [PostController],
+      providers: [
+        { provide: PostService, useValue: postService },
+        { provide: CommentService, useValue: commentService },
+      ],
+    }).compile();
+
+    postController = module.get<PostController>(PostController);
   });
 
   it('should be defined', () => {
@@ -63,8 +65,8 @@ describe('PostController', () => {
 
   describe('getPost()', () => {
     it('should call postService.findById()', async () => {
-      await postController.getPost(1);
-      expect(postService.findById).toHaveBeenCalledWith(1);
+      await postController.getPost(postId);
+      expect(postService.findById).toHaveBeenCalledWith(postId);
     });
   });
 
@@ -82,7 +84,7 @@ describe('PostController', () => {
 
     it('should call postService.create()', async () => {
       await postController.create(createPostDto, user);
-      expect(postService.create).toHaveBeenCalledWith(createPostDto, 1);
+      expect(postService.create).toHaveBeenCalledWith(createPostDto, user.id);
     });
   });
 
@@ -96,44 +98,39 @@ describe('PostController', () => {
     });
 
     it('should call commentService.createOnPost()', async () => {
-      await postController.addComment(addCommentOnPostDto, user, 1);
-      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto.content, 1, null, user, { select: commentSelect });
+      await postController.addComment(addCommentOnPostDto, user, postId);
+      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto, postId, user.id, null);
     });
   });
 
   describe('replyComment()', () => {
     let addCommentOnPostDto: AddCommentOnPostDto;
+    let parentCommentId: number;
 
     beforeEach(() => {
+      parentCommentId = 3;
       addCommentOnPostDto = {
         content: 'content',
       };
     });
 
     it('should call commentService.createOnPost()', async () => {
-      await postController.replyToComment(addCommentOnPostDto, user, 1, 2);
-      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto.content, 1, 2, user, { select: commentSelect });
+      await postController.replyToComment(addCommentOnPostDto, user, postId, parentCommentId);
+      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto, postId, user.id, parentCommentId);
     });
   });
 
   describe('getCommentsOnPost()', () => {
     it('should call commentService.find()', async () => {
-      await postController.getCommentsOnPost(1);
-      expect(commentService.find).toHaveBeenCalledWith({
-        where: {
-          post: {
-            id: 1,
-          },
-        },
-        select: commentSelect,
-      });
+      await postController.getCommentsOnPost(postId);
+      expect(commentService.findByPostId).toHaveBeenCalledWith(postId);
     });
   });
 
   describe('deletePost()', () => {
     it('should call postService.softDeletePost()', async () => {
-      await postController.deletePost(1, user);
-      expect(postService.softDeleteById).toHaveBeenCalledWith(1, 1);
+      await postController.deletePost(postId, user);
+      expect(postService.softDeleteById).toHaveBeenCalledWith(postId, user.id);
     });
   });
 });

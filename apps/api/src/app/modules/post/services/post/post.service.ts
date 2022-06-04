@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
-import { PostRepositoryService } from '../../repositories/post/post-repository/post-repository.service';
+import { PostRepositoryService } from '../../repositories/post/post-repository.service';
 
 @Injectable()
 export class PostService {

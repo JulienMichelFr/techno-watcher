@@ -1,35 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Comment, Prisma, User } from '@prisma/client';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { CommentRepositoryService } from '../../repositories/comment/comment-repository.service';
+import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 
 @Injectable()
 export class CommentService {
-  public constructor(private prisma: PrismaService) {}
+  public constructor(private commentRepository: CommentRepositoryService) {}
 
-  public async createOnPost(content: string, postId: number, commentId: number | null, user: User, args: Prisma.CommentArgs = {}): Promise<Comment> {
-    return this.prisma.comment.create({
-      data: {
-        content,
-        post: { connect: { id: postId } },
-        author: { connect: { id: user.id } },
-        parentComment: commentId ? { connect: { id: commentId } } : undefined,
-      },
-      ...args,
-    });
+  public async createOnPost(addCommentOnPostDto: AddCommentOnPostDto, postId: number, userId: number, commentId: number | null = null): Promise<CommentModel> {
+    return this.commentRepository.createOnPost(addCommentOnPostDto, postId, userId, commentId);
   }
 
-  public async find(conditions: Prisma.CommentFindManyArgs = {}): Promise<Comment[]> {
-    return this.prisma.comment.findMany(conditions);
+  public async findByPostId(postId: number): Promise<CommentModel[]> {
+    return this.commentRepository.findByPostId(postId);
   }
 
-  public async findOne(conditions: Prisma.CommentFindUniqueArgs): Promise<Comment | null> {
-    return this.prisma.comment.findUnique(conditions);
-  }
+  public async softDeleteById(commentId: number, userId: number): Promise<void> {
+    const comment: CommentModel = await this.commentRepository.findById(commentId);
 
-  public async softDeleteComment(commentId: number): Promise<void> {
-    await this.prisma.comment.update({
-      where: { id: commentId },
-      data: { deletedAt: new Date() },
-    });
+    if (comment.author.id !== userId) {
+      throw new ForbiddenException('You are not allowed to delete this comment');
+    }
+
+    await this.commentRepository.softDeleteById(commentId);
   }
 }
