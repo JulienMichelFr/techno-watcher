@@ -6,7 +6,7 @@ import { JwtPayload } from '../../auth.type';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { UnauthorizedException } from '@nestjs/common';
 import { CryptoService } from '../crypto/crypto.service';
-import MockedFn = jest.MockedFn;
+import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
 
 describe('AuthService', () => {
   let userService: UserService;
@@ -20,7 +20,8 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     userService = {
-      findOne: jest.fn(),
+      findById: jest.fn(),
+      findByEmail: jest.fn(),
       create: jest.fn(),
       updateRefreshToken: jest.fn(),
     } as unknown as UserService;
@@ -38,14 +39,11 @@ describe('AuthService', () => {
 
     service = new AuthService(userService, jwtService, invitationService, cryptoService);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (jwtService.sign as MockedFn<any>).mockReturnValue('token');
+    (jwtService.sign as jest.Mock).mockReturnValue('token');
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (cryptoService.hashPassword as MockedFn<any>).mockReturnValue(hashedPassword);
+    (cryptoService.hashPassword as jest.Mock).mockReturnValue(hashedPassword);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (cryptoService.validatePassword as MockedFn<any>).mockReturnValue(true);
+    (cryptoService.validatePassword as jest.Mock).mockReturnValue(true);
   });
 
   it('should be defined', () => {
@@ -54,25 +52,23 @@ describe('AuthService', () => {
 
   describe('validateUserPassword()', () => {
     it('should return null if user is not found', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue(null);
+      (userService.findByEmail as jest.Mock).mockRejectedValue(null);
       const result: JwtPayload = await service.validateUserPassword({ email: 'email', password });
       expect(result).toBeNull();
     });
 
     it('should return null if password is not valid', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (cryptoService.validatePassword as MockedFn<any>).mockReturnValueOnce(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue({ password: 'missMatchPassword' });
+      (cryptoService.validatePassword as jest.Mock).mockReturnValueOnce(false);
+
+      (userService.findByEmail as jest.Mock).mockResolvedValue({ password: 'missMatchPassword' });
       const result: JwtPayload = await service.validateUserPassword({ email: 'email', password });
       expect(result).toBeNull();
     });
 
     it('should return payload if user exists and password is valid', async () => {
       const response: JwtPayload = { email: 'email', username: 'username', id: 1 };
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue({ ...response, password: hashedPassword });
+
+      (userService.findByEmail as jest.Mock).mockResolvedValue({ ...response, password: hashedPassword });
       const result: JwtPayload = await service.validateUserPassword({ email: 'email', password });
       expect(result).toEqual(response);
     });
@@ -104,43 +100,33 @@ describe('AuthService', () => {
   });
 
   describe('signUp()', () => {
-    it('should throw an error if invitation is not valid', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (invitationService.findByCode as MockedFn<any>).mockResolvedValue(null);
-      const dto: SignUpDTO = { email: 'email', password: 'password', invitation: 'code', username: 'username' };
-      await expect(service.signUp(dto)).rejects.toThrowError(new UnauthorizedException('Invalid invitation'));
-    });
+    let invitation: InvitationModel;
+    let signUpDto: SignUpDTO;
 
-    it('should throw an error if invitation is already used', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (invitationService.findByCode as MockedFn<any>).mockResolvedValue({ user: true });
-      const dto: SignUpDTO = { email: 'email', password: 'password', invitation: 'code', username: 'username' };
-      await expect(service.signUp(dto)).rejects.toThrowError(new UnauthorizedException('Invalid invitation'));
+    beforeEach(() => {
+      invitation = new InvitationModel();
+      invitation.id = 2;
+      invitation.code = 'code';
+      invitation.alreadyUsed = false;
+
+      (invitationService.findByCode as jest.Mock).mockResolvedValue(invitation);
+
+      signUpDto = new SignUpDTO('username', 'email', 'password', invitation.code);
     });
 
     it('should create new user', async () => {
       jest.spyOn(service, 'signIn').mockResolvedValue({ accessToken: 'token', refreshToken: 'token' });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (invitationService.findByCode as MockedFn<any>).mockResolvedValue({ id: 2 });
-      const dto: SignUpDTO = { email: 'email', password, invitation: 'code', username: 'username' };
-      await service.signUp(dto);
-      expect(userService.create).toHaveBeenCalledWith({
-        email: dto.email,
-        password: hashedPassword,
-        username: dto.username,
-        invitation: { connect: { id: 2 } },
-      });
+      await service.signUp(signUpDto);
+      expect(userService.create).toHaveBeenCalledWith({ ...signUpDto, password: hashedPassword });
     });
 
     it('should use signIn() if user is created', async () => {
       jest.spyOn(service, 'signIn').mockResolvedValue({ accessToken: 'token', refreshToken: 'token' });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (invitationService.findByCode as MockedFn<any>).mockResolvedValue({ id: 2 });
-      const dto: SignUpDTO = { email: 'email', password, invitation: 'code', username: 'username' };
-      await service.signUp(dto);
-      expect(service.signIn).toHaveBeenCalledWith({ email: dto.email, password });
+      (invitationService.findByCode as jest.Mock).mockResolvedValue({ id: 2 });
+      await service.signUp(signUpDto);
+      expect(service.signIn).toHaveBeenCalledWith({ email: signUpDto.email, password });
     });
   });
 
@@ -154,35 +140,31 @@ describe('AuthService', () => {
     });
 
     it('should verify refreshToken', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (jwtService.verify as MockedFn<any>).mockResolvedValue(jwtPayload);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue({ refreshToken: refreshTokenDTO.refreshToken });
+      (jwtService.verify as jest.Mock).mockResolvedValue(jwtPayload);
+
+      (userService.findById as jest.Mock).mockResolvedValue({ refreshToken: refreshTokenDTO.refreshToken });
       await service.refreshToken(refreshTokenDTO);
       expect(jwtService.verify).toHaveBeenCalledWith(refreshTokenDTO.refreshToken);
     });
 
     it('should throw an error if user is not found', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (jwtService.verify as MockedFn<any>).mockResolvedValue(jwtPayload);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue(null);
+      (jwtService.verify as jest.Mock).mockResolvedValue(jwtPayload);
+
+      (userService.findById as jest.Mock).mockResolvedValue(null);
       await expect(service.refreshToken(refreshTokenDTO)).rejects.toThrowError(new UnauthorizedException('Invalid credentials'));
     });
 
     it('should throw an error if refresh token mismatch', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (jwtService.verify as MockedFn<any>).mockResolvedValue(jwtPayload);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue({ refreshToken: 'other' });
+      (jwtService.verify as jest.Mock).mockResolvedValue(jwtPayload);
+
+      (userService.findById as jest.Mock).mockResolvedValue({ refreshToken: 'other' });
       await expect(service.refreshToken(refreshTokenDTO)).rejects.toThrowError(new UnauthorizedException('Invalid credentials'));
     });
 
     it('should return refresh token', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (jwtService.verify as MockedFn<any>).mockResolvedValue(jwtPayload);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue({ refreshToken: refreshTokenDTO.refreshToken });
+      (jwtService.verify as jest.Mock).mockResolvedValue(jwtPayload);
+
+      (userService.findById as jest.Mock).mockResolvedValue({ refreshToken: refreshTokenDTO.refreshToken });
       const result: AuthResponseModel = await service.refreshToken(refreshTokenDTO);
       expect(result).toEqual({
         accessToken: 'token',
@@ -191,10 +173,9 @@ describe('AuthService', () => {
     });
 
     it('should update refresh token', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (jwtService.verify as MockedFn<any>).mockResolvedValue(jwtPayload);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (userService.findOne as MockedFn<any>).mockResolvedValue({ id: 1, refreshToken: refreshTokenDTO.refreshToken });
+      (jwtService.verify as jest.Mock).mockResolvedValue(jwtPayload);
+
+      (userService.findById as jest.Mock).mockResolvedValue({ id: 1, refreshToken: refreshTokenDTO.refreshToken });
       await service.refreshToken(refreshTokenDTO);
       expect(userService.updateRefreshToken).toHaveBeenCalledWith(1, 'token');
     });

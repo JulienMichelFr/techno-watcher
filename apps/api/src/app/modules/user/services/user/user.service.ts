@@ -1,23 +1,40 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Prisma, User } from '@prisma/client';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { UserRepositoryService } from '../../repositories/user/user-repository.service';
+import { UserModel } from '../../models/user/user.model';
+import { SignUpDTO } from '@techno-watcher/api-models';
+import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
+import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
 
 @Injectable()
 export class UserService {
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(private readonly userRepository: UserRepositoryService, private invitationService: InvitationService) {}
 
-  public create(user: Prisma.UserCreateInput): Promise<User> {
-    return this.prismaService.user.create({ data: user });
+  public async create(user: SignUpDTO): Promise<UserModel> {
+    let invitation: InvitationModel;
+    try {
+      invitation = await this.invitationService.findByCode(user.invitation);
+    } catch (e) {
+      if (e instanceof NotFoundException) {
+        throw new UnprocessableEntityException('Invalid invitation');
+      }
+      throw e;
+    }
+
+    if (invitation.alreadyUsed) {
+      throw new UnprocessableEntityException('Invalid invitation');
+    }
+    return this.userRepository.create(user, invitation.id);
   }
 
-  public findOne(search: Prisma.UserWhereUniqueInput, args: Prisma.UserArgs = {}): Promise<User> {
-    return this.prismaService.user.findUnique({ where: search, ...args });
+  public async findById(userId: number): Promise<UserModel> {
+    return this.userRepository.findById(userId);
+  }
+
+  public async findByEmail(email: string): Promise<UserModel> {
+    return this.userRepository.findByEmail(email);
   }
 
   public async updateRefreshToken(userId: number, refreshToken: string): Promise<void> {
-    await this.prismaService.user.update({
-      where: { id: userId },
-      data: { refreshToken },
-    });
+    await this.userRepository.updateRefreshToken(userId, refreshToken);
   }
 }

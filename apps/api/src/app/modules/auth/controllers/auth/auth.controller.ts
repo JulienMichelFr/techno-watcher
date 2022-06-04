@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Public } from '../../decorators/public/public.decorator';
@@ -13,7 +13,11 @@ export class AuthController {
   @HttpCode(200)
   @Post('sign-in')
   public async signIn(@Body() { email, password }: SignInDTO): Promise<AuthResponseModel> {
-    return await this.authService.signIn({ email, password });
+    try {
+      return await this.authService.signIn({ email, password });
+    } catch (e) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
   }
 
   @Serializer(AuthResponseModel)

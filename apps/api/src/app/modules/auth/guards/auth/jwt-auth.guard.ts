@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../auth.type';
 import { Request } from 'express';
 import { UserService } from '../../../user/services/user/user.service';
-import { User } from '@prisma/client';
+import { UserModel } from '../../../user/models/user/user.model';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -25,7 +25,7 @@ export class JwtAuthGuard implements CanActivate {
 
     const decodedJwt: JwtPayload = this.decodeJwt(authorizationHeader.replace('Bearer ', ''));
 
-    const user: User = await this.userService.findOne({ id: decodedJwt.id });
+    const user: UserModel = await this.userService.findById(decodedJwt.id);
     if (!user) {
       throw new UnauthorizedException('Token is invalid');
     }

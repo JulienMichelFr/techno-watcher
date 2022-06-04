@@ -50,25 +50,25 @@ Object {
 
 exports[`Auth Sign up should reject already used email 1`] = `
 Object {
-  "error": "Bad Request",
+  "error": "Unprocessable Entity",
   "message": "Could not create resource, email is already used",
-  "statusCode": 400,
+  "statusCode": 422,
 }
 `;
 
 exports[`Auth Sign up should reject already used invitation code 1`] = `
 Object {
-  "error": "Unauthorized",
+  "error": "Unprocessable Entity",
   "message": "Invalid invitation",
-  "statusCode": 401,
+  "statusCode": 422,
 }
 `;
 
 exports[`Auth Sign up should reject already used username 1`] = `
 Object {
-  "error": "Bad Request",
+  "error": "Unprocessable Entity",
   "message": "Could not create resource, username is already used",
-  "statusCode": 400,
+  "statusCode": 422,
 }
 `;
 
@@ -84,9 +84,9 @@ Object {
 
 exports[`Auth Sign up should reject invalid invitation code 1`] = `
 Object {
-  "error": "Unauthorized",
+  "error": "Unprocessable Entity",
   "message": "Invalid invitation",
-  "statusCode": 401,
+  "statusCode": 422,
 }
 `;
 
