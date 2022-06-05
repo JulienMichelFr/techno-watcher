@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { JwtPayload } from '../../auth.type';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { UnauthorizedException } from '@nestjs/common';
-import { CryptoService } from '../crypto/crypto.service';
+import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
 import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
 
 describe('AuthService', () => {

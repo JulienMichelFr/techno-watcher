@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../auth.type';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
-import { CryptoService } from '../crypto/crypto.service';
+import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
 import { UserModel } from '../../../user/models/user/user.model';
 
 @Injectable()
