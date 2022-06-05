@@ -1,9 +1,10 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable, skipWhile, switchMap, take } from 'rxjs';
-import { JWT_REQUIRED } from '../constantes/jwt-required-http-context';
 import { Injectable } from '@angular/core';
+import { Observable, skipWhile, switchMap, take } from 'rxjs';
+
 import { AuthFacade } from '../+state/auth/auth.facade';
 import { AuthState } from '../+state/auth/auth.models';
+import { JWT_REQUIRED } from '../constantes/jwt-required-http-context';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

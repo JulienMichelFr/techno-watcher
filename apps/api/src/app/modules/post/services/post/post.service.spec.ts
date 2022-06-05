@@ -1,8 +1,11 @@
-import { PostService } from './post.service';
-import { CreatePostDto, GetPostsDto, PostModel } from '@techno-watcher/api-models';
-import { Test, TestingModule } from '@nestjs/testing';
 import { ForbiddenException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { CreatePostDto, GetPostsDto, PostModel } from '@techno-watcher/api-models';
+
 import { PostRepositoryService } from '../../repositories/post/post-repository.service';
+
+import { PostService } from './post.service';
 
 describe('PostService', () => {
   let postRepository: PostRepositoryService;

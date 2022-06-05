@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
+
 import { PrismaModule } from '../prisma/prisma.module';
-import { InvitationService } from './services/invitation/invitation.service';
-import { PrismaInvitationRepositoryService } from './repositories/invitation/prisma-invitation-repository.service';
+
 import { InvitationRepositoryService } from './repositories/invitation/invitation-repository.service';
+import { PrismaInvitationRepositoryService } from './repositories/invitation/prisma-invitation-repository.service';
+import { InvitationService } from './services/invitation/invitation.service';
 
 @Module({
   imports: [PrismaModule],

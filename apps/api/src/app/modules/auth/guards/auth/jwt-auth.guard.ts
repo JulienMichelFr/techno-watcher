@@ -1,11 +1,12 @@
-import { Reflector } from '@nestjs/core';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { IS_PUBLIC_KEY } from '../../decorators/public/public.decorator';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from '../../auth.type';
 import { Request } from 'express';
-import { UserService } from '../../../user/services/user/user.service';
+
 import { UserModel } from '../../../user/models/user/user.model';
+import { UserService } from '../../../user/services/user/user.service';
+import { JwtPayload } from '../../auth.type';
+import { IS_PUBLIC_KEY } from '../../decorators/public/public.decorator';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

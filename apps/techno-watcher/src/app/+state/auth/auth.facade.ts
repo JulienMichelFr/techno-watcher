@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as AuthSelectors from './auth.selectors';
-import * as AuthActions from './auth.actions';
 import { Observable } from 'rxjs';
-import { AuthState, AuthStateUserProfile } from './auth.models';
+
 import { SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+
+import * as AuthActions from './auth.actions';
+import { AuthState, AuthStateUserProfile } from './auth.models';
+import * as AuthSelectors from './auth.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {

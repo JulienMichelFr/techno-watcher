@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiServiceBase } from '../../bases/api-service.base';
-import { CommentModel } from '@techno-watcher/api-models';
 import { Observable } from 'rxjs';
+
+import { CommentModel } from '@techno-watcher/api-models';
+
+import { ApiServiceBase } from '../../bases/api-service.base';
 
 @Injectable({
   providedIn: 'root',

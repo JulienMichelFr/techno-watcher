@@ -1,10 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from '../../../user/services/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from '../../auth.type';
+
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
-import { UserModel } from '../../../user/models/user/user.model';
+
 import { CreateUserDto } from '../../../user/dtos/create-user.dto';
+import { UserModel } from '../../../user/models/user/user.model';
+import { UserService } from '../../../user/services/user/user.service';
+import { JwtPayload } from '../../auth.type';
 
 @Injectable()
 export class AuthService {

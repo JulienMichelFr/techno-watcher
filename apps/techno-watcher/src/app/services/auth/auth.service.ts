@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpErrorResponse } from '@angular/common/http';
-import { ConfigService } from '../config/config.service';
-import { AuthResponseModel, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
-import { catchError, Observable, throwError } from 'rxjs';
-import { JWT_REQUIRED } from '../../constantes/jwt-required-http-context';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, Observable, throwError } from 'rxjs';
+
+import { AuthResponseModel, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+
+import { JWT_REQUIRED } from '../../constantes/jwt-required-http-context';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',

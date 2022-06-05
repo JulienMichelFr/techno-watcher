@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuthFacade } from '../../../../+state/auth/auth.facade';
 import { Observable } from 'rxjs';
+
+import { AuthFacade } from '../../../../+state/auth/auth.facade';
 import { AuthStateUserProfile } from '../../../../+state/auth/auth.models';
 
 @Component({

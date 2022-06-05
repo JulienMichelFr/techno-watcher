@@ -1,10 +1,12 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
 
+import { AuthResponseModel } from '@techno-watcher/api-models';
+
+import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
+
 import * as fromActions from './auth.actions';
 import { AuthAction } from './auth.actions';
 import { AuthState } from './auth.models';
-import { AuthResponseModel } from '@techno-watcher/api-models';
-import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
 
 export const AUTH_FEATURE_KEY: string = 'auth';
 

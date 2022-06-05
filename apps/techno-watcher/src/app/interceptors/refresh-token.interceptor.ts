@@ -1,7 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { AuthFacade } from '../+state/auth/auth.facade';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, skipWhile, switchMap, take, throwError } from 'rxjs';
+
+import { AuthFacade } from '../+state/auth/auth.facade';
 import { AuthState } from '../+state/auth/auth.models';
 
 @Injectable()

@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SignUpDTO } from '@techno-watcher/api-models';
-import { AuthFacade } from '../../../../+state/auth/auth.facade';
 import { Observable } from 'rxjs';
+
+import { SignUpDTO } from '@techno-watcher/api-models';
+
+import { AuthFacade } from '../../../../+state/auth/auth.facade';
 
 @Component({
   selector: 'techno-watcher-sign-up-page',

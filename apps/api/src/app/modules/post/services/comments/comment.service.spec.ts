@@ -1,8 +1,11 @@
-import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommentRepositoryService } from '../../repositories/comment/comment-repository.service';
-import { CommentService } from './comment.service';
+
+import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
+
 import { UserModel } from '../../../user/models/user/user.model';
+import { CommentRepositoryService } from '../../repositories/comment/comment-repository.service';
+
+import { CommentService } from './comment.service';
 
 describe('CommentService', () => {
   let repository: CommentRepositoryService;

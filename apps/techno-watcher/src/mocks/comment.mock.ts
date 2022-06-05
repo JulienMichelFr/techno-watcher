@@ -1,6 +1,7 @@
 import { randEmail, randNumber, randParagraph, randRecentDate, randUserName, seed } from '@ngneat/falso';
-import { CommentModel } from '@techno-watcher/api-models';
 import { plainToInstance } from 'class-transformer';
+
+import { CommentModel } from '@techno-watcher/api-models';
 
 seed('my-seed-2');
 

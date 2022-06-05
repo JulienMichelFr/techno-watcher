@@ -1,10 +1,11 @@
-import {moduleMetadata, Story, Meta} from '@storybook/angular';
+import {FormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { action } from '@storybook/addon-actions';
+import {Meta,moduleMetadata, Story} from '@storybook/angular';
+
 import { TagInputComponent } from './tag-input.component';
 import { TagInputModule } from './tag-input.module';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
-import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Shared/Components/TagInput',

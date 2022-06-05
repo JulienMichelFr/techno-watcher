@@ -1,7 +1,9 @@
-import { seed } from '@ngneat/falso';
-import { SEED_ID } from './seed-id';
 import { Injectable } from '@nestjs/common';
+import { seed } from '@ngneat/falso';
+
 import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
+
+import { SEED_ID } from './seed-id';
 
 seed(SEED_ID);
 

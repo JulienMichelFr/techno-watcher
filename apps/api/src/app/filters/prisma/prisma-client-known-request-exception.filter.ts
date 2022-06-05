@@ -1,5 +1,5 @@
-import { BaseExceptionFilter } from '@nestjs/core';
 import { ArgumentsHost, Catch, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { BaseExceptionFilter } from '@nestjs/core';
 import { Prisma } from '@prisma/client';
 
 @Injectable()

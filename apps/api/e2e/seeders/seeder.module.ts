@@ -1,9 +1,11 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { InvitationSeeder } from './invitation.seeder';
-import { UserSeeder } from './user.seeder';
-import { PostSeeder } from './post.seeder';
-import { CommentSeeder } from './comment.seeder';
+
 import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
+
+import { CommentSeeder } from './comment.seeder';
+import { InvitationSeeder } from './invitation.seeder';
+import { PostSeeder } from './post.seeder';
+import { UserSeeder } from './user.seeder';
 
 @Module({
   providers: [InvitationSeeder, UserSeeder, PostSeeder, CommentSeeder],

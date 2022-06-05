@@ -1,10 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaUserRepositoryService, UserAndSelect } from './prisma-user-repository.service';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
-import { UserModel } from '../../models/user/user.model';
-import { SignUpDTO } from '@techno-watcher/api-models';
 import { NotFoundException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Prisma } from '@prisma/client';
+
+import { SignUpDTO } from '@techno-watcher/api-models';
+
+import { PrismaService } from '../../../prisma/prisma.service';
+import { UserModel } from '../../models/user/user.model';
+
+import { PrismaUserRepositoryService, UserAndSelect } from './prisma-user-repository.service';
 
 describe('PrismaUserRepositoryService', () => {
   let service: PrismaUserRepositoryService;

@@ -1,6 +1,8 @@
-import { AuthService } from '../../services/auth/auth.service';
-import { AuthController } from './auth.controller';
 import { RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+
+import { AuthService } from '../../services/auth/auth.service';
+
+import { AuthController } from './auth.controller';
 
 describe('AuthController', () => {
   let authService: AuthService;

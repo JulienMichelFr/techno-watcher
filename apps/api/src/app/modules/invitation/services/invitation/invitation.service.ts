@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { InvitationRepositoryService } from '../../repositories/invitation/invitation-repository.service';
+
 import { InvitationModel } from '../../models/invitation/invitation.model';
+import { InvitationRepositoryService } from '../../repositories/invitation/invitation-repository.service';
 
 @Injectable()
 export class InvitationService {

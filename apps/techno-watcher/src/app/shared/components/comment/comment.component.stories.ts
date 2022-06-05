@@ -1,8 +1,10 @@
+import { provideMockStore } from '@ngrx/store/testing';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
+
+import { generateComment } from '../../../../mocks/comment.mock';
+
 import { CommentComponent } from './comment.component';
 import { CommentComponentModule } from './comment-component.module';
-import { generateComment } from '../../../../mocks/comment.mock';
-import { provideMockStore } from '@ngrx/store/testing';
 
 export default {
   title: 'Shared/Components/Comment',

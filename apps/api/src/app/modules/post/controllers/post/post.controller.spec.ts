@@ -1,9 +1,12 @@
-import { PostService } from '../../services/post/post.service';
-import { CommentService } from '../../services/comments/comment.service';
-import { PostController } from './post.controller';
-import { AddCommentOnPostDto, CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { AddCommentOnPostDto, CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
+
 import { UserModel } from '../../../user/models/user/user.model';
+import { CommentService } from '../../services/comments/comment.service';
+import { PostService } from '../../services/post/post.service';
+
+import { PostController } from './post.controller';
 
 describe('PostController', () => {
   let postService: PostService;

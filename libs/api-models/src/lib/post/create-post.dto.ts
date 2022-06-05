@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
 
 export class CreatePostDto {
   @IsNotEmpty()

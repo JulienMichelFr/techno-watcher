@@ -1,5 +1,6 @@
-import { UrlValidatorDirective } from './url-validator.directive';
 import { AbstractControl, FormControl } from '@angular/forms';
+
+import { UrlValidatorDirective } from './url-validator.directive';
 
 describe('UrlValidatorDirective', () => {
   const directive: UrlValidatorDirective = new UrlValidatorDirective();

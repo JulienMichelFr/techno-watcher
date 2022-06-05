@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Prisma } from '@prisma/client';
+
 import { AddCommentOnPostDto, AuthorModel, CommentModel } from '@techno-watcher/api-models';
+
 import { PrismaService } from '../../../prisma/prisma.service';
+
 import { CommentAndSelect, PrismaCommentRepositoryService } from './prisma-comment-repository.service';
 
 describe('PrismaCommentRepositoryService', () => {

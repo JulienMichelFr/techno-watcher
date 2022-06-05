@@ -1,11 +1,13 @@
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../../../user/services/user/user.service';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
+import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { Request } from 'express';
+
+import { UserService } from '../../../user/services/user/user.service';
+
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 describe('JwtAuthGuard', () => {
   let guard: JwtAuthGuard;

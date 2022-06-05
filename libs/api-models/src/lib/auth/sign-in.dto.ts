@@ -1,5 +1,5 @@
-import { IsEmail, IsString } from 'class-validator';
 import type { User } from '@prisma/client';
+import { IsEmail, IsString } from 'class-validator';
 
 export class SignInDTO implements Pick<User, 'email' | 'password'> {
   @IsEmail()

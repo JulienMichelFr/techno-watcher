@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { UserRepositoryService } from '../../repositories/user/user-repository.service';
-import { UserModel } from '../../models/user/user.model';
-import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
-import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
+
 import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
+import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
+import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
 import { CreateUserDto } from '../../dtos/create-user.dto';
+import { UserModel } from '../../models/user/user.model';
+import { UserRepositoryService } from '../../repositories/user/user-repository.service';
 
 @Injectable()
 export class UserService {

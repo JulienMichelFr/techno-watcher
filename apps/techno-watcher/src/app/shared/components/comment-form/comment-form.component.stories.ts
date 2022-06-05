@@ -1,7 +1,8 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CommentFormModule } from './comment-form.module';
-import { CommentFormComponent } from './comment-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
+
+import { CommentFormComponent } from './comment-form.component';
+import { CommentFormModule } from './comment-form.module';
 
 export default {
   title: 'Shared/Components/CommentForm',

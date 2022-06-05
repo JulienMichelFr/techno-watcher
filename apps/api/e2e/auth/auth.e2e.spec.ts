@@ -1,13 +1,15 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { sign } from 'jsonwebtoken';
+import * as supertest from 'supertest';
+
+import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+
 import { AppModule } from '../../src/app/app.module';
+import { signIn } from '../helpers/signin';
+import { InvitationSeeder } from '../seeders/invitation.seeder';
 import { SeederModule } from '../seeders/seeder.module';
 import { UserSeeder } from '../seeders/user.seeder';
-import { InvitationSeeder } from '../seeders/invitation.seeder';
-import * as supertest from 'supertest';
-import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
-import { signIn } from '../helpers/signin';
-import { sign } from 'jsonwebtoken';
 
 describe('Auth', () => {
   let app: INestApplication;

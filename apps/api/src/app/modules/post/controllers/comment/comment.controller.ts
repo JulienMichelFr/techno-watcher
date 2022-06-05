@@ -1,7 +1,8 @@
 import { Controller, Delete, Param, ParseIntPipe } from '@nestjs/common';
-import { CommentService } from '../../services/comments/comment.service';
+
 import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
 import { UserModel } from '../../../user/models/user/user.model';
+import { CommentService } from '../../services/comments/comment.service';
 
 @Controller('comments')
 export class CommentController {

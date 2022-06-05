@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PostService } from '../../services/post/post.service';
-import { BehaviorSubject, map, Observable, shareReplay, switchMap, tap } from 'rxjs';
-import { Paginated, PostModel } from '@techno-watcher/api-models';
 import { PageEvent } from '@angular/material/paginator';
+import { BehaviorSubject, map, Observable, shareReplay, switchMap, tap } from 'rxjs';
+
+import { Paginated, PostModel } from '@techno-watcher/api-models';
+
+import { PostService } from '../../services/post/post.service';
 
 @Component({
   selector: 'techno-watcher-home-page',

@@ -1,13 +1,15 @@
-import { Seeder } from './base-seeder';
-import { Comment, Post, User } from '@prisma/client';
-import { PostSeeder } from './post.seeder';
-import { getDate } from '../helpers/get-date';
-import { rand, randParagraph, seed } from '@ngneat/falso';
-import { generateCount } from '../helpers/generate-count';
-import { UserSeeder } from './user.seeder';
-import { SEED_ID } from './seed-id';
 import { Injectable } from '@nestjs/common';
+import { rand, randParagraph, seed } from '@ngneat/falso';
+import { Comment, Post, User } from '@prisma/client';
+
 import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
+import { generateCount } from '../helpers/generate-count';
+import { getDate } from '../helpers/get-date';
+
+import { Seeder } from './base-seeder';
+import { PostSeeder } from './post.seeder';
+import { SEED_ID } from './seed-id';
+import { UserSeeder } from './user.seeder';
 
 seed(SEED_ID);
 

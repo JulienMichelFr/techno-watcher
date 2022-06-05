@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { PostModel } from '@techno-watcher/api-models';
 
 @Component({

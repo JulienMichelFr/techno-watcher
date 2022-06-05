@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+
 import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 
 @Component({

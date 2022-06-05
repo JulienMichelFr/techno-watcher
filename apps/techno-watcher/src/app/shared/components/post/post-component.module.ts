@@ -1,13 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PostComponent } from './post.component';
-import { MatIconModule } from '@angular/material/icon';
+import { NgModule } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
-import { TagComponentModule } from '../tag/tag-component.module';
-import { DateAgoPipeModule } from '../../pipes/date-ago/date-ago-pipe.module';
-import { MatCardModule } from '@angular/material/card';
-import { PostSourcePipeModule } from '../../pipes/post-source/post-source-pipe.module';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
+import { DateAgoPipeModule } from '../../pipes/date-ago/date-ago-pipe.module';
+import { PostSourcePipeModule } from '../../pipes/post-source/post-source-pipe.module';
+import { TagComponentModule } from '../tag/tag-component.module';
+
+import { PostComponent } from './post.component';
 
 @NgModule({
   declarations: [PostComponent],

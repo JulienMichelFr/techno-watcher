@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
+import { catchError, map, mergeMap, of, repeat, tap } from 'rxjs';
+
+import { AuthService } from '../../services/auth/auth.service';
+import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
 
 import * as fromActions from './auth.actions';
-import { AuthService } from '../../services/auth/auth.service';
-import { catchError, map, mergeMap, of, repeat, tap } from 'rxjs';
-import { Router } from '@angular/router';
-import { DecodedToken, decodeJwt } from '../../shared/utils/decode-jwt';
 
 export const AUTH_LOCAL_STORAGE_KEY: string = 'auth';
 

@@ -1,6 +1,8 @@
-import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+
 import type { Sort } from '../types';
+
 import { PostModel } from './post.model';
 
 type PostSort = Sort<PostModel>;

@@ -1,6 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { map, Observable } from 'rxjs';
+
 import { Paginated } from '@techno-watcher/api-models';
 
 @Injectable()

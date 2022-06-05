@@ -1,6 +1,8 @@
-import { SignUpForm } from './sign-up.form';
 import { FormControl } from '@angular/forms';
+
 import { SignUpDTO } from '@techno-watcher/api-models';
+
+import { SignUpForm } from './sign-up.form';
 
 describe('SignUpForm', () => {
   let form: SignUpForm;

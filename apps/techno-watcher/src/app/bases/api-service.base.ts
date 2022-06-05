@@ -1,7 +1,8 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
-import { ConfigService } from '../services/config/config.service';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { ConfigService } from '../services/config/config.service';
 
 @Injectable()
 export abstract class ApiServiceBase<Model = unknown> {

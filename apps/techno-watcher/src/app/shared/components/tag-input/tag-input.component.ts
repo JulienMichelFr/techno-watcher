@@ -1,9 +1,10 @@
+import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+
 import { noop, NoopFn } from '../../utils/noop';
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'techno-watcher-tag-input',

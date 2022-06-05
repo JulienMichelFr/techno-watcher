@@ -1,12 +1,14 @@
+import { Injectable } from '@nestjs/common';
+import { seed } from '@ngneat/falso';
 import type { User } from '@prisma/client';
 import { Invitation } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
+
+import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
+
 import { Seeder } from './base-seeder';
 import { InvitationSeeder } from './invitation.seeder';
-import * as bcrypt from 'bcrypt';
-import { seed } from '@ngneat/falso';
 import { SEED_ID } from './seed-id';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
 
 seed(SEED_ID);
 

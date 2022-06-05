@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { CryptoService } from './services/crypto/crypto.service';
 
 @Module({

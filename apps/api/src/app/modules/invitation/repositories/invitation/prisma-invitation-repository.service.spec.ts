@@ -1,9 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { InvitationAndSelect, PrismaInvitationRepositoryService } from './prisma-invitation-repository.service';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
-import { InvitationModel } from '../../models/invitation/invitation.model';
 import { NotFoundException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Prisma } from '@prisma/client';
+
+import { PrismaService } from '../../../prisma/prisma.service';
+import { InvitationModel } from '../../models/invitation/invitation.model';
+
+import { InvitationAndSelect, PrismaInvitationRepositoryService } from './prisma-invitation-repository.service';
 
 describe('PrismaInvitationRepositoryService', () => {
   let service: PrismaInvitationRepositoryService;

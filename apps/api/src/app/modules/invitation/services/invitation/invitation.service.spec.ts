@@ -1,6 +1,8 @@
-import { InvitationService } from './invitation.service';
-import { InvitationRepositoryService } from '../../repositories/invitation/invitation-repository.service';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { InvitationRepositoryService } from '../../repositories/invitation/invitation-repository.service';
+
+import { InvitationService } from './invitation.service';
 
 describe('InvitationService', () => {
   let repository: InvitationRepositoryService;

@@ -1,9 +1,12 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
-import { SignUpForm } from './sign-up.form';
-import { noop, NoopFn } from '../../../../shared/utils/noop';
 import { Subscription } from 'rxjs';
+
 import { SignUpDTO } from '@techno-watcher/api-models';
+
+import { noop, NoopFn } from '../../../../shared/utils/noop';
+
+import { SignUpForm } from './sign-up.form';
 
 type OnChangeFn = (value?: SignUpDTO) => void;
 type OnTouchedFn = NoopFn;

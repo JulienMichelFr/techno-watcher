@@ -1,13 +1,15 @@
-import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CommentListComponent } from './comment-list.component';
-import { CommentListModule } from '../../comment-list.module';
-import { generateCommentList } from '../../../../../../mocks/comment.mock';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { AuthState } from '../../../../../+state/auth/auth.models';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { select, Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
+
+import { generateCommentList } from '../../../../../../mocks/comment.mock';
+import { AuthState } from '../../../../../+state/auth/auth.models';
 import { isSignedIn } from '../../../../../+state/auth/auth.selectors';
+import { CommentListModule } from '../../comment-list.module';
+
+import { CommentListComponent } from './comment-list.component';
 
 const signedOutState: AuthState = {
   refreshToken: null,

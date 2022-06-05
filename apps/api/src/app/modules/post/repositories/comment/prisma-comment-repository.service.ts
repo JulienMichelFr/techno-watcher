@@ -1,8 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CommentRepositoryService } from './comment-repository.service';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { AddCommentOnPostDto, AuthorModel, CommentModel } from '@techno-watcher/api-models';
 import { Comment, Prisma } from '@prisma/client';
+
+import { AddCommentOnPostDto, AuthorModel, CommentModel } from '@techno-watcher/api-models';
+
+import { PrismaService } from '../../../prisma/prisma.service';
+
+import { CommentRepositoryService } from './comment-repository.service';
 
 export type CommentAndSelect = Omit<Comment, 'authorId'> & { author: { id: number; username: string } };
 

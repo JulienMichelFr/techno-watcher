@@ -1,5 +1,5 @@
-import { UserModel } from '../../models/user/user.model';
 import { CreateUserDto } from '../../dtos/create-user.dto';
+import { UserModel } from '../../models/user/user.model';
 
 export abstract class UserRepositoryService {
   public abstract create(user: CreateUserDto, invitationId: number): Promise<UserModel>;

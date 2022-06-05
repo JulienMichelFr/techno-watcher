@@ -1,10 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
-import { PostService } from '../../services/post/post.service';
-import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
+
 import { AddCommentOnPostDto, CommentModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
+
+import { GetUser } from '../../../auth/decorators/get-user/get-user.decorator';
 import { Public } from '../../../auth/decorators/public/public.decorator';
-import { CommentService } from '../../services/comments/comment.service';
 import { UserModel } from '../../../user/models/user/user.model';
+import { CommentService } from '../../services/comments/comment.service';
+import { PostService } from '../../services/post/post.service';
 
 @Controller('posts')
 export class PostController {

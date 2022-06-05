@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InvitationRepositoryService } from './invitation-repository.service';
-import { PrismaService } from '../../../prisma/prisma.service';
 import { Invitation, Prisma, User } from '@prisma/client';
+
+import { PrismaService } from '../../../prisma/prisma.service';
 import { InvitationModel } from '../../models/invitation/invitation.model';
+
+import { InvitationRepositoryService } from './invitation-repository.service';
 
 export type InvitationAndSelect = Invitation & { user: Pick<User, 'id'> | null };
 

@@ -1,9 +1,10 @@
-import { SignUpFormComponent } from './sign-up-form.component';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
+
+import { SignUpFormComponent } from './sign-up-form.component';
 
 export default {
   title: 'Auth/Components/SignUpForm',

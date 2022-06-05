@@ -1,7 +1,9 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CreatePostDto} from "@techno-watcher/api-models";
-import {PostService} from "../../../../services/post/post.service";
 import {Router} from "@angular/router";
+
+import {CreatePostDto} from "@techno-watcher/api-models";
+
+import {PostService} from "../../../../services/post/post.service";
 
 @Component({
   selector: 'techno-watcher-create-post-page',

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/typedef */
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { AUTH_FEATURE_KEY } from "./auth.reducer";
+
 import { AuthState } from "./auth.models";
+import { AUTH_FEATURE_KEY } from "./auth.reducer";
 
 export const getAuthState = createFeatureSelector<AuthState>(AUTH_FEATURE_KEY);
 export const authStateIsLoading = createSelector(getAuthState, (state: AuthState) => state.loading);

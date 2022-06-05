@@ -1,9 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { UserRepositoryService } from './user-repository.service';
-import { UserModel } from '../../models/user/user.model';
-import { SignUpDTO } from '@techno-watcher/api-models';
 import { Prisma, User } from '@prisma/client';
+
+import { SignUpDTO } from '@techno-watcher/api-models';
+
+import { PrismaService } from '../../../prisma/prisma.service';
+import { UserModel } from '../../models/user/user.model';
+
+import { UserRepositoryService } from './user-repository.service';
 
 export type UserAndSelect = Pick<UserModel, 'id' | 'email' | 'username' | 'password' | 'refreshToken'>;
 

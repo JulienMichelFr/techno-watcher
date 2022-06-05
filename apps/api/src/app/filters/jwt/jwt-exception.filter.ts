@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, ForbiddenException, UnauthorizedException } from '@nestjs/common';
-import { JsonWebTokenError } from 'jsonwebtoken';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 @Catch(JsonWebTokenError)
 export class JwtExceptionFilter extends BaseExceptionFilter {

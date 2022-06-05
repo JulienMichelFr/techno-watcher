@@ -1,5 +1,6 @@
-import { TagComponent } from './tag.component';
 import { moduleMetadata, Story } from '@storybook/angular';
+
+import { TagComponent } from './tag.component';
 import { TagComponentModule } from './tag-component.module';
 
 export default {

@@ -1,12 +1,14 @@
-import { Post, User } from '@prisma/client';
-import { Seeder } from './base-seeder';
-import { generateCount } from '../helpers/generate-count';
-import { rand, randCatchPhrase, randNumber, randParagraph, randUrl, randWord, seed } from '@ngneat/falso';
-import { getDate } from '../helpers/get-date';
-import { UserSeeder } from './user.seeder';
-import { SEED_ID } from './seed-id';
-import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
+import { rand, randCatchPhrase, randNumber, randParagraph, randUrl, randWord, seed } from '@ngneat/falso';
+import { Post, User } from '@prisma/client';
+
+import { PrismaService } from '../../src/app/modules/prisma/prisma.service';
+import { generateCount } from '../helpers/generate-count';
+import { getDate } from '../helpers/get-date';
+
+import { Seeder } from './base-seeder';
+import { SEED_ID } from './seed-id';
+import { UserSeeder } from './user.seeder';
 
 seed(SEED_ID);
 

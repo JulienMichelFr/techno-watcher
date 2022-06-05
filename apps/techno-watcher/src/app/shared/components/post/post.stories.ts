@@ -1,10 +1,13 @@
-import { PostComponent } from './post.component';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { TagComponentModule } from '../tag/tag-component.module';
-import { PostComponentModule } from './post-component.module';
 import { randRecentDate, randUrl } from '@ngneat/falso';
-import { PostModel } from '@techno-watcher/api-models';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { plainToInstance } from 'class-transformer';
+
+import { PostModel } from '@techno-watcher/api-models';
+
+import { TagComponentModule } from '../tag/tag-component.module';
+
+import { PostComponent } from './post.component';
+import { PostComponentModule } from './post-component.module';
 
 const post: PostModel = plainToInstance(
   PostModel,

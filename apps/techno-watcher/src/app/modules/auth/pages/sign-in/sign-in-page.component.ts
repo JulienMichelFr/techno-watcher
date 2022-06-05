@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignUpDTO } from '@techno-watcher/api-models';
-import { AuthFacade } from '../../../../+state/auth/auth.facade';
 import { Observable } from 'rxjs';
+
+import { SignUpDTO } from '@techno-watcher/api-models';
+
+import { AuthFacade } from '../../../../+state/auth/auth.facade';
 
 @Component({
   selector: 'techno-watcher-sign-in',

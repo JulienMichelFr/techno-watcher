@@ -1,7 +1,8 @@
 import { Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { isSignedIn } from '../../../+state/auth/auth.selectors';
 import { Subscription } from 'rxjs';
+
+import { isSignedIn } from '../../../+state/auth/auth.selectors';
 
 @Directive({
   selector: '[technoWatcherShowOnSignedIn]',

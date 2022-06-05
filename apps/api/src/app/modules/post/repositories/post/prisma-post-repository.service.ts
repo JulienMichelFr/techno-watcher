@@ -1,7 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
 import { Post, Prisma } from '@prisma/client';
+
 import { AuthorModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
+
+import { PrismaService } from '../../../prisma/prisma.service';
+
 import { PostRepositoryService } from './post-repository.service';
 
 export type PostAndSelect = Omit<Post, 'comments' | 'authorId'> & { author: { id: number; username: string }; _count: { comments: number } };

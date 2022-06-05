@@ -1,6 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CommentRepositoryService } from '../../repositories/comment/comment-repository.service';
+
 import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
+
+import { CommentRepositoryService } from '../../repositories/comment/comment-repository.service';
 
 @Injectable()
 export class CommentService {

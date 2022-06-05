@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, debounceTime, filter, map, Observable, switchMap, take, tap, withLatestFrom } from 'rxjs';
+
 import { AddCommentOnPostDto, CommentModel, PostModel } from '@techno-watcher/api-models';
-import { PostService } from '../../../../services/post/post.service';
-import { noop } from '../../../../shared/utils/noop';
+
 import { AuthFacade } from '../../../../+state/auth/auth.facade';
 import { CommentService } from '../../../../services/comment/comment.service';
+import { PostService } from '../../../../services/post/post.service';
+import { noop } from '../../../../shared/utils/noop';
 
 @Component({
   selector: 'techno-watcher-show-post-page-page',

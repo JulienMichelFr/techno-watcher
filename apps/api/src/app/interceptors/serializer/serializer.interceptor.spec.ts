@@ -1,8 +1,10 @@
-import { Expose } from 'class-transformer';
-import { SerializerInterceptor } from './serializer.interceptor';
 import { CallHandler } from '@nestjs/common';
+import { Expose } from 'class-transformer';
 import { Observable, of } from 'rxjs';
+
 import { Paginated } from '@techno-watcher/api-models';
+
+import { SerializerInterceptor } from './serializer.interceptor';
 
 describe('SerializerInterceptor', () => {
   interface Input {

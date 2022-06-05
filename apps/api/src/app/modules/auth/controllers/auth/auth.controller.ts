@@ -1,8 +1,10 @@
 import { Body, Controller, HttpCode, Post, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from '../../services/auth/auth.service';
+
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
-import { Public } from '../../decorators/public/public.decorator';
+
 import { Serializer } from '../../../../decorators/serializer/serializer.decorator';
+import { Public } from '../../decorators/public/public.decorator';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Controller('auth')
 export class AuthController {

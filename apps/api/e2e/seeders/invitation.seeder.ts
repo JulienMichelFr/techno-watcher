@@ -1,9 +1,11 @@
-import { Seeder } from './base-seeder';
-import type { Invitation } from '@prisma/client';
-import { randWord, seed } from '@ngneat/falso';
-import { generateCount } from '../helpers/generate-count';
-import { SEED_ID } from './seed-id';
 import { Injectable } from '@nestjs/common';
+import { randWord, seed } from '@ngneat/falso';
+import type { Invitation } from '@prisma/client';
+
+import { generateCount } from '../helpers/generate-count';
+
+import { Seeder } from './base-seeder';
+import { SEED_ID } from './seed-id';
 
 seed(SEED_ID);
 

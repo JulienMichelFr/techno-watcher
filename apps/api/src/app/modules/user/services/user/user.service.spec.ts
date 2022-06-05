@@ -1,11 +1,13 @@
-import { UserService } from './user.service';
-import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
-import { UserRepositoryService } from '../../repositories/user/user-repository.service';
+
 import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
+import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
+import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { UserModel } from '../../models/user/user.model';
+import { UserRepositoryService } from '../../repositories/user/user-repository.service';
+
+import { UserService } from './user.service';
 
 describe('UserService', () => {
   let service: UserService;

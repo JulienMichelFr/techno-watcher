@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { AddCommentOnPostDto } from '@techno-watcher/api-models';
 import { NgForm } from '@angular/forms';
+
+import { AddCommentOnPostDto } from '@techno-watcher/api-models';
 
 @Component({
   selector: 'techno-watcher-comment-form',

@@ -1,6 +1,7 @@
 import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { PASSWORD_REGEXP, SignUpDTO } from '@techno-watcher/api-models';
 import { ErrorStateMatcher } from '@angular/material/core';
+
+import { PASSWORD_REGEXP, SignUpDTO } from '@techno-watcher/api-models';
 
 export class SignUpForm extends FormGroup {
   public get username(): FormControl {

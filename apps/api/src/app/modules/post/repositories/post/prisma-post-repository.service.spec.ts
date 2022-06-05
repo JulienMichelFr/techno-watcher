@@ -1,8 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Prisma } from '@prisma/client';
+
 import { AuthorModel, CreatePostDto, GetPostsDto, Paginated, PostModel } from '@techno-watcher/api-models';
-import { PostAndSelect, PrismaPostRepositoryService } from './prisma-post-repository.service';
+
 import { PrismaService } from '../../../prisma/prisma.service';
+
+import { PostAndSelect, PrismaPostRepositoryService } from './prisma-post-repository.service';
 
 describe('PrismaPostRepositoryService', () => {
   let prismaService: PrismaService;

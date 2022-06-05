@@ -1,9 +1,11 @@
-import * as supertest from 'supertest';
-import { signIn } from '../helpers/signin';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from '../../src/app/app.module';
+import * as supertest from 'supertest';
+
 import { AddCommentOnPostDto } from '@techno-watcher/api-models';
+
+import { AppModule } from '../../src/app/app.module';
+import { signIn } from '../helpers/signin';
 import { CommentSeeder } from '../seeders/comment.seeder';
 import { SeederModule } from '../seeders/seeder.module';
 

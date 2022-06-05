@@ -1,10 +1,13 @@
-import { UserService } from '../../../user/services/user/user.service';
-import { JwtService } from '@nestjs/jwt';
-import { AuthService } from './auth.service';
-import { JwtPayload } from '../../auth.type';
-import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
+
+import { UserService } from '../../../user/services/user/user.service';
+import { JwtPayload } from '../../auth.type';
+
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let userService: UserService;
