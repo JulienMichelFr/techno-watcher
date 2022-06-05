@@ -2,58 +2,43 @@ import { PostService } from '../../services/post/post.service';
 import { CommentService } from '../../services/comments/comment.service';
 import { PostController } from './post.controller';
 import { AddCommentOnPostDto, CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
-import { Prisma, User } from '@prisma/client';
+import { Test, TestingModule } from '@nestjs/testing';
+import { UserModel } from '../../../user/models/user/user.model';
 
 describe('PostController', () => {
   let postService: PostService;
   let commentService: CommentService;
   let postController: PostController;
 
-  let postSelect: Prisma.PostSelect;
-  let commentSelect: Prisma.CommentSelect;
-  let user: User;
+  let user: UserModel;
+  let postId: number;
 
-  beforeEach(() => {
-    postSelect = {
-      _count: true,
-      author: {
-        select: {
-          username: true,
-        },
-      },
-      comments: false,
-      content: true,
-      createdAt: true,
-      id: true,
-      link: true,
-      tags: true,
-      title: true,
-      updatedAt: true,
-    };
-    commentSelect = {
-      id: true,
-      author: { select: { username: true } },
-      content: true,
-      createdAt: true,
-      updatedAt: true,
-      parentCommentId: true,
-      deletedAt: true,
-    };
-    user = { id: 1 } as User;
+  beforeEach(async () => {
+    user = { id: 1 } as UserModel;
+
+    postId = 2;
 
     postService = {
       find: jest.fn(),
-      findOne: jest.fn(),
+      findById: jest.fn(),
       create: jest.fn(),
       softDeleteById: jest.fn(),
     } as unknown as PostService;
 
     commentService = {
-      find: jest.fn(),
+      findByPostId: jest.fn(),
       createOnPost: jest.fn(),
     } as unknown as CommentService;
 
-    postController = new PostController(postService, commentService);
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [PostController],
+      providers: [
+        { provide: PostService, useValue: postService },
+        { provide: CommentService, useValue: commentService },
+      ],
+    }).compile();
+
+    postController = module.get<PostController>(PostController);
   });
 
   it('should be defined', () => {
@@ -74,50 +59,14 @@ describe('PostController', () => {
 
     it('should call postService.find()', async () => {
       await postController.getPosts(getPostsDto);
-      expect(postService.find).toHaveBeenCalledWith(
-        {
-          where: {
-            deletedAt: null,
-          },
-          skip: getPostsDto.skip,
-          take: getPostsDto.take,
-          orderBy: [{ createdAt: 'desc' }],
-          select: postSelect,
-        },
-        true
-      );
-    });
-
-    it('should add tags in where clause', async () => {
-      getPostsDto.tags = ['tag1', 'tag2'];
-      await postController.getPosts(getPostsDto);
-      expect(postService.find).toHaveBeenCalledWith(
-        {
-          where: {
-            deletedAt: null,
-            tags: {
-              hasSome: getPostsDto.tags,
-            },
-          },
-          skip: getPostsDto.skip,
-          take: getPostsDto.take,
-          orderBy: [{ createdAt: 'desc' }],
-          select: postSelect,
-        },
-        true
-      );
+      expect(postService.find).toHaveBeenCalledWith(getPostsDto);
     });
   });
 
   describe('getPost()', () => {
-    it('should call postService.findOne()', async () => {
-      await postController.getPost(1);
-      expect(postService.findOne).toHaveBeenCalledWith({
-        where: {
-          id: 1,
-        },
-        select: postSelect,
-      });
+    it('should call postService.findById()', async () => {
+      await postController.getPost(postId);
+      expect(postService.findById).toHaveBeenCalledWith(postId);
     });
   });
 
@@ -135,17 +84,7 @@ describe('PostController', () => {
 
     it('should call postService.create()', async () => {
       await postController.create(createPostDto, user);
-      expect(postService.create).toHaveBeenCalledWith(
-        {
-          ...createPostDto,
-          author: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-        { select: postSelect }
-      );
+      expect(postService.create).toHaveBeenCalledWith(createPostDto, user.id);
     });
   });
 
@@ -159,67 +98,39 @@ describe('PostController', () => {
     });
 
     it('should call commentService.createOnPost()', async () => {
-      await postController.addComment(addCommentOnPostDto, user, 1);
-      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto.content, 1, null, user, { select: commentSelect });
+      await postController.addComment(addCommentOnPostDto, user, postId);
+      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto, postId, user.id, null);
     });
   });
 
   describe('replyComment()', () => {
     let addCommentOnPostDto: AddCommentOnPostDto;
+    let parentCommentId: number;
 
     beforeEach(() => {
+      parentCommentId = 3;
       addCommentOnPostDto = {
         content: 'content',
       };
     });
 
     it('should call commentService.createOnPost()', async () => {
-      await postController.replyToComment(addCommentOnPostDto, user, 1, 2);
-      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto.content, 1, 2, user, { select: commentSelect });
+      await postController.replyToComment(addCommentOnPostDto, user, postId, parentCommentId);
+      expect(commentService.createOnPost).toHaveBeenCalledWith(addCommentOnPostDto, postId, user.id, parentCommentId);
     });
   });
 
   describe('getCommentsOnPost()', () => {
     it('should call commentService.find()', async () => {
-      await postController.getCommentsOnPost(1);
-      expect(commentService.find).toHaveBeenCalledWith({
-        where: {
-          post: {
-            id: 1,
-          },
-        },
-        select: commentSelect,
-      });
+      await postController.getCommentsOnPost(postId);
+      expect(commentService.findByPostId).toHaveBeenCalledWith(postId);
     });
   });
 
   describe('deletePost()', () => {
-    it('should get post from service', async () => {
-      (postService.findOne as jest.Mock).mockResolvedValueOnce({ authorId: user.id });
-      await postController.deletePost(1, user);
-      expect(postService.findOne).toHaveBeenCalledWith({
-        where: {
-          id: 1,
-        },
-        select: {
-          authorId: true,
-        },
-      });
-    });
-
     it('should call postService.softDeletePost()', async () => {
-      (postService.findOne as jest.Mock).mockResolvedValueOnce({ authorId: user.id });
-      await postController.deletePost(1, user);
-      expect(postService.softDeleteById).toHaveBeenCalledWith(1);
-    });
-
-    it('should throw an error if post is not found', async () => {
-      await expect(postController.deletePost(1, user)).rejects.toThrowError('Post with id 1 not found');
-    });
-
-    it('should throw an error if user is not the author', async () => {
-      (postService.findOne as jest.Mock).mockResolvedValueOnce({ authorId: 2 });
-      await expect(postController.deletePost(1, user)).rejects.toThrowError('You are not allowed to delete this post');
+      await postController.deletePost(postId, user);
+      expect(postService.softDeleteById).toHaveBeenCalledWith(postId, user.id);
     });
   });
 });

@@ -1,35 +1,34 @@
-import { PrismaService } from '../../../prisma/prisma.service';
 import { InvitationService } from './invitation.service';
+import { InvitationRepositoryService } from '../../repositories/invitation/invitation-repository.service';
+import { Test, TestingModule } from '@nestjs/testing';
 
 describe('InvitationService', () => {
-  let prismaService: PrismaService;
-  let invitationService: InvitationService;
+  let repository: InvitationRepositoryService;
+  let service: InvitationService;
+  let invitationCode: string;
 
-  beforeEach(() => {
-    prismaService = {
-      invitation: {
-        findUnique: jest.fn(),
-      },
-    } as unknown as PrismaService;
+  beforeEach(async () => {
+    invitationCode = 'code';
 
-    invitationService = new InvitationService(prismaService);
+    repository = {
+      findByCode: jest.fn(),
+    };
+
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [InvitationService, { provide: InvitationRepositoryService, useValue: repository }],
+    }).compile();
+
+    service = module.get<InvitationService>(InvitationService);
   });
 
   it('should be defined', () => {
-    expect(invitationService).toBeDefined();
+    expect(service).toBeDefined();
   });
 
   describe('findByCode()', () => {
-    it('should call prismaService', async () => {
-      await invitationService.findByCode('code');
-      expect(prismaService.invitation.findUnique).toHaveBeenCalledWith({
-        include: {
-          user: true,
-        },
-        where: {
-          code: 'code',
-        },
-      });
+    it('should call repository', async () => {
+      await service.findByCode(invitationCode);
+      expect(repository.findByCode).toHaveBeenCalledWith(invitationCode);
     });
   });
 });

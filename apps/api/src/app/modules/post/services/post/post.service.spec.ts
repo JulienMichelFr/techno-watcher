@@ -1,150 +1,96 @@
-import { PrismaService } from '../../../prisma/prisma.service';
 import { PostService } from './post.service';
-import { Post, Prisma } from '@prisma/client';
-import { Paginated } from '@techno-watcher/api-models';
+import { CreatePostDto, GetPostsDto, PostModel } from '@techno-watcher/api-models';
+import { Test, TestingModule } from '@nestjs/testing';
+import { ForbiddenException } from '@nestjs/common';
+import { PostRepositoryService } from '../../repositories/post/post-repository.service';
 
 describe('PostService', () => {
-  let prismaService: PrismaService;
-  let postService: PostService;
+  let postRepository: PostRepositoryService;
+  let service: PostService;
 
-  beforeEach(() => {
-    prismaService = {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      $transaction: jest.fn(),
-      post: {
-        count: jest.fn().mockResolvedValue(1),
-        create: jest.fn(),
-        findUnique: jest.fn(),
-        findMany: jest.fn(),
-        update: jest.fn(),
-      } as unknown as PrismaService,
-    } as unknown as PrismaService;
+  beforeEach(async () => {
+    postRepository = {
+      findById: jest.fn(),
+      findPaginated: jest.fn(),
+      create: jest.fn(),
+      softDeleteById: jest.fn(),
+    } as unknown as PostRepositoryService;
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [{ provide: PostRepositoryService, useValue: postRepository }, PostService],
+    }).compile();
 
-    postService = new PostService(prismaService);
-  });
-
-  beforeAll(() => {
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(new Date(2022, 1, 1));
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
+    service = module.get<PostService>(PostService);
   });
 
   it('should be defined', () => {
-    expect(postService).toBeDefined();
+    expect(service).toBeDefined();
   });
 
-  describe('count()', () => {
-    it('should call prisma service with correct args', async () => {
-      const conditions: Prisma.PostCountArgs = {
-        where: {
-          deletedAt: null,
-        },
-      };
-      await postService.count(conditions);
-      expect(prismaService.post.count).toHaveBeenCalledWith(conditions);
-    });
-  });
-
-  describe('findOne()', () => {
-    it('should call prisma service with correct args', async () => {
-      const conditions: Prisma.PostFindUniqueArgs = {
-        where: {
-          id: 1,
-        },
-      };
-      await postService.findOne(conditions);
-      expect(prismaService.post.findUnique).toHaveBeenCalledWith(conditions);
+  describe('findById()', () => {
+    it('should call correct method on repository', async () => {
+      await service.findById(1);
+      expect(postRepository.findById).toHaveBeenCalledWith(1);
     });
   });
 
   describe('find()', () => {
-    let conditions: Prisma.PostFindManyArgs;
-    let response: Post[];
-
-    beforeEach(() => {
-      conditions = {
-        where: {
-          deletedAt: null,
-        },
-        select: {
-          id: true,
-        },
+    it('should call correct method on repository', async () => {
+      const getPostsDto: GetPostsDto = {
+        skip: 0,
+        sort: 'createdAt:asc',
+        tags: [],
+        take: 10,
       };
-
-      response = [{ id: 1 } as Post];
-
-      (prismaService.post.findMany as jest.Mock).mockResolvedValue(response);
-      (prismaService.$transaction as jest.Mock).mockResolvedValue([response.length, response]);
-    });
-
-    afterEach(() => {
-      (prismaService.post.findMany as jest.Mock).mockClear();
-    });
-
-    it('should call prisma service with correct args', async () => {
-      await postService.find(conditions, false);
-      expect(prismaService.post.findMany).toHaveBeenCalledWith(conditions);
-    });
-
-    it('should return correct response', async () => {
-      const result: Post[] | Paginated<Post> = await postService.find(conditions, false);
-      expect(result).toEqual(response);
-    });
-
-    it('should not call transaction and count without pagination', async () => {
-      await postService.find(conditions, false);
-      expect(prismaService.$transaction).not.toHaveBeenCalled();
-      expect(prismaService.post.count).not.toHaveBeenCalled();
-    });
-
-    it('should call transaction and count without pagination', async () => {
-      await postService.find(conditions, true);
-      expect(prismaService.$transaction).toHaveBeenCalled();
-      expect(prismaService.post.count).toHaveBeenCalledWith({ where: conditions.where });
-    });
-
-    it('should return correct response with pagination', async () => {
-      const result: Post[] | Paginated<Post> = await postService.find(conditions, true);
-      expect(result).toEqual({
-        total: 1,
-        from: 0,
-        to: 10,
-        data: response,
-        perPage: 10,
-      });
+      await service.find(getPostsDto);
+      expect(postRepository.findPaginated).toHaveBeenCalledWith(getPostsDto);
     });
   });
 
   describe('create()', () => {
-    let postCreateInput: Prisma.PostCreateInput;
-
-    beforeEach(() => {
-      postCreateInput = {
-        title: 'title',
-      } as Prisma.PostCreateInput;
-    });
-
-    it('should call prisma service with correct args', async () => {
-      await postService.create(postCreateInput);
-      expect(prismaService.post.create).toHaveBeenCalledWith({ data: postCreateInput });
-    });
-
-    it('should add extra args', async () => {
-      await postService.create(postCreateInput, { select: { id: true } });
-      expect(prismaService.post.create).toHaveBeenCalledWith({ data: postCreateInput, select: { id: true } });
+    it('should call correct method on repository', async () => {
+      const createPostDto: CreatePostDto = {
+        content: '',
+        link: '',
+        tags: [],
+        title: '',
+      };
+      const userId: number = 1;
+      await service.create(createPostDto, userId);
+      expect(postRepository.create).toHaveBeenCalledWith(createPostDto, userId);
     });
   });
 
   describe('softDeleteById()', () => {
-    it('should call prisma service with correct args', async () => {
-      await postService.softDeleteById(1);
-      expect(prismaService.post.update).toHaveBeenCalledWith({
-        where: { id: 1 },
-        data: { deletedAt: new Date() },
-      });
+    let postId: number;
+    let userId: number;
+    let post: PostModel;
+
+    beforeEach(() => {
+      postId = 1;
+      userId = 1;
+      post = {
+        id: postId,
+        author: {
+          id: userId,
+        },
+      } as PostModel;
+
+      (postRepository.findById as jest.Mock).mockResolvedValue(post);
+    });
+
+    it('should call correct method on repository', async () => {
+      await service.softDeleteById(postId, userId);
+      expect(postRepository.softDeleteById).toHaveBeenCalledWith(postId);
+    });
+
+    it('should get post before deleting', async () => {
+      await service.softDeleteById(postId, userId);
+      expect(postRepository.findById).toHaveBeenCalledWith(postId);
+    });
+
+    it('should throw an error if user is not the author', async () => {
+      post.author.id = 2;
+      await expect(service.softDeleteById(postId, userId)).rejects.toThrowError(new ForbiddenException('You are not allowed to delete this post'));
     });
   });
 });

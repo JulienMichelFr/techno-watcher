@@ -8,9 +8,10 @@ import { AuthModule } from './modules/auth/auth.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { JwtExceptionFilter } from './filters/jwt/jwt-exception.filter';
 import { PrismaClientKnownRequestExceptionFilter } from './filters/prisma/prisma-client-known-request-exception.filter';
+import { CryptoModule } from './modules/crypto/crypto.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PostModule, UserModule, AuthModule, PrismaModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PostModule, UserModule, AuthModule, PrismaModule, CryptoModule],
   controllers: [],
   providers: [
     {

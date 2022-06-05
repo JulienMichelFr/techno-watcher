@@ -3,6 +3,7 @@
 exports[`Posts Create comment Create a comment on a comment (Authenticated) 1`] = `
 Object {
   "author": Object {
+    "id": 1000,
     "username": "User 1",
   },
   "content": "My comment",
@@ -10,6 +11,7 @@ Object {
   "deletedAt": null,
   "id": Any<Number>,
   "parentCommentId": 1001,
+  "postId": 1013,
   "updatedAt": Any<String>,
 }
 `;
@@ -25,6 +27,7 @@ Object {
 exports[`Posts Create comment Create a comment on a post (Authenticated) 1`] = `
 Object {
   "author": Object {
+    "id": 1000,
     "username": "User 1",
   },
   "content": "My comment",
@@ -32,6 +35,7 @@ Object {
   "deletedAt": null,
   "id": Any<Number>,
   "parentCommentId": null,
+  "postId": 1013,
   "updatedAt": Any<String>,
 }
 `;
@@ -47,6 +51,7 @@ Object {
 exports[`Posts Create post Create a post (Authenticated) 1`] = `
 Object {
   "author": Object {
+    "id": 1000,
     "username": "User 1",
   },
   "content": "My content",
@@ -74,7 +79,7 @@ Object {
 exports[`Posts Delete comment Delete a comment (Invalid user) 1`] = `
 Object {
   "error": "Forbidden",
-  "message": "You are not the author of this comment",
+  "message": "You are not allowed to delete this comment",
   "statusCode": 403,
 }
 `;
@@ -107,6 +112,7 @@ exports[`Posts Get comments on post Get comments on post with id 1013 1`] = `
 Array [
   Object {
     "author": Object {
+      "id": 1000,
       "username": "User 1",
     },
     "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
@@ -114,10 +120,12 @@ Array [
     "deletedAt": null,
     "id": 1007,
     "parentCommentId": null,
+    "postId": 1013,
     "updatedAt": "2022-01-02T09:26:09.611Z",
   },
   Object {
     "author": Object {
+      "id": 1001,
       "username": "User 2",
     },
     "content": "Est iste totam accusamus dolorem est. Quis non sit impedit similique incidunt odio aspernatur aut rem. Architecto est eum.",
@@ -125,6 +133,7 @@ Array [
     "deletedAt": null,
     "id": 1021,
     "parentCommentId": 1007,
+    "postId": 1013,
     "updatedAt": "2022-11-01T19:33:46.688Z",
   },
 ]
@@ -133,6 +142,7 @@ Array [
 exports[`Posts Get posts Get a single post 1`] = `
 Object {
   "author": Object {
+    "id": 1000,
     "username": "User 1",
   },
   "content": "Et id harum unde et ratione minima non. Suscipit ipsum rem. Sed asperiores quaerat dolorum autem nihil voluptatem et hic ut. Molestiae rerum autem. Dolores nam soluta officia pariatur debitis.",
@@ -154,6 +164,7 @@ Object {
   "data": Array [
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Et id harum unde et ratione minima non. Suscipit ipsum rem. Sed asperiores quaerat dolorum autem nihil voluptatem et hic ut. Molestiae rerum autem. Dolores nam soluta officia pariatur debitis.",
@@ -170,6 +181,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Similique molestiae id officia corporis quidem. Aliquam et ut eos ut nemo est voluptatem. Possimus ut quo labore. Alias amet quia enim. Quia ipsum pariatur facere illum esse recusandae veniam. Nihil enim fugit porro nam et quis sunt.",
@@ -186,6 +198,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Praesentium consequatur ut sit vel. Molestias fugiat quis cupiditate ipsa eos fugit est ullam. Sit labore et natus dolores ut quis eaque cupiditate. Et ut et et autem assumenda animi autem. Pariatur amet consequatur necessitatibus consequatur consequatur et explicabo sint. Nam sit dolore.",
@@ -202,6 +215,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Dolor officia a fuga omnis sit. Ut atque est nostrum. Quos aut quo eos vel velit autem et aspernatur.",
@@ -218,6 +232,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Est quo facilis voluptas aperiam. Natus dolores quas ratione enim repellendus. Illum dolor repellendus voluptas.",
@@ -234,6 +249,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
@@ -247,6 +263,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Aperiam autem non et aut illum ut nihil laborum omnis. Vitae et ab et. Cupiditate et est delectus. Mollitia qui qui dolores reiciendis perferendis voluptates maiores. Omnis corporis cumque sequi sequi excepturi velit laborum nobis. Neque id maiores voluptatem est debitis.",
@@ -263,6 +280,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Quia sit architecto itaque voluptas aliquam. Rem veritatis qui quasi sint velit dolorem maxime voluptatem. Sit aut laboriosam aspernatur dicta non consequatur qui recusandae. Dignissimos voluptatem labore praesentium.",
@@ -278,6 +296,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
@@ -294,6 +313,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Aut facilis qui. Cupiditate sit ratione eum sunt rerum impedit. Qui suscipit debitis et et voluptates voluptatem voluptatibus. Quas voluptatum quae corporis corporis possimus.",
@@ -320,6 +340,7 @@ Object {
   "data": Array [
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Quo voluptatem quia numquam laudantium sit quibusdam aut. Veritatis omnis neque ea saepe hic enim. Nam odit dolor non consequuntur perspiciatis inventore ut sint. Velit quod praesentium adipisci modi.",
@@ -335,6 +356,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Veniam commodi autem voluptatibus eos dolor quas reprehenderit. Praesentium cupiditate tempore et reprehenderit. Deleniti exercitationem illum maiores. Reprehenderit odio in ea voluptatem ut ut ullam.",
@@ -350,6 +372,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Labore corporis blanditiis dolorum nemo nam praesentium alias sequi inventore. Cupiditate rerum enim sint quis. Eum occaecati provident labore veniam deserunt vero sed soluta repellat. Cum sapiente pariatur et ea a recusandae et optio. Sequi doloribus reiciendis corrupti quidem accusamus est nesciunt. Excepturi accusamus consequatur est sed maiores excepturi autem.",
@@ -365,6 +388,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Sunt velit facere fuga et voluptas inventore itaque. Necessitatibus ratione in esse. Quasi dignissimos quia est sequi incidunt enim reiciendis. At omnis iure in doloremque. Aut tempore consequatur facilis est ut distinctio est quas. Autem sunt est saepe quasi sed reprehenderit error magnam.",
@@ -382,6 +406,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Vel et molestiae quis ea modi quas tempore dolorum fuga. Aut dolore numquam et. Amet sit quibusdam ea blanditiis consectetur velit.",
@@ -408,6 +433,7 @@ Object {
   "data": Array [
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Est quo facilis voluptas aperiam. Natus dolores quas ratione enim repellendus. Illum dolor repellendus voluptas.",
@@ -424,6 +450,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Similique molestiae id officia corporis quidem. Aliquam et ut eos ut nemo est voluptatem. Possimus ut quo labore. Alias amet quia enim. Quia ipsum pariatur facere illum esse recusandae veniam. Nihil enim fugit porro nam et quis sunt.",
@@ -440,6 +467,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Praesentium consequatur ut sit vel. Molestias fugiat quis cupiditate ipsa eos fugit est ullam. Sit labore et natus dolores ut quis eaque cupiditate. Et ut et et autem assumenda animi autem. Pariatur amet consequatur necessitatibus consequatur consequatur et explicabo sint. Nam sit dolore.",
@@ -456,6 +484,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
@@ -469,6 +498,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Vel et molestiae quis ea modi quas tempore dolorum fuga. Aut dolore numquam et. Amet sit quibusdam ea blanditiis consectetur velit.",
@@ -484,6 +514,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Aut facilis qui. Cupiditate sit ratione eum sunt rerum impedit. Qui suscipit debitis et et voluptates voluptatem voluptatibus. Quas voluptatum quae corporis corporis possimus.",
@@ -499,6 +530,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Aperiam autem non et aut illum ut nihil laborum omnis. Vitae et ab et. Cupiditate et est delectus. Mollitia qui qui dolores reiciendis perferendis voluptates maiores. Omnis corporis cumque sequi sequi excepturi velit laborum nobis. Neque id maiores voluptatem est debitis.",
@@ -515,6 +547,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Sunt velit facere fuga et voluptas inventore itaque. Necessitatibus ratione in esse. Quasi dignissimos quia est sequi incidunt enim reiciendis. At omnis iure in doloremque. Aut tempore consequatur facilis est ut distinctio est quas. Autem sunt est saepe quasi sed reprehenderit error magnam.",
@@ -532,6 +565,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
@@ -548,6 +582,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Dolor officia a fuga omnis sit. Ut atque est nostrum. Quos aut quo eos vel velit autem et aspernatur.",
@@ -575,6 +610,7 @@ Object {
   "data": Array [
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Est quo facilis voluptas aperiam. Natus dolores quas ratione enim repellendus. Illum dolor repellendus voluptas.",
@@ -591,6 +627,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1000,
         "username": "User 1",
       },
       "content": "Minima soluta sed sed et optio explicabo at distinctio repudiandae. Magnam deleniti a ea. Non velit accusamus veniam qui. Necessitatibus velit ad aut officiis in officiis quasi. Sunt nulla dolores voluptatem esse magnam ut.",
@@ -607,6 +644,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Labore corporis blanditiis dolorum nemo nam praesentium alias sequi inventore. Cupiditate rerum enim sint quis. Eum occaecati provident labore veniam deserunt vero sed soluta repellat. Cum sapiente pariatur et ea a recusandae et optio. Sequi doloribus reiciendis corrupti quidem accusamus est nesciunt. Excepturi accusamus consequatur est sed maiores excepturi autem.",
@@ -622,6 +660,7 @@ Object {
     },
     Object {
       "author": Object {
+        "id": 1001,
         "username": "User 2",
       },
       "content": "Sunt velit facere fuga et voluptas inventore itaque. Necessitatibus ratione in esse. Quasi dignissimos quia est sequi incidunt enim reiciendis. At omnis iure in doloremque. Aut tempore consequatur facilis est ut distinctio est quas. Autem sunt est saepe quasi sed reprehenderit error magnam.",

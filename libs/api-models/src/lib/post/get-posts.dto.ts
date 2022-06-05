@@ -1,9 +1,9 @@
 import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { Post } from '@prisma/client';
-import type { Sort } from '../types/sort.type';
+import type { Sort } from '../types';
+import { PostModel } from './post.model';
 
-type PostSort = Sort<Post>;
+type PostSort = Sort<PostModel>;
 
 export class GetPostsDto {
   @Type(() => Number)

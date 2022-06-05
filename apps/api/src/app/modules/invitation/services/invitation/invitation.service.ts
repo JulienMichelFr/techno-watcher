@@ -1,19 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Invitation, User } from '@prisma/client';
-import { PrismaService } from '../../../prisma/prisma.service';
+import { InvitationRepositoryService } from '../../repositories/invitation/invitation-repository.service';
+import { InvitationModel } from '../../models/invitation/invitation.model';
 
 @Injectable()
 export class InvitationService {
-  public constructor(private readonly prisma: PrismaService) {}
+  public constructor(private readonly invitationRepository: InvitationRepositoryService) {}
 
-  public async findByCode(code: string): Promise<Invitation & { user: User }> {
-    return this.prisma.invitation.findUnique({
-      include: {
-        user: true,
-      },
-      where: {
-        code,
-      },
-    });
+  public async findByCode(code: string): Promise<InvitationModel> {
+    return this.invitationRepository.findByCode(code);
   }
 }

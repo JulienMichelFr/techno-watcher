@@ -25,7 +25,7 @@ describe('JwtAuthGuard', () => {
     } as unknown as JwtService;
 
     userServiceMock = {
-      findOne: jest.fn(),
+      findById: jest.fn(),
     } as unknown as UserService;
 
     httpArgumentsHostMock = {
@@ -70,7 +70,7 @@ describe('JwtAuthGuard', () => {
         },
       });
       (jwtServiceMock.verify as jest.Mock).mockReturnValue({ id: 1 });
-      (userServiceMock.findOne as jest.Mock).mockResolvedValue(null);
+      (userServiceMock.findById as jest.Mock).mockResolvedValue(null);
       await expect(guard.canActivate(context)).rejects.toThrow(new UnauthorizedException('Token is invalid'));
     });
 
@@ -81,7 +81,7 @@ describe('JwtAuthGuard', () => {
         },
       });
       (jwtServiceMock.verify as jest.Mock).mockReturnValue({ id: 1 });
-      (userServiceMock.findOne as jest.Mock).mockResolvedValue({ id: 1 });
+      (userServiceMock.findById as jest.Mock).mockResolvedValue({ id: 1 });
       const result: boolean = await guard.canActivate(context);
       expect(result).toBe(true);
     });
@@ -93,7 +93,7 @@ describe('JwtAuthGuard', () => {
         },
       });
       (jwtServiceMock.verify as jest.Mock).mockReturnValue({ id: 1 });
-      (userServiceMock.findOne as jest.Mock).mockResolvedValue({ id: 1 });
+      (userServiceMock.findById as jest.Mock).mockResolvedValue({ id: 1 });
       await guard.canActivate(context);
       const r: Request & { user: User } = context.switchToHttp().getRequest();
       expect(r.user).toEqual({ id: 1 });

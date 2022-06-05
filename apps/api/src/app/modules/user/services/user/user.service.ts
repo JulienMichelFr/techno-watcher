@@ -1,23 +1,62 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Prisma, User } from '@prisma/client';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { UserRepositoryService } from '../../repositories/user/user-repository.service';
+import { UserModel } from '../../models/user/user.model';
+import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
+import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
+import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
+import { CreateUserDto } from '../../dtos/create-user.dto';
 
 @Injectable()
 export class UserService {
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly userRepository: UserRepositoryService,
+    private invitationService: InvitationService,
+    private cryptoService: CryptoService
+  ) {}
 
-  public create(user: Prisma.UserCreateInput): Promise<User> {
-    return this.prismaService.user.create({ data: user });
+  public async create(user: CreateUserDto, invitationCode: string): Promise<UserModel> {
+    const password: string = await this.hashPassword(user.password);
+
+    let invitation: InvitationModel;
+    try {
+      invitation = await this.invitationService.findByCode(invitationCode);
+    } catch (e) {
+      if (e instanceof NotFoundException) {
+        throw new UnprocessableEntityException('Invalid invitation');
+      }
+      throw e;
+    }
+
+    if (invitation.alreadyUsed) {
+      throw new UnprocessableEntityException('Invalid invitation');
+    }
+    return this.userRepository.create(
+      {
+        username: user.username,
+        email: user.email,
+        password,
+      },
+      invitation.id
+    );
   }
 
-  public findOne(search: Prisma.UserWhereUniqueInput, args: Prisma.UserArgs = {}): Promise<User> {
-    return this.prismaService.user.findUnique({ where: search, ...args });
+  public async findById(userId: number): Promise<UserModel> {
+    return this.userRepository.findById(userId);
+  }
+
+  public async findByEmail(email: string): Promise<UserModel> {
+    return this.userRepository.findByEmail(email);
   }
 
   public async updateRefreshToken(userId: number, refreshToken: string): Promise<void> {
-    await this.prismaService.user.update({
-      where: { id: userId },
-      data: { refreshToken },
-    });
+    await this.userRepository.updateRefreshToken(userId, refreshToken);
+  }
+
+  public async validateUserPassword(user: UserModel, password: string): Promise<boolean> {
+    return this.cryptoService.validatePassword(password, user.password);
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    return this.cryptoService.hashPassword(password);
   }
 }

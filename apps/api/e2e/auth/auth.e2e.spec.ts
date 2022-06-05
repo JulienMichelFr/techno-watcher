@@ -127,7 +127,7 @@ describe('Auth', () => {
       return supertest(app.getHttpServer())
         .post('/auth/sign-up')
         .send(data)
-        .expect(400)
+        .expect(422)
         .expect((response) => {
           expect(response.body).toMatchSnapshot();
         });
@@ -161,7 +161,7 @@ describe('Auth', () => {
       return supertest(app.getHttpServer())
         .post('/auth/sign-up')
         .send(data)
-        .expect(401)
+        .expect(422)
         .expect((response) => {
           expect(response.body).toMatchSnapshot();
         });
@@ -178,7 +178,7 @@ describe('Auth', () => {
       return supertest(app.getHttpServer())
         .post('/auth/sign-up')
         .send(data)
-        .expect(401)
+        .expect(422)
         .expect((response) => {
           expect(response.body).toMatchSnapshot();
         });
@@ -212,7 +212,7 @@ describe('Auth', () => {
       return supertest(app.getHttpServer())
         .post('/auth/sign-up')
         .send(data)
-        .expect(400)
+        .expect(422)
         .expect((response) => {
           expect(response.body).toMatchSnapshot();
         });

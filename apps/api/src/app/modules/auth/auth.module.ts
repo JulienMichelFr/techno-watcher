@@ -8,11 +8,12 @@ import { JWT_EXPIRATION, JWT_SECRET } from '../../constantes/config.const';
 import { JwtAuthGuard } from './guards/auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { InvitationModule } from '../invitation/invitation.module';
-import { CryptoService } from './services/crypto/crypto.service';
+import { CryptoModule } from '../crypto/crypto.module';
 
 @Global()
 @Module({
   imports: [
+    CryptoModule,
     UserModule,
     InvitationModule,
     JwtModule.registerAsync({
@@ -25,7 +26,6 @@ import { CryptoService } from './services/crypto/crypto.service';
   ],
   providers: [
     AuthService,
-    CryptoService,
     JwtAuthGuard,
     {
       provide: APP_GUARD,

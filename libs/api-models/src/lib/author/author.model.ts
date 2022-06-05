@@ -1,7 +1,4 @@
-import {User} from "@prisma/client";
-import {Expose} from "class-transformer";
-
-export class AuthorModel implements Pick<User, 'username'> {
-  @Expose()
+export class AuthorModel {
+  public id!: number;
   public username!: string;
 }

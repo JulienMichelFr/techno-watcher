@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
 import { Public } from '../../decorators/public/public.decorator';
@@ -12,22 +12,26 @@ export class AuthController {
   @Public()
   @HttpCode(200)
   @Post('sign-in')
-  public async signIn(@Body() { email, password }: SignInDTO): Promise<AuthResponseModel> {
-    return await this.authService.signIn({ email, password });
+  public async signIn(@Body() signInDTO: SignInDTO): Promise<AuthResponseModel> {
+    try {
+      return await this.authService.signIn(signInDTO);
+    } catch (e) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
   }
 
   @Serializer(AuthResponseModel)
   @Public()
   @Post('sign-up')
-  public async signUp(@Body() { username, email, password, invitation }: SignUpDTO): Promise<AuthResponseModel> {
-    return await this.authService.signUp({ username, email, password, invitation });
+  public async signUp(@Body() signUpDTO: SignUpDTO): Promise<AuthResponseModel> {
+    return await this.authService.signUp(signUpDTO);
   }
 
   @Serializer(AuthResponseModel)
   @Public()
   @HttpCode(200)
   @Post('refresh-token')
-  public async refreshToken(@Body() { refreshToken }: RefreshTokenDto): Promise<AuthResponseModel> {
-    return await this.authService.refreshToken({ refreshToken });
+  public async refreshToken(@Body() refreshTokenDto: RefreshTokenDto): Promise<AuthResponseModel> {
+    return await this.authService.refreshToken(refreshTokenDto);
   }
 }
