@@ -12,9 +12,9 @@ export class AuthController {
   @Public()
   @HttpCode(200)
   @Post('sign-in')
-  public async signIn(@Body() { email, password }: SignInDTO): Promise<AuthResponseModel> {
+  public async signIn(@Body() signInDTO: SignInDTO): Promise<AuthResponseModel> {
     try {
-      return await this.authService.signIn({ email, password });
+      return await this.authService.signIn(signInDTO);
     } catch (e) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -23,15 +23,15 @@ export class AuthController {
   @Serializer(AuthResponseModel)
   @Public()
   @Post('sign-up')
-  public async signUp(@Body() { username, email, password, invitation }: SignUpDTO): Promise<AuthResponseModel> {
-    return await this.authService.signUp({ username, email, password, invitation });
+  public async signUp(@Body() signUpDTO: SignUpDTO): Promise<AuthResponseModel> {
+    return await this.authService.signUp(signUpDTO);
   }
 
   @Serializer(AuthResponseModel)
   @Public()
   @HttpCode(200)
   @Post('refresh-token')
-  public async refreshToken(@Body() { refreshToken }: RefreshTokenDto): Promise<AuthResponseModel> {
-    return await this.authService.refreshToken({ refreshToken });
+  public async refreshToken(@Body() refreshTokenDto: RefreshTokenDto): Promise<AuthResponseModel> {
+    return await this.authService.refreshToken(refreshTokenDto);
   }
 }

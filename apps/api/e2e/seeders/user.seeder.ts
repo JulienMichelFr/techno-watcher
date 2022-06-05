@@ -12,12 +12,12 @@ seed(SEED_ID);
 
 @Injectable()
 export class UserSeeder extends Seeder<User> {
-  private static hashPassword(password: string): string {
-    return bcrypt.hashSync(password, 12);
-  }
-
   public constructor(protected readonly prisma: PrismaService, protected readonly invitationSeeder: InvitationSeeder) {
     super(prisma);
+  }
+
+  private static hashPassword(password: string): string {
+    return bcrypt.hashSync(password, 12);
   }
 
   public async seed(): Promise<User[]> {

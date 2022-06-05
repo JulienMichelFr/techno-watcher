@@ -1,17 +1,17 @@
-import { User } from '@prisma/client';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommentService } from '../../services/comments/comment.service';
 import { CommentController } from './comment.controller';
+import { UserModel } from '../../../user/models/user/user.model';
 
 describe('CommentController', () => {
   let commentService: CommentService;
   let controller: CommentController;
-  let user: User;
+  let user: UserModel;
   let commentId: number;
 
   beforeEach(async () => {
     commentId = 1;
-    user = { id: 2 } as User;
+    user = { id: 2 } as UserModel;
 
     commentService = {
       softDeleteById: jest.fn(),

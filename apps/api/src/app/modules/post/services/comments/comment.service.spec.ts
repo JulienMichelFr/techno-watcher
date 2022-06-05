@@ -1,19 +1,19 @@
 import { AddCommentOnPostDto, CommentModel } from '@techno-watcher/api-models';
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '@prisma/client';
 import { CommentRepositoryService } from '../../repositories/comment/comment-repository.service';
 import { CommentService } from './comment.service';
+import { UserModel } from '../../../user/models/user/user.model';
 
 describe('CommentService', () => {
   let repository: CommentRepositoryService;
   let service: CommentService;
 
-  let user: User;
+  let user: UserModel;
   let comment: CommentModel;
   let postId: number;
 
   beforeEach(async () => {
-    user = { id: 1 } as User;
+    user = { id: 1 } as UserModel;
     comment = new CommentModel();
     comment.id = 2;
     comment.author = user;

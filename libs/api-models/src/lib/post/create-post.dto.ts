@@ -1,8 +1,7 @@
 import { IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
-import type { Prisma } from '@prisma/client';
 import { Transform } from 'class-transformer';
 
-export class CreatePostDto implements Pick<Prisma.PostCreateInput, 'title' | 'content' | 'tags'> {
+export class CreatePostDto {
   @IsNotEmpty()
   @IsString()
   public title!: string;

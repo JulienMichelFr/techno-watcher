@@ -2,19 +2,19 @@ import { PostService } from '../../services/post/post.service';
 import { CommentService } from '../../services/comments/comment.service';
 import { PostController } from './post.controller';
 import { AddCommentOnPostDto, CreatePostDto, GetPostsDto } from '@techno-watcher/api-models';
-import { User } from '@prisma/client';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserModel } from '../../../user/models/user/user.model';
 
 describe('PostController', () => {
   let postService: PostService;
   let commentService: CommentService;
   let postController: PostController;
 
-  let user: User;
+  let user: UserModel;
   let postId: number;
 
   beforeEach(async () => {
-    user = { id: 1 } as User;
+    user = { id: 1 } as UserModel;
 
     postId = 2;
 
