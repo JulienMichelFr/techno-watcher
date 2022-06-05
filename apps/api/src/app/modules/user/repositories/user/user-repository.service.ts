@@ -1,9 +1,8 @@
-import { SignUpDTO } from '@techno-watcher/api-models';
 import { UserModel } from '../../models/user/user.model';
+import { CreateUserDto } from '../../dtos/create-user.dto';
 
 export abstract class UserRepositoryService {
-  // TODO: add a CreateUserDto
-  public abstract create(user: SignUpDTO, invitationId: number): Promise<UserModel>;
+  public abstract create(user: CreateUserDto, invitationId: number): Promise<UserModel>;
 
   public abstract findById(id: number): Promise<UserModel>;
 

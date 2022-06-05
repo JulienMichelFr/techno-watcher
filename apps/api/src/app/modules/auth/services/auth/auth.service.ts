@@ -3,23 +3,17 @@ import { UserService } from '../../../user/services/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../auth.type';
 import { AuthResponseModel, RefreshTokenDto, SignInDTO, SignUpDTO } from '@techno-watcher/api-models';
-import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
-import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
 import { UserModel } from '../../../user/models/user/user.model';
+import { CreateUserDto } from '../../../user/dtos/create-user.dto';
 
 @Injectable()
 export class AuthService {
-  public constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-    private readonly invitationService: InvitationService,
-    private readonly cryptoService: CryptoService
-  ) {}
+  public constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
   public async validateUserPassword(loginDTO: SignInDTO): Promise<JwtPayload> {
     try {
       const user: UserModel = await this.userService.findByEmail(loginDTO.email);
-      const passwordValidated: boolean = await this.validatePassword(loginDTO.password, user.password);
+      const passwordValidated: boolean = await this.userService.validateUserPassword(user, loginDTO.password);
       if (passwordValidated) {
         return { email: user.email, username: user.username, id: user.id };
       }
@@ -38,8 +32,11 @@ export class AuthService {
   }
 
   public async signUp(signUpDTO: SignUpDTO): Promise<AuthResponseModel> {
-    const password: string = await this.hashPassword(signUpDTO.password);
-    await this.userService.create({ ...signUpDTO, password });
+    const createUserDto: CreateUserDto = new CreateUserDto();
+    createUserDto.email = signUpDTO.email;
+    createUserDto.username = signUpDTO.username;
+    createUserDto.password = signUpDTO.password;
+    await this.userService.create(createUserDto, signUpDTO.invitation);
 
     return this.signIn({ email: signUpDTO.email, password: signUpDTO.password });
   }
@@ -62,13 +59,5 @@ export class AuthService {
     const refreshToken: string = this.jwtService.sign(user, { expiresIn: '7d' });
     await this.userService.updateRefreshToken(user.id, refreshToken);
     return { accessToken, refreshToken };
-  }
-
-  private async hashPassword(password: string): Promise<string> {
-    return this.cryptoService.hashPassword(password);
-  }
-
-  private async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
-    return this.cryptoService.validatePassword(password, hashedPassword);
   }
 }

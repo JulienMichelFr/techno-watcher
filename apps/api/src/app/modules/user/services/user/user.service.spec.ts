@@ -2,13 +2,16 @@ import { UserService } from './user.service';
 import { InvitationService } from '../../../invitation/services/invitation/invitation.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { InvitationModel } from '../../../invitation/models/invitation/invitation.model';
-import { SignUpDTO } from '@techno-watcher/api-models';
 import { UserRepositoryService } from '../../repositories/user/user-repository.service';
+import { CryptoService } from '../../../crypto/services/crypto/crypto.service';
+import { CreateUserDto } from '../../dtos/create-user.dto';
+import { UserModel } from '../../models/user/user.model';
 
 describe('UserService', () => {
   let service: UserService;
   let repository: UserRepositoryService;
   let invitationService: InvitationService;
+  let cryptoService: CryptoService;
   let userId: number;
 
   beforeEach(async () => {
@@ -20,6 +23,11 @@ describe('UserService', () => {
       findByEmail: jest.fn(),
       updateRefreshToken: jest.fn(),
     };
+
+    cryptoService = {
+      hashPassword: jest.fn(),
+      validatePassword: jest.fn(),
+    } as CryptoService;
 
     invitationService = {
       findByCode: jest.fn(),
@@ -36,6 +44,10 @@ describe('UserService', () => {
           provide: InvitationService,
           useValue: invitationService,
         },
+        {
+          provide: CryptoService,
+          useValue: cryptoService,
+        },
       ],
     }).compile();
 
@@ -48,23 +60,37 @@ describe('UserService', () => {
 
   describe('create()', () => {
     let invitation: InvitationModel;
-    let signUpDTO: SignUpDTO;
+    let createUserDto: CreateUserDto;
+    let hashedPassword: string;
 
     beforeEach(() => {
-      signUpDTO = new SignUpDTO('username', 'email', 'password', 'invitation');
+      createUserDto = new CreateUserDto();
+      createUserDto.email = 'email';
+      createUserDto.password = 'password';
+      createUserDto.username = 'username';
+
+      hashedPassword = 'hashedPassword';
+
       invitation = new InvitationModel();
       invitation.id = 2;
+      invitation.code = 'code';
       (invitationService.findByCode as jest.Mock).mockResolvedValue(invitation);
+      (cryptoService.hashPassword as jest.Mock).mockReturnValue(hashedPassword);
     });
 
     it('should get invitation from InvitationService', async () => {
-      await service.create(signUpDTO);
-      expect(invitationService.findByCode).toHaveBeenCalledWith(signUpDTO.invitation);
+      await service.create(createUserDto, invitation.code);
+      expect(invitationService.findByCode).toHaveBeenCalledWith(invitation.code);
+    });
+
+    it('should hash provided password', async () => {
+      await service.create(createUserDto, invitation.code);
+      expect(cryptoService.hashPassword).toHaveBeenCalledWith(createUserDto.password);
     });
 
     it('should create user with repository', async () => {
-      await service.create(signUpDTO);
-      expect(repository.create).toHaveBeenCalledWith(signUpDTO, invitation.id);
+      await service.create(createUserDto, invitation.code);
+      expect(repository.create).toHaveBeenCalledWith({ ...createUserDto, password: hashedPassword }, invitation.id);
     });
   });
 
@@ -98,6 +124,30 @@ describe('UserService', () => {
     it('should update refresh token', async () => {
       await service.updateRefreshToken(userId, refreshToken);
       expect(repository.updateRefreshToken).toHaveBeenCalledWith(userId, refreshToken);
+    });
+  });
+
+  describe('validateUserPassword()', () => {
+    let userModel: UserModel;
+    let password: string;
+
+    beforeEach(() => {
+      password = 'password';
+      userModel = new UserModel();
+      userModel.password = 'hashed password';
+    });
+
+    it('should return null if password is not valid', async () => {
+      (cryptoService.validatePassword as jest.Mock).mockReturnValueOnce(false);
+
+      const result: boolean = await service.validateUserPassword(userModel, password);
+      expect(result).toBeFalsy();
+    });
+
+    it('should return payload if user exists and password is valid', async () => {
+      (cryptoService.validatePassword as jest.Mock).mockReturnValueOnce(true);
+      const result: boolean = await service.validateUserPassword(userModel, password);
+      expect(result).toBeTruthy();
     });
   });
 });
