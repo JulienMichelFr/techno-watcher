@@ -1,18 +1,13 @@
 <form #form="ngForm" (ngSubmit)="submit(comment)">
   <mat-card>
     <mat-card-content>
-      <mat-form-field class="w-full">
-        <textarea
-          [(ngModel)]="comment.content"
-          [cdkAutosizeMinRows]="5"
-          [disabled]="isLoading"
-          cdkTextareaAutosize
-          matInput
-          name="content"
-          placeholder="Your comment"
-          required
-        ></textarea>
-      </mat-form-field>
+      <techno-watcher-markdown-input
+        class="w-full"
+        [(ngModel)]="comment.content"
+        required="true"
+        name="content"
+        placeholder="Your comment"
+      ></techno-watcher-markdown-input>
     </mat-card-content>
     <mat-card-actions align="end">
       <button [disabled]="form.invalid || isLoading" color="primary" mat-raised-button type="submit">Post comment</button>

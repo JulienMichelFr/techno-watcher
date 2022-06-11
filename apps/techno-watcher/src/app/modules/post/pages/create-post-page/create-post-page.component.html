@@ -10,10 +10,8 @@
           <input matInput placeholder="Link" name="link" [(ngModel)]="post.link" required technoWatcherUrlValidator #linkInput="ngModel" />
           <mat-error *ngIf="linkInput?.errors?.['url']">Link must be a valid URL</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <textarea matInput placeholder="Content" name="content" cdkTextareaAutosize [cdkAutosizeMinRows]="5" [(ngModel)]="post.content"></textarea>
-        </mat-form-field>
         <techno-watcher-tag-input name="tags" [(ngModel)]="post.tags" required></techno-watcher-tag-input>
+        <techno-watcher-markdown-input [(ngModel)]="post.content" placeholder="Content" name="content"></techno-watcher-markdown-input>
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
