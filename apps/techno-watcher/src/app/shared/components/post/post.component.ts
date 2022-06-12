@@ -20,6 +20,8 @@ export class PostComponent {
   }
 
   public onDelete(): void {
-    this.delete.emit();
+    if (confirm('Are you sure you want to delete this post?')) {
+      this.delete.emit();
+    }
   }
 }

@@ -4,13 +4,13 @@ import { CommentModel } from '@techno-watcher/api-models';
 
 seed('my-seed-2');
 
-type GenerateCommentOptions = { id?: number; parentId?: number; content?: string };
+type GenerateCommentOptions = { id?: number; parentId?: number; content?: string; username?: string };
 
-export function generateComment({ id, parentId, content }: GenerateCommentOptions = {}): CommentModel {
+export function generateComment({ id, parentId, content, username }: GenerateCommentOptions = {}): CommentModel {
   return {
     author: {
       id: randNumber(),
-      username: randUserName(),
+      username: username ?? randUserName(),
     },
     content: content ?? randParagraph(),
     createdAt: randRecentDate(),

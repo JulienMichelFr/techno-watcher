@@ -3,10 +3,15 @@
     <mat-card-content class="!mb-0 flex flex-col">
       <div class="flex justify-between items-center p-x-1">
         <div class="flex flex-col gap-1">
-          <div class="font-bold text-[24px]">
+          <div class="font-bold text-[24px] flex items-center gap-2">
             <ng-container *ngIf="post; else loadingTitleTemplate">
               {{ post.title }}
+
+              <button *ngIf="canDelete" mat-icon-button color="warn" (click)="onDelete()">
+                <mat-icon>delete</mat-icon>
+              </button>
             </ng-container>
+
             <ng-template #loadingTitleTemplate>
               <div class="h-4 w-200 bg-primaryLighter rounded"></div>
             </ng-template>

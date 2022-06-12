@@ -16,18 +16,12 @@ export class CommentComponent {
   @Output() public readonly deleteComment: EventEmitter<number> = new EventEmitter<number>();
   @Output() public readonly reply: EventEmitter<void> = new EventEmitter<void>();
 
-  public showComments: boolean = true;
-
-  public toggleComments(): void {
-    this.showComments = !this.showComments;
-  }
-
   public emitReply(): void {
     this.reply.emit();
   }
 
   public emitDelete(): void {
-    if (this.comment?.id) {
+    if (this.comment?.id && confirm(`Are you sure you want to delete this comment ?`)) {
       this.deleteComment.emit(this.comment.id);
     }
   }
