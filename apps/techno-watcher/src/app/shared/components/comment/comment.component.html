@@ -20,7 +20,10 @@
       <div class="flex items-start gap-4 pt-2 pb-2">
         <mat-icon class="rotate-180" color="accent">reply</mat-icon>
         <ng-container *ngIf="comment; else loadingBodyTemplate">
-          <div *ngIf="!comment.deletedAt; else deletedCommentTemplate">{{ comment.content }}</div>
+          <techno-watcher-markdown-renderer
+            [content]="comment.content"
+            *ngIf="!comment.deletedAt; else deletedCommentTemplate"
+          ></techno-watcher-markdown-renderer>
           <ng-template #deletedCommentTemplate><i>This comment has been deleted.</i></ng-template>
         </ng-container>
         <ng-template #loadingBodyTemplate>

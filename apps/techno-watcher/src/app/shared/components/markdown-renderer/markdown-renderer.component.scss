@@ -1,0 +1,72 @@
+h1 {
+  @apply text-base font-bold text-6xl;
+}
+
+h2 {
+  @apply text-base font-bold text-5xl;
+}
+
+h3 {
+  @apply text-base font-bold text-4xl;
+}
+
+h4 {
+  @apply text-base font-bold text-3xl;
+}
+
+h5 {
+  @apply text-base font-bold text-2xl;
+}
+
+h6 {
+  @apply text-base font-bold text-xl;
+}
+
+pre {
+  @apply text-base font-mono p-4 my-2 rounded-lg bg-accentLighter;
+  code {
+    @apply p-0 rounded-none;
+  }
+}
+
+code {
+  @apply text-base font-mono p-2 rounded-sm bg-accentLighter;
+}
+
+table {
+  @apply table-auto shadow rounded-lg bg-primaryLighter;
+
+  thead {
+    @apply bg-accentDarker text-primaryLighter;
+  }
+
+  th,
+  td {
+    @apply px-4 py-2 border-accent border;
+  }
+}
+
+ol {
+  @apply list-decimal;
+}
+
+ul {
+  @apply list-disc;
+}
+
+ol,
+ul {
+  @apply p-4;
+}
+
+a {
+  @apply underline text-blue-700;
+
+  &:visited {
+    @apply text-gray-800;
+  }
+}
+
+blockquote {
+  @apply text-base border-l-4 border-b-white p-4 my-2 rounded-r-lg bg-accentDarker text-accentLighter;
+}

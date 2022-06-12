@@ -6,11 +6,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+import { MarkdownInputComponentModule } from '../markdown-input/markdown-input.component';
+
 import { CommentFormComponent } from './comment-form.component';
 
 @NgModule({
   declarations: [CommentFormComponent],
-  imports: [CommonModule, MatCardModule, MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule, MarkdownInputComponentModule],
   exports: [CommentFormComponent],
 })
 export class CommentFormModule {}

@@ -1,6 +1,8 @@
 const { createGlobPatternsForDependencies } = require('@nrwl/angular/tailwind');
 const { join } = require('path');
 
+const colors = require('tailwindcss/colors');
+
 function withOpacityValue(variable) {
   return `var(${variable})`;
   // TODO Handle opacity values
@@ -17,6 +19,8 @@ module.exports = {
   content: [join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'), ...createGlobPatternsForDependencies(__dirname)],
   theme: {
     colors: {
+      ...colors,
+
       //#region Primary Color
       primary: withOpacityValue('--primary-color'),
       primaryLighter: withOpacityValue('--primary-lighter-color'),

@@ -1,29 +1,25 @@
-import { randEmail, randNumber, randParagraph, randRecentDate, randUserName, seed } from '@ngneat/falso';
-import { plainToInstance } from 'class-transformer';
+import { randNumber, randParagraph, randRecentDate, randUserName, seed } from '@ngneat/falso';
 
 import { CommentModel } from '@techno-watcher/api-models';
 
 seed('my-seed-2');
 
-export function generateComment(id: number = randNumber(), parentId: number | null = null): CommentModel {
-  return plainToInstance(
-    CommentModel,
-    {
-      id: id,
-      createdAt: randRecentDate(),
-      updatedAt: randRecentDate(),
-      content: randParagraph(),
-      parentCommentId: parentId,
-      author: {
-        id: randNumber(),
-        createdAt: randRecentDate(),
-        updatedAt: randRecentDate(),
-        username: randUserName(),
-        email: randEmail(),
-      },
+type GenerateCommentOptions = { id?: number; parentId?: number; content?: string };
+
+export function generateComment({ id, parentId, content }: GenerateCommentOptions = {}): CommentModel {
+  return {
+    author: {
+      id: randNumber(),
+      username: randUserName(),
     },
-    { excludeExtraneousValues: true }
-  );
+    content: content ?? randParagraph(),
+    createdAt: randRecentDate(),
+    deletedAt: null,
+    id: id ?? randNumber(),
+    parentCommentId: parentId ?? null,
+    postId: randNumber(),
+    updatedAt: randRecentDate(),
+  };
 }
 
 export function generateCommentList(): CommentModel[] {
@@ -38,13 +34,13 @@ export function generateCommentList(): CommentModel[] {
       8
    */
   return [
-    generateComment(1),
-    generateComment(2, 1),
-    generateComment(3, 2),
-    generateComment(4, 1),
-    generateComment(5, 1),
-    generateComment(6),
-    generateComment(7),
-    generateComment(8, 7),
+    generateComment({ id: 1 }),
+    generateComment({ id: 2, parentId: 1 }),
+    generateComment({ id: 3, parentId: 2 }),
+    generateComment({ id: 4, parentId: 1 }),
+    generateComment({ id: 5, parentId: 1 }),
+    generateComment({ id: 6 }),
+    generateComment({ id: 7 }),
+    generateComment({ id: 8, parentId: 7 }),
   ];
 }

@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { CommentComponentModule } from '../../shared/components/comment/comment-component.module';
 import { CommentFormModule } from '../../shared/components/comment-form/comment-form.module';
 import { CommentListModule } from '../../shared/components/comment-list/comment-list.module';
+import { MarkdownInputComponentModule } from '../../shared/components/markdown-input/markdown-input.component';
+import { MarkdownRendererComponentModule } from '../../shared/components/markdown-renderer/markdown-renderer.component';
 import { PostComponentModule } from '../../shared/components/post/post-component.module';
 import { TagInputModule } from '../../shared/components/tag-input/tag-input.module';
 import { ShowOnSignedInModule } from '../../shared/directives/show-on-signed-in/show-on-signed-in.module';
@@ -34,6 +36,8 @@ import { PostRoutingModule } from './post-routing.module';
     CommentListModule,
     CommentFormModule,
     UrlValidatorDirectiveModule,
+    MarkdownInputComponentModule,
+    MarkdownRendererComponentModule,
   ],
   declarations: [ShowPostPageComponent, CreatePostPageComponent],
   exports: [],
