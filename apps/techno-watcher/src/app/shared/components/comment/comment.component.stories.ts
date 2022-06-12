@@ -1,4 +1,5 @@
 import { provideMockStore } from '@ngrx/store/testing';
+import { action } from '@storybook/addon-actions';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 
 import { generateComment } from '../../../../mocks/comment.mock';
@@ -21,6 +22,14 @@ export default {
       ],
     }),
   ],
+  args: {
+    deleteComment: action('deleteComment'),
+  },
+  argTypes: {
+    deleteComment: {
+      action: 'deleteComment',
+    },
+  },
 } as Meta;
 
 const Template: Story<CommentComponent> = (args: CommentComponent) => ({
@@ -34,6 +43,12 @@ Default.args = {
      ---
      Hello`,
   }),
+};
+
+export const CanDelete: Story<CommentComponent> = Template.bind({});
+CanDelete.args = {
+  comment: generateComment({ username: 'username' }),
+  username: 'username',
 };
 
 export const Deleted: Story<CommentComponent> = Template.bind({});

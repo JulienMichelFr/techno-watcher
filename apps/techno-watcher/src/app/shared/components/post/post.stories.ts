@@ -1,4 +1,5 @@
 import { randRecentDate, randUrl } from '@ngneat/falso';
+import { action } from '@storybook/addon-actions';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 
 import { PostModel } from '@techno-watcher/api-models';
@@ -35,12 +36,18 @@ export default {
       imports: [PostComponentModule, TagComponentModule],
     }),
   ],
+  args: {
+    delete: action('delete'),
+  },
   argTypes: {
     canDelete: {
       control: {
         type: 'boolean',
       },
       defaultValue: false,
+    },
+    delete: {
+      action: 'delete',
     },
   },
 } as Meta;
