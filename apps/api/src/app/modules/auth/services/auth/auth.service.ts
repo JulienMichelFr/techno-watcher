@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   public async refreshToken(refreshTokenDTO: RefreshTokenDto): Promise<AuthResponseModel> {
-    const { id, email, username }: JwtPayload = await this.jwtService.verify(refreshTokenDTO.refreshToken);
+    const { id }: JwtPayload = await this.jwtService.verify(refreshTokenDTO.refreshToken);
     const user: UserModel = await this.userService.findById(id);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
@@ -53,7 +53,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    return this.generateTokens({ id, email, username });
+    return this.generateTokens({ id: user.id, email: user.email, username: user.username });
   }
 
   private async generateTokens(user: JwtPayload): Promise<AuthResponseModel> {

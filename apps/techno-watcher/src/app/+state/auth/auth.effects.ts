@@ -24,7 +24,8 @@ export class AuthEffects {
           return fromActions.signOut();
         }
         const decoded: DecodedToken = decodeJwt(refreshToken);
-        if (decoded.exp < Date.now()) {
+        const now: number = Date.now() / 1000;
+        if (decoded.exp < now) {
           return fromActions.signOut();
         }
 
@@ -85,8 +86,8 @@ export class AuthEffects {
   public storeRefreshTokenInLocalStorage$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(fromActions.signInSuccess, fromActions.signUpSuccess),
-        map(({ payload }) => localStorage.setItem(AUTH_LOCAL_STORAGE_KEY, payload.accessToken))
+        ofType(fromActions.signInSuccess, fromActions.signUpSuccess, fromActions.refreshTokenSuccess),
+        map(({ payload }) => localStorage.setItem(AUTH_LOCAL_STORAGE_KEY, payload.refreshToken))
       ),
     { dispatch: false }
   );
