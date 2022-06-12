@@ -15,7 +15,11 @@ const post: PostModel = {
     id: 1,
     username: 'username',
   },
-  content: 'Post content',
+  content: `# Content title
+
+  - [ ] Item 1
+  - [x] Item 2
+  `,
   createdAt: randRecentDate(),
   updatedAt: randRecentDate(),
   link: randUrl(),
@@ -50,6 +54,11 @@ Default.args = {
   post,
 };
 
+export const ContentHidden: Story<PostComponent> = Template.bind({});
+ContentHidden.args = {
+  post,
+  showContent: false,
+};
 export const CanDelete: Story<PostComponent> = Template.bind({});
 CanDelete.args = {
   post,

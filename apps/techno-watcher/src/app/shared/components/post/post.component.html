@@ -1,6 +1,6 @@
 <mat-card>
   <div [class.animate-pulse]="!post">
-    <mat-card-content class="!mb-0">
+    <mat-card-content class="!mb-0 flex flex-col">
       <div class="flex justify-between items-center p-x-1">
         <div class="flex flex-col gap-1">
           <div class="font-bold text-[24px]">
@@ -50,6 +50,21 @@
             </ng-container>
           </div>
         </div>
+      </div>
+
+      <div *ngIf="showContent">
+        <mat-divider inset="true" class="!mb-4 !mt-4"></mat-divider>
+        <ng-container *ngIf="post; else loadingContentTemplate">
+          <techno-watcher-markdown-renderer [content]="post.content"></techno-watcher-markdown-renderer>
+        </ng-container>
+        <ng-template #loadingContentTemplate>
+          <div class="flex flex-col gap-2">
+            <div class="h-4 w-full bg-primaryLighter rounded"></div>
+            <div class="h-4 w-full bg-primaryLighter rounded"></div>
+            <div class="h-4 w-full bg-primaryLighter rounded"></div>
+            <div class="h-4 w-full bg-primaryLighter rounded"></div>
+          </div>
+        </ng-template>
       </div>
     </mat-card-content>
   </div>

@@ -43,7 +43,7 @@ export class HomePageComponent {
   private getPaginatedPosts$(page: number): Observable<Paginated<PostModel>> {
     this.loadingSubject.next(true);
     return this.postService
-      .findPosts({ sort: 'createdAt:asc', take: 10, skip: page * this.pageSize, tags: [] })
+      .findPosts({ sort: 'createdAt:desc', take: 10, skip: page * this.pageSize, tags: [] })
       .pipe(tap(() => this.loadingSubject.next(false)));
   }
 }

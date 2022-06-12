@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
@@ -9,7 +10,7 @@ export default {
   component: MarkdownInputComponent,
   decorators: [
     moduleMetadata({
-      imports: [MarkdownInputComponentModule, BrowserAnimationsModule],
+      imports: [MarkdownInputComponentModule, BrowserAnimationsModule, FormsModule],
     }),
   ],
   args: {

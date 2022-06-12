@@ -29,7 +29,11 @@ const Template: Story<CommentComponent> = (args: CommentComponent) => ({
 
 export const Default: Story<CommentComponent> = Template.bind({});
 Default.args = {
-  comment: generateComment(),
+  comment: generateComment({
+    content: `# My comment title
+     ---
+     Hello`,
+  }),
 };
 
 export const Deleted: Story<CommentComponent> = Template.bind({});
