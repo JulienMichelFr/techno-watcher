@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { SignUpDTO } from '@techno-watcher/api-models';
@@ -13,19 +13,19 @@ import { AuthFacade } from '../../../../+state/auth/auth.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInPageComponent {
-  public form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required]),
+  public form: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+    password: new UntypedFormControl(null, [Validators.required]),
   });
 
   public isLoading$: Observable<boolean> = this.authFacade.isLoading$;
 
-  public get emailFormControl(): FormControl {
-    return this.form.get('email') as FormControl;
+  public get emailFormControl(): UntypedFormControl {
+    return this.form.get('email') as UntypedFormControl;
   }
 
-  public get passwordFormControl(): FormControl {
-    return this.form.get('email') as FormControl;
+  public get passwordFormControl(): UntypedFormControl {
+    return this.form.get('email') as UntypedFormControl;
   }
 
   public constructor(private authFacade: AuthFacade) {}

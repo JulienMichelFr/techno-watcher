@@ -1,11 +1,11 @@
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroupDirective, NgForm, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 import { PASSWORD_REGEXP, SignUpDTO } from '@techno-watcher/api-models';
 
-export class SignUpForm extends FormGroup {
-  public get username(): FormControl {
-    return this.get('username') as FormControl;
+export class SignUpForm extends UntypedFormGroup {
+  public get username(): UntypedFormControl {
+    return this.get('username') as UntypedFormControl;
   }
 
   public get usernameErrorMessage(): string | null {
@@ -30,8 +30,8 @@ export class SignUpForm extends FormGroup {
     return null;
   }
 
-  public get email(): FormControl {
-    return this.get('email') as FormControl;
+  public get email(): UntypedFormControl {
+    return this.get('email') as UntypedFormControl;
   }
 
   public get emailErrorMessage(): string | null {
@@ -50,8 +50,8 @@ export class SignUpForm extends FormGroup {
     return null;
   }
 
-  public get password(): FormControl {
-    return this.get('password') as FormControl;
+  public get password(): UntypedFormControl {
+    return this.get('password') as UntypedFormControl;
   }
 
   public get passwordErrorMessage(): string | null {
@@ -80,8 +80,8 @@ export class SignUpForm extends FormGroup {
     return null;
   }
 
-  public get confirmPassword(): FormControl {
-    return this.get('confirmPassword') as FormControl;
+  public get confirmPassword(): UntypedFormControl {
+    return this.get('confirmPassword') as UntypedFormControl;
   }
 
   public get confirmPasswordErrorMessage(): string | null {
@@ -101,13 +101,13 @@ export class SignUpForm extends FormGroup {
   }
 
   public confirmPasswordErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
       return !!(control?.touched && (control?.invalid || form?.hasError('passwordAreSame')));
     },
   };
 
-  public get invitation(): FormControl {
-    return this.get('invitation') as FormControl;
+  public get invitation(): UntypedFormControl {
+    return this.get('invitation') as UntypedFormControl;
   }
 
   public get invitationErrorMessage(): string | null {
@@ -125,11 +125,11 @@ export class SignUpForm extends FormGroup {
   public constructor() {
     super(
       {
-        username: new FormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-        email: new FormControl(null, [Validators.required, Validators.email]),
-        password: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(32), Validators.pattern(PASSWORD_REGEXP)]),
-        confirmPassword: new FormControl(null, [Validators.required]),
-        invitation: new FormControl(null, [Validators.required]),
+        username: new UntypedFormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+        email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+        password: new UntypedFormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(32), Validators.pattern(PASSWORD_REGEXP)]),
+        confirmPassword: new UntypedFormControl(null, [Validators.required]),
+        invitation: new UntypedFormControl(null, [Validators.required]),
       },
       [SignUpForm.passwordAreSameValidator()]
     );
@@ -139,8 +139,8 @@ export class SignUpForm extends FormGroup {
     return (form: AbstractControl): ValidationErrors | null => {
       const formGroup: SignUpForm = form as SignUpForm;
 
-      const passwordControl: FormControl = formGroup.password;
-      const confirmPasswordControl: FormControl = formGroup.confirmPassword;
+      const passwordControl: UntypedFormControl = formGroup.password;
+      const confirmPasswordControl: UntypedFormControl = formGroup.confirmPassword;
 
       if (!passwordControl.touched || !confirmPasswordControl.touched || confirmPasswordControl.invalid) {
         return null;
