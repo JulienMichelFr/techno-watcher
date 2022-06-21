@@ -1,10 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { SignUpDTO } from '@techno-watcher/api-models';
+import { SignInDTO } from '@techno-watcher/api-models';
 
 import { AuthFacade } from '../../../../+state/auth/auth.facade';
+
+type SignUpDTOFormGroup = {
+  email: FormControl<string>;
+  password: FormControl<string>;
+};
 
 @Component({
   selector: 'techno-watcher-sign-in',
@@ -13,24 +18,29 @@ import { AuthFacade } from '../../../../+state/auth/auth.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInPageComponent {
-  public form: UntypedFormGroup = new UntypedFormGroup({
-    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
-    password: new UntypedFormControl(null, [Validators.required]),
+  public form: FormGroup<SignUpDTOFormGroup> = new FormGroup<SignUpDTOFormGroup>({
+    email: new FormControl<string>('', { validators: [Validators.required, Validators.email], nonNullable: true }),
+    password: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
   });
 
   public isLoading$: Observable<boolean> = this.authFacade.isLoading$;
 
-  public get emailFormControl(): UntypedFormControl {
-    return this.form.get('email') as UntypedFormControl;
+  public get emailFormControl(): FormControl<string> {
+    return this.form.controls.email;
   }
 
-  public get passwordFormControl(): UntypedFormControl {
-    return this.form.get('email') as UntypedFormControl;
+  public get passwordFormControl(): FormControl<string> {
+    return this.form.controls.password;
   }
 
   public constructor(private authFacade: AuthFacade) {}
 
-  public submitForm(signUpDTO: SignUpDTO): void {
-    this.authFacade.signIn(signUpDTO);
+  public submitForm(form: FormGroup<SignUpDTOFormGroup>): void {
+    const signInDTO: SignInDTO = {
+      email: form.controls.email.value,
+      password: form.controls.password.value,
+    };
+
+    this.authFacade.signIn(signInDTO);
   }
 }

@@ -1,11 +1,17 @@
-import { AbstractControl, FormGroupDirective, NgForm, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 import { PASSWORD_REGEXP, SignUpDTO } from '@techno-watcher/api-models';
 
-export class SignUpForm extends UntypedFormGroup {
-  public get username(): UntypedFormControl {
-    return this.get('username') as UntypedFormControl;
+export class SignUpForm extends FormGroup<{
+  username: FormControl<string>;
+  email: FormControl<string>;
+  password: FormControl<string>;
+  confirmPassword: FormControl<string>;
+  invitation: FormControl<string>;
+}> {
+  public get username(): FormControl<string> {
+    return this.controls.username;
   }
 
   public get usernameErrorMessage(): string | null {
@@ -30,8 +36,8 @@ export class SignUpForm extends UntypedFormGroup {
     return null;
   }
 
-  public get email(): UntypedFormControl {
-    return this.get('email') as UntypedFormControl;
+  public get email(): FormControl<string> {
+    return this.controls.email;
   }
 
   public get emailErrorMessage(): string | null {
@@ -50,8 +56,8 @@ export class SignUpForm extends UntypedFormGroup {
     return null;
   }
 
-  public get password(): UntypedFormControl {
-    return this.get('password') as UntypedFormControl;
+  public get password(): FormControl {
+    return this.controls.password;
   }
 
   public get passwordErrorMessage(): string | null {
@@ -80,8 +86,8 @@ export class SignUpForm extends UntypedFormGroup {
     return null;
   }
 
-  public get confirmPassword(): UntypedFormControl {
-    return this.get('confirmPassword') as UntypedFormControl;
+  public get confirmPassword(): FormControl<string> {
+    return this.controls.confirmPassword;
   }
 
   public get confirmPasswordErrorMessage(): string | null {
@@ -101,13 +107,13 @@ export class SignUpForm extends UntypedFormGroup {
   }
 
   public confirmPasswordErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
       return !!(control?.touched && (control?.invalid || form?.hasError('passwordAreSame')));
     },
   };
 
-  public get invitation(): UntypedFormControl {
-    return this.get('invitation') as UntypedFormControl;
+  public get invitation(): FormControl {
+    return this.controls.invitation;
   }
 
   public get invitationErrorMessage(): string | null {
@@ -125,11 +131,14 @@ export class SignUpForm extends UntypedFormGroup {
   public constructor() {
     super(
       {
-        username: new UntypedFormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-        email: new UntypedFormControl(null, [Validators.required, Validators.email]),
-        password: new UntypedFormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(32), Validators.pattern(PASSWORD_REGEXP)]),
-        confirmPassword: new UntypedFormControl(null, [Validators.required]),
-        invitation: new UntypedFormControl(null, [Validators.required]),
+        username: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(2), Validators.maxLength(20)], nonNullable: true }),
+        email: new FormControl<string>('', { validators: [Validators.required, Validators.email], nonNullable: true }),
+        password: new FormControl<string>('', {
+          validators: [Validators.required, Validators.minLength(8), Validators.maxLength(32), Validators.pattern(PASSWORD_REGEXP)],
+          nonNullable: true,
+        }),
+        confirmPassword: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+        invitation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
       },
       [SignUpForm.passwordAreSameValidator()]
     );
@@ -139,8 +148,8 @@ export class SignUpForm extends UntypedFormGroup {
     return (form: AbstractControl): ValidationErrors | null => {
       const formGroup: SignUpForm = form as SignUpForm;
 
-      const passwordControl: UntypedFormControl = formGroup.password;
-      const confirmPasswordControl: UntypedFormControl = formGroup.confirmPassword;
+      const passwordControl: FormControl<string> = formGroup.password;
+      const confirmPasswordControl: FormControl<string> = formGroup.confirmPassword;
 
       if (!passwordControl.touched || !confirmPasswordControl.touched || confirmPasswordControl.invalid) {
         return null;
@@ -156,11 +165,11 @@ export class SignUpForm extends UntypedFormGroup {
   }
 
   public fromDTO(value: Partial<SignUpDTO>): void {
-    this.username.setValue(value?.username ?? null);
-    this.email.setValue(value?.email ?? null);
-    this.password.setValue(value?.password ?? null);
-    this.confirmPassword.setValue(value?.password ?? null);
-    this.invitation.setValue(value?.invitation ?? null);
+    this.username.setValue(value?.username ?? '');
+    this.email.setValue(value?.email ?? '');
+    this.password.setValue(value?.password ?? '');
+    this.confirmPassword.setValue(value?.password ?? '');
+    this.invitation.setValue(value?.invitation ?? '');
     this.markAsPristine();
     this.markAsUntouched();
   }
