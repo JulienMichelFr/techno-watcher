@@ -1,12 +1,11 @@
 {
   "migrations": [
     {
-      "version": "14.1.8",
-      "cli": "nx",
-      "description": "Change storybook targets for Angular projects to use @storybook/angular executors",
-      "factory": "./src/migrations/update-14-1-8/change-storybook-targets",
-      "package": "@nrwl/storybook",
-      "name": "update-14.1.8"
+      "description": "The road to v14",
+      "version": "14-beta",
+      "factory": "./14_0_0/index",
+      "package": "@ngrx/router-store",
+      "name": "ngrx-router-store-migration-04"
     }
   ]
 }

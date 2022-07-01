@@ -43,10 +43,10 @@ describe('SignUpForm', () => {
     it('should set not provided values to null', () => {
       form.fromDTO({ username: dto.username });
       expect(form.username.value).toBe(dto.username);
-      expect(form.email.value).toBeNull();
-      expect(form.password.value).toBeNull();
-      expect(form.confirmPassword.value).toBeNull();
-      expect(form.invitation.value).toBeNull();
+      expect(form.email.value).toEqual('');
+      expect(form.password.value).toEqual('');
+      expect(form.confirmPassword.value).toEqual('');
+      expect(form.invitation.value).toEqual('');
     });
 
     it('should reset previous values when some values are not provided', () => {
@@ -54,9 +54,9 @@ describe('SignUpForm', () => {
       form.fromDTO({ username: dto.username, email: dto.email });
       expect(form.username.value).toBe(dto.username);
       expect(form.email.value).toBe(dto.email);
-      expect(form.password.value).toBeNull();
-      expect(form.confirmPassword.value).toBeNull();
-      expect(form.invitation.value).toBeNull();
+      expect(form.password.value).toEqual('');
+      expect(form.confirmPassword.value).toEqual('');
+      expect(form.invitation.value).toEqual('');
     });
 
     it('should mark form as pristine', () => {
