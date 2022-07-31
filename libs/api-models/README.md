@@ -1,11 +1,10 @@
 # api-models
 
-This library was generated with [Nx](https://nx.dev).
+This library contains shared interfaces between the [Webapp](https://github.com/JulienMichelFr/techno-watcher/tree/main/apps/techno-watcher) and
+the [API](https://github.com/JulienMichelFr/techno-watcher/tree/main/apps/api)
 
-## Building
+Serialization/de-serialization and validation are handled by [class-validator](https://github.com/typestack/class-validator)
+and [class-transformer](https://github.com/typestack/class-transformer)
 
-Run `nx build api-models` to build the library.
-
-## Running unit tests
-
-Run `nx test api-models` to execute the unit tests via [Jest](https://jestjs.io).
+- `.dto.ts` files are used as input for API requests
+- `.model.ts` files models
